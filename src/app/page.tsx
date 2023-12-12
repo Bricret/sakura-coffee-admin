@@ -1,4 +1,4 @@
-import FormLogin from "./UI/form-login";
+import FormLogin from "./UI/auth/login/form-login";
 
 export default function Home() {
   return (

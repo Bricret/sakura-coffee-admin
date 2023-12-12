@@ -1,14 +1,13 @@
 import Image from "next/image";
-import { fonts } from "./Fonts";
-import { Icons } from "../plugins/Icons";
+import { fonts } from "../../Fonts";
+import { Icons } from "../../../plugins/Icons";
 
 
 const { UserIcon, PasswordIcon } = Icons;
 
-
 export default function FormLogin() {
   return (
-    <main className="lg:grid lg:grid-cols-[500px,1fr] max-h-screen bg-[#f4dcc0]">
+    <main className="lg:grid lg:grid-cols-[500px,1fr] max-h-screen bg-primary">
       <article className="hidden items-center justify-center h-screen lg:block">
         <Image
           src="/Carrusel/2.jpg"
@@ -32,7 +31,7 @@ export default function FormLogin() {
             priority
         />
         <h1 className="text-3xl font-bold hidden lg:block">Inicia Sesion</h1>
-        <p className="text-[#a88165] hidden lg:block">Ingresa tus credenciales para poder acceder</p>
+        <p className="text-secundary hidden lg:block">Ingresa tus credenciales para poder acceder</p>
       </div>
       <form className=""> 
           {/* Input UserName */}
@@ -60,7 +59,7 @@ export default function FormLogin() {
           <PasswordIcon className="absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
         </div>
         <button
-          className={`rounded-md text-center h-10 px-4 py-2 w-full bg-[#3b2323] text-white font-bold hover:bg-[#a88165] transition duration-300 ease-in-out ${fonts.merriweather.className}`}
+          className={`rounded-md text-center h-10 px-4 py-2 w-full bg-third text-white font-bold hover:bg-secundary transition duration-300 ease-in-out ${fonts.merriweather.className}`}
           type="submit"
         >
           Iniciar Sesion
