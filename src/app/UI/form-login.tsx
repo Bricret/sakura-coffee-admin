@@ -1,6 +1,9 @@
 import Image from "next/image";
 import { fonts } from "./Fonts";
+import { Icons } from "../plugins/Icons";
 
+
+const { UserIcon, PasswordIcon } = Icons;
 
 
 export default function FormLogin() {
@@ -31,38 +34,30 @@ export default function FormLogin() {
         <h1 className="text-3xl font-bold hidden lg:block">Inicia Sesion</h1>
         <p className="text-[#a88165] hidden lg:block">Ingresa tus credenciales para poder acceder</p>
       </div>
-      <form className="space-y-4">
-        <div className="space-y-2">
-          <label
-            className={`text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 ${fonts.merriweather.className}`}
-            htmlFor="nickname"
-          >
-            Usuario
+      <form className=""> 
+          {/* Input UserName */}
+          <label htmlFor="nickname" className={`text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 ${fonts.merriweather.className}`}>
+            Nombre de usuario
           </label>
+          <div className="relative flex mt-2 mb-4">
           <input
-            className={`flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50`}
+            className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+            placeholder="Nombre de usuario"
             id="nickname"
-            placeholder="Sakura"
-            required
-            type="nickname"
           />
+          <UserIcon className="absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
         </div>
-        <div className="space-y-2">
-          <div className="flex items-center">
-            <label
-              className={`text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 ${fonts.merriweather.className}`}
-              htmlFor="password"
-            >
-              contraseña
-            </label>
-          </div>
+        {/* Input Password */}
+        <label htmlFor="password" className={`text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 ${fonts.merriweather.className}`}>
+          Contraseña
+          </label>
+          <div className="relative flex mt-2 mb-6">
           <input
-            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+            placeholder="**************"
             id="password"
-            required
-            type="password"
-            placeholder="********"
           />
+          <PasswordIcon className="absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
         </div>
         <button
           className={`rounded-md text-center h-10 px-4 py-2 w-full bg-[#3b2323] text-white font-bold hover:bg-[#a88165] transition duration-300 ease-in-out ${fonts.merriweather.className}`}
