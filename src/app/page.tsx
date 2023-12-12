@@ -1,8 +1,9 @@
+import FormLogin from "./UI/form-login";
 
 export default function Home() {
   return (
     <div>
-      <h1>Hola mundo</h1>
+      <FormLogin />
     </div>
   )
 }
