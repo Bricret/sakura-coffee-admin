@@ -1,56 +1,56 @@
 import Image from "next/image";
+import { fonts } from "./Fonts";
 
 
 
 export default function FormLogin() {
   return (
-    <main className="lg:grid lg:grid-cols-2">
-  <article className="flex items-center justify-center lg:block h-screen">
-      <div className="image-container">
+    <main className="lg:grid lg:grid-cols-[500px,1fr] max-h-screen bg-[#f4dcc0]">
+      <article className="hidden items-center justify-center h-screen lg:block">
         <Image
-          src="/Carrusel/3.jpg"
+          src="/Carrusel/2.jpg"
           alt="Coffee Shop Image 1"
-          className="h-screen w-full object-cover"
+          className="h-screen object-cover"
           width="500"
           height="500"
           priority
         />
-    </div>
-  </article>
-  <article className="flex items-center justify-center p-12">
+      </article>
+    <article className="flex items-center justify-center h-screen  py-9 px-12 lg:p-0">
     <div className="mx-auto w-[350px] space-y-6">
       <div className="flex flex-col items-center space-y-2">
         <Image
-            src="/logo.jpg"
+            src="/logo.png"
             alt="Coffee Shop Logo"
             className="object-cover mb-4"
             width="200"
             height="200"
+            style={{ height: "auto", width: "auto" }}
             priority
         />
-        <h1 className="text-3xl font-bold">Inicia Sesion</h1>
-        <p className="text-gray-500 dark:text-gray-400">Ingresa tus credenciales para poder acceder</p>
+        <h1 className="text-3xl font-bold hidden lg:block">Inicia Sesion</h1>
+        <p className="text-[#a88165] hidden lg:block">Ingresa tus credenciales para poder acceder</p>
       </div>
-      <div className="space-y-4">
+      <form className="space-y-4">
         <div className="space-y-2">
           <label
-            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            htmlFor="email"
+            className={`text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 ${fonts.merriweather.className}`}
+            htmlFor="nickname"
           >
             Usuario
           </label>
           <input
-            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-            id="email"
+            className={`flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50`}
+            id="nickname"
             placeholder="Sakura"
             required
-            type="text"
+            type="nickname"
           />
         </div>
         <div className="space-y-2">
           <div className="flex items-center">
             <label
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              className={`text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 ${fonts.merriweather.className}`}
               htmlFor="password"
             >
               contraseña
@@ -65,12 +65,12 @@ export default function FormLogin() {
           />
         </div>
         <button
-          className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full"
+          className={`rounded-md text-center h-10 px-4 py-2 w-full bg-[#3b2323] text-white font-bold hover:bg-[#a88165] transition duration-300 ease-in-out ${fonts.merriweather.className}`}
           type="submit"
         >
-          Login
+          Iniciar Sesion
         </button>
-      </div>
+      </form>
     </div>
   </article>
 </main>
