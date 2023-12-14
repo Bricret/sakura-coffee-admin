@@ -2,6 +2,7 @@ import Image from "next/image";
 import { fonts } from "../../Fonts";
 import { Icons } from "../../../plugins/Icons";
 import { Button } from "../button";
+import { Input } from "@nextui-org/react";
 
 
 const { UserIcon, PasswordIcon } = Icons;
@@ -39,26 +40,28 @@ export default function FormLogin() {
           <label htmlFor="nickname" className={`text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 ${fonts.merriweather.className}`}>
             Nombre de usuario
           </label>
-          <div className="relative flex mt-2 mb-4">
-          <input
-            className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
-            placeholder="Nombre de usuario"
-            id="nickname"
-          />
-          <UserIcon className="absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
-        </div>
+          <Input
+          type="nickname"
+          placeholder="Sakura"
+          labelPlacement="outside"
+          className="my-2"
+          startContent={
+            <UserIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0 h-4 w-4" />
+          }
+        />
         {/* Input Password */}
         <label htmlFor="password" className={`text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 ${fonts.merriweather.className}`}>
           Contraseña
           </label>
-          <div className="relative flex mt-2 mb-6">
-          <input
-            className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
-            placeholder="**************"
-            id="password"
+          <Input
+            type="password"
+            placeholder="**********"
+            labelPlacement="outside"
+            className="mt-2 mb-6"
+            startContent={
+              <PasswordIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0 h-4 w-4" />
+          }
           />
-          <PasswordIcon className="absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
-        </div>
         <Button>
           Iniciar Sesion
         </Button>

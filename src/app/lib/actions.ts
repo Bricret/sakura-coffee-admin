@@ -1,13 +1,12 @@
 'use server';
 
-
-import { revalidatePath } from "next/cache";
+import { redirect } from 'next/navigation';
 import { IncriptPass } from "../plugins/incript/argon2";
 import { CreateUserFormSchema } from "../plugins/zod";
 import prisma from "./db";
+import { revalidatePath } from "next/cache";
 
 export async function createUser(formData: FormData) {
-    throw new Error('Error al registrar al usuario');
     const { userName, password, rol } = CreateUserFormSchema.parse({
         userName: formData.get('username'),
         password: formData.get('password'),
@@ -15,6 +14,16 @@ export async function createUser(formData: FormData) {
     });
 
     const PassIncript = await IncriptPass(password);
+
+    const userFound = await prisma.users.findFirst({
+        where: {
+            name: userName
+        }
+    })
+
+     if (userFound) {
+        throw new Error('Usuario ya existe');
+     }  
 
     try {
         await prisma.users.create({
@@ -24,12 +33,11 @@ export async function createUser(formData: FormData) {
                 rol_id: rol
             }
         });
-        console.log('usuario registrado correctamente')
-        revalidatePath('/registerUser');
-        return { message: 'Usuario creado correctamente.' }
-        
+        console.log('usuario registrado correctamente');
     } catch ( error : any ) {
-        
+       console.log('error', error);
     }
 
+    revalidatePath('/dashboard');
+    redirect('/dashboard');
 }
