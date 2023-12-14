@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { PT_Sans } from 'next/font/google'
 import './UI/globals.css'
+import { Providers } from './providers'
 
 const pT_Sans = PT_Sans({ subsets: ['latin'], weight: ["400", "700"] })
 
@@ -15,8 +16,12 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={pT_Sans.className}>{children}</body>
+    <html lang="en" className='dark'>
+      <body className={pT_Sans.className}>
+        <Providers >
+          {children}
+        </Providers>
+      </body>
     </html>
   )
 }

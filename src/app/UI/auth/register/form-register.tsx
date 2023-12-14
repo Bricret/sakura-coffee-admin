@@ -14,7 +14,7 @@ export default function RegisterForm() {
                 className="w-full lg:w-1/2 text-black flex flex-col items-center justify-center bg-no-repeat bg-cover bg-center relative "
                 style={{backgroundImage: 'url(/sideImage.jpg)'}}    
             >
-                <div className="bg-white/60 p-2 rounded-lg text-center cursor-default">
+                <div className="bg-white/80 p-2 rounded-lg text-center cursor-default">
                     <h1 className={`${ fonts.merriweather.className } text-3xl font-bold text-third`}>
                         Bienvenido
                     </h1>
@@ -43,13 +43,12 @@ export default function RegisterForm() {
                             required
                         />
                         <select 
-                            name="selectRol" 
-                            defaultValue={0}  
+                            name="selectRol"
                             id="selectRol" 
+                            defaultValue={1}
                             className="border border-gray-400 py-1 px-2 w-full mb-4 cursor-pointer"
                             required
                         >
-                            <option value={0} disabled >Selecciona un rol</option>
                             <option value={1}>Administrador</option>
                             <option value={2}>Mesero</option>
                         </select>
