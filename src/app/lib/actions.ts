@@ -1,10 +1,8 @@
 'use server';
 
-import { redirect } from 'next/navigation';
 import { IncriptPass } from "../plugins/incript/argon2";
 import { CreateUserFormSchema } from "../plugins/zod";
 import prisma from "./db";
-import { revalidatePath } from "next/cache";
 
 export async function createUser(formData: FormData) {
     const { userName, password, rol } = CreateUserFormSchema.parse({
@@ -19,11 +17,11 @@ export async function createUser(formData: FormData) {
         where: {
             name: userName
         }
-    })
+    });
 
      if (userFound) {
-        throw new Error('Usuario ya existe');
-     }  
+        return { success: false, message: 'Usuario ya existe en la base de datos' }
+     }; 
 
     try {
         await prisma.users.create({
@@ -34,10 +32,11 @@ export async function createUser(formData: FormData) {
             }
         });
         console.log('usuario registrado correctamente');
+        return { success: true, message: 'Usuario creado correctamente' }
     } catch ( error : any ) {
        console.log('error', error);
+       return { success: false, message: 'Usuario no creado correctamente' }
     }
-
-    revalidatePath('/dashboard');
-    redirect('/dashboard');
 }
+
+
