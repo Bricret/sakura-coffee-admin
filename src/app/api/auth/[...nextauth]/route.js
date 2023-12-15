@@ -18,14 +18,14 @@ export const authOptions = {
                 name: credentials.username
             }
         })
-        if (!userFind) return null
+        if (!userFind) throw new Error('Usuario no encontrado, verifique sus credenciales')
 
         const verifyPass = await ComparePass(credentials.password, userFind.password)
 
         
-        if ( !verifyPass ) return null
+        if ( !verifyPass ) throw new Error('Contraseña incorrecta, verifique sus credenciales')
         
-        if ( !userFind.status ) return null
+        if ( !userFind.status ) throw new Error('Usuario inactivo, contacte con el administrador')
 
         return {
             id: userFind.id,
@@ -35,8 +35,12 @@ export const authOptions = {
         }
 
       },
+      
     }),
   ],
+  pages: {
+    signIn: '/'
+  },
 };
 
 const handler = NextAuth(authOptions);
@@ -44,21 +48,3 @@ const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
 
 
-
-
-
-// if (!userFound) throw new Error('No user found')
-
-        // console.log(userFound)
-
-        // const matchPassword = await ComparePass(credentials.password, userFound.password)
-
-        // if (!matchPassword) return null
-
-        // return {
-        //     id: userFound.id,
-        //     name: userFound.name,
-        //     status: userFound.status,
-        //     rol_id: userFound.role_id,
-        
-        // }

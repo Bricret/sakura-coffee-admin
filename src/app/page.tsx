@@ -1,7 +1,18 @@
 import Image from "next/image";
 import FormLogin from "./UI/auth/login/form-login";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./api/auth/[...nextauth]/route";
+import { redirect } from "next/navigation";
 
-export default function Home() {
+
+export default async function Home() {
+
+  // ! Codigo para bloquear la ruta si el usuario esta logueado
+  const session = await getServerSession(authOptions);
+  if(session) {
+    redirect('/dashboard');
+  }
+
   return (
     <div>
       <main className="lg:grid lg:grid-cols-[500px,1fr] max-h-screen bg-primary">

@@ -4,29 +4,16 @@ import { fonts } from "../../Fonts";
 import { Icons } from "../../../plugins/Icons";
 import { Button } from "../button";
 import { Input } from "@nextui-org/react";
-import { signIn } from "next-auth/react";
-import { LoginUserSchema } from "@/app/plugins/zod";
-
+import { Toaster } from "sonner";
+import HandlerVerify from "./verifyForm";
 
 const { UserIcon, PasswordIcon } = Icons;
 
 export default function FormLogin() {
 
   async function GetForm( formData: FormData ) {
-    const { username, password } = LoginUserSchema.parse({
-      username: formData.get('nickname'),
-      password: formData.get('password')
-    });
-    const res = await signIn('credentials', { 
-      username, 
-      password, 
-      redirect: false 
-    });
-    console.log(res);
-
+    await HandlerVerify(formData);
 }
-
-
   return (
     
       <form action={GetForm}> 
@@ -36,6 +23,7 @@ export default function FormLogin() {
           </label>
           <Input
           name="nickname"
+          required
           id="nickname"
           type="text"
           placeholder="Sakura"
@@ -52,6 +40,7 @@ export default function FormLogin() {
           <Input
             name="password"
             id="password"
+            required
             type="password"
             placeholder="**********"
             labelPlacement="outside"
@@ -63,6 +52,13 @@ export default function FormLogin() {
         <Button>
           Iniciar Sesion
         </Button>
+        <Toaster 
+            dir="auto"
+            visibleToasts={2}
+            duration={1500}
+            closeButton
+            richColors
+        />
       </form>
     )
 }
