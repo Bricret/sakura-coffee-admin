@@ -31,7 +31,6 @@ export async function createUser(formData: FormData) {
                 rol_id: rol
             }
         });
-        console.log('usuario registrado correctamente');
         return { success: true, message: 'Usuario creado correctamente' }
     } catch ( error : any ) {
        console.log('error', error);

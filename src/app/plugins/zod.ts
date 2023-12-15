@@ -15,3 +15,8 @@ export const CreateUserFormSchema = CreateUserSchema.omit({
     status: true
 })
 
+
+export const LoginUserSchema = z.object({
+    username: z.string(),
+    password: z.string()
+});

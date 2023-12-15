@@ -1,10 +1,39 @@
+import Image from "next/image";
 import FormLogin from "./UI/auth/login/form-login";
 
 export default function Home() {
   return (
     <div>
-      <FormLogin />
-
+      <main className="lg:grid lg:grid-cols-[500px,1fr] max-h-screen bg-primary">
+        <article className="hidden items-center justify-center h-screen lg:block">
+          <Image
+            src="/Carrusel/2.jpg"
+            alt="Coffee Shop Image 1"
+            className="h-screen object-cover"
+            width="500"
+            height="500"
+            priority
+          />
+        </article>
+        <article className="flex items-center justify-center h-screen  py-9 px-12 lg:p-0">
+          <div className="mx-auto w-[350px] space-y-6">
+            <div className="flex flex-col items-center space-y-2">
+              <Image
+                src="/logo.png"
+                alt="Coffee Shop Logo"
+                className="object-cover mb-4"
+                width="200"
+                height="200"
+                style={{ height: "auto", width: "auto" }}
+                priority
+              />
+              <h1 className="text-3xl font-bold hidden lg:block">Inicia Sesion</h1>
+              <p className="text-secundary hidden lg:block">Ingresa tus credenciales para poder acceder</p>
+            </div>
+            <FormLogin />
+          </div>
+        </article>
+      </main>
     </div>
   )
 }

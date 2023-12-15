@@ -1,47 +1,43 @@
-import Image from "next/image";
+'use client';
+
 import { fonts } from "../../Fonts";
 import { Icons } from "../../../plugins/Icons";
 import { Button } from "../button";
 import { Input } from "@nextui-org/react";
+import { signIn } from "next-auth/react";
+import { LoginUserSchema } from "@/app/plugins/zod";
 
 
 const { UserIcon, PasswordIcon } = Icons;
 
 export default function FormLogin() {
+
+  async function GetForm( formData: FormData ) {
+    const { username, password } = LoginUserSchema.parse({
+      username: formData.get('nickname'),
+      password: formData.get('password')
+    });
+    const res = await signIn('credentials', { 
+      username, 
+      password, 
+      redirect: false 
+    });
+    console.log(res);
+
+}
+
+
   return (
-    <main className="lg:grid lg:grid-cols-[500px,1fr] max-h-screen bg-primary">
-      <article className="hidden items-center justify-center h-screen lg:block">
-        <Image
-          src="/Carrusel/2.jpg"
-          alt="Coffee Shop Image 1"
-          className="h-screen object-cover"
-          width="500"
-          height="500"
-          priority
-        />
-      </article>
-    <article className="flex items-center justify-center h-screen  py-9 px-12 lg:p-0">
-    <div className="mx-auto w-[350px] space-y-6">
-      <div className="flex flex-col items-center space-y-2">
-        <Image
-            src="/logo.png"
-            alt="Coffee Shop Logo"
-            className="object-cover mb-4"
-            width="200"
-            height="200"
-            style={{ height: "auto", width: "auto" }}
-            priority
-        />
-        <h1 className="text-3xl font-bold hidden lg:block">Inicia Sesion</h1>
-        <p className="text-secundary hidden lg:block">Ingresa tus credenciales para poder acceder</p>
-      </div>
-      <form className=""> 
+    
+      <form action={GetForm}> 
           {/* Input UserName */}
           <label htmlFor="nickname" className={`text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 ${fonts.merriweather.className}`}>
             Nombre de usuario
           </label>
           <Input
-          type="nickname"
+          name="nickname"
+          id="nickname"
+          type="text"
           placeholder="Sakura"
           labelPlacement="outside"
           className="my-2"
@@ -54,6 +50,8 @@ export default function FormLogin() {
           Contraseña
           </label>
           <Input
+            name="password"
+            id="password"
             type="password"
             placeholder="**********"
             labelPlacement="outside"
@@ -66,8 +64,5 @@ export default function FormLogin() {
           Iniciar Sesion
         </Button>
       </form>
-    </div>
-  </article>
-</main>
     )
 }
