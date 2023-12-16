@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation";
 const links = [
     { 
         name: 'Pagina Principal', 
-        href: '/home', 
+        href: '/dashboard', 
         // icon: HostIcon 
       },
     
@@ -42,9 +42,9 @@ export default function NavLinks() {
           <Link     
             key={link.name}
             href={link.href}
-            className={`flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3
+            className={`flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-primary p-3 text-sm font-medium hover:bg-secundary/40 hover:text-white md:flex-none md:justify-start md:p-2 md:px-3
             
-              ${ pathname === link.href ? 'text-blue-600 bg-sky-100 ': '' }
+              ${ pathname === link.href ? 'text-white bg-secundary/40  ': '' }
             `}
           >
             {/* <LinkIcon className="w-6" /> */}
