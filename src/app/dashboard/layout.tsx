@@ -1,5 +1,5 @@
-import { Metadata } from "next"
 import SideNav from "../UI/dashboard/SideNav";
+import { Metadata } from "next"
 
 export const metadata: Metadata = {
     title: 'Dashboard | Sakura Coffee Shop',

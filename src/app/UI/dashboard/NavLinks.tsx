@@ -1,34 +1,8 @@
 'use client';
-import { Icons } from "@/app/plugins/Icons";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Links } from "./Data";
 
-// const { HostIcon, InvoiceIcon, UserIcon, WorkerIcon } = Icons;
-
-const links = [
-    { 
-        name: 'Pagina Principal', 
-        href: '/dashboard', 
-        // icon: HostIcon 
-      },
-    
-      { 
-        name: 'Registros', 
-        href: '/home/registrar', 
-        // icon: WorkerIcon 
-      },
-    
-      {
-        name: 'Lista de registros',
-        href: '/home/registros',
-        // icon: InvoiceIcon
-      },
-      {
-        name: 'Usuarios',
-        href: '/home/usuarios',
-        // icon: UserIcon
-      }
-    ];
 
 export default function NavLinks() {
 
@@ -36,19 +10,19 @@ export default function NavLinks() {
 
     return (
         <>
-        {links.map((link) => {
-        // const LinkIcon = link.icon;
+        {Links.map((link) => {
+        const LinkIcon = link.icon;
         return (
           <Link     
-            key={link.name}
+            key={link.title}
             href={link.href}
-            className={`flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-primary p-3 text-sm font-medium hover:bg-secundary/40 hover:text-white md:flex-none md:justify-start md:p-2 md:px-3
+            className={`flex flex-col md:flex-row h-[80px] md:h-[48px] grow items-center justify-center gap-2 rounded-md bg-primary p-3 text-sm font-medium hover:bg-secundary/40 text-zinc-700 hover:text-black md:flex-none md:justify-start md:p-2 md:px-3
             
-              ${ pathname === link.href ? 'text-white bg-secundary/40  ': '' }
+              ${ pathname === link.href ? 'bg-secundary/40 focus:text-black  ': '' }
             `}
           >
-            {/* <LinkIcon className="w-6" /> */}
-            <p className="hidden md:block">{link.name}</p>
+            <LinkIcon className="w-6 h-5 " />
+            <p className="hidden md:block">{link.title}</p>
           </Link>
         );
       })}
