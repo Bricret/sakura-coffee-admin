@@ -22,7 +22,7 @@ export default function NavLinks() {
             `}
           >
             <LinkIcon className="w-6 h-5 " />
-            <p className="hidden md:block">{link.title}</p>
+            <p className="">{link.title}</p>
           </Link>
         );
       })}

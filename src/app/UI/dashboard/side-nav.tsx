@@ -15,18 +15,11 @@ export default function SideNav() {
   return (
     <div className={`flex h-full flex-col px-3 py-4 md:px-2 border-0 md:border-r-2 border-secundary/30 bg-primary drop-shadow-2xl ${merriweather.className}`}>
       <Link
-        className="mb-2 flex h-20 items-center justify-center rounded-md p-4 md:h-32"
+        className="mb-2 hidden md:flex h-20 items-center justify-center rounded-md p-4 md:h-32"
         href="/dashboard"
       >
           <SakuraLogo />
-          <div className="block md:hidden">
-            <h1 
-              className="text-3xl font-bold text-fourth">
-                Sakura  
-                <span className="text-third"> Coffee </span> 
-                Shop
-            </h1>
-          </div>
+          
       </Link>
       <div className="flex grow flex-row justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">
         <NavLinks />
@@ -37,7 +30,7 @@ export default function SideNav() {
             startContent={<PowerIcon className="w-6 h-4" />}
             onClick={() => signOut({ callbackUrl: '/' })}
           >
-            <p className="hidden md:block">Cerrar Sesion</p>
+            <p className="">Salir</p>
           </Button>
         </form>
       </div>

@@ -8,7 +8,7 @@ const { CashRegisterIcon, DashBoardIcon, ReportIcon, InventoryIcon } = Icons;
 
 export const Links = [
     {
-        title: 'Dashboard',
+        title: 'Panel',
         icon: DashBoardIcon,
         href: '/dashboard',
     },
@@ -18,7 +18,7 @@ export const Links = [
         href: '/dashboard/caja',
     },
     {
-        title: 'Inventario',
+        title: 'Catalogo',
         icon: InventoryIcon,
         href: '/dashboard/inventario',
     },
