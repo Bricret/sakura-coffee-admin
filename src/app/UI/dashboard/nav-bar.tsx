@@ -1,6 +1,6 @@
 import React from "react";
 import { fonts } from "../Fonts";
-import UserMenu from "./UserMenu";
+import UserMenu from "./user-menu";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
@@ -18,7 +18,7 @@ export default async function NavBar() {
             <div className="flex flex-row justify-between items-center px-4 py-2 ">
                 <div className="flex flex-row items-center gap-2">
                     <div className="w-8 h-8 bg-secundary rounded-full"></div>
-                    <p className={`text-lg md:text-xl font-semibold ${ fonts.merriweather.className }`}>Bienvenido de nuevo <span className="text-secundary font-bold">{ session?.user?.name }</span> 🎉</p>
+                    <p className={`text-lg md:text-xl font-semibold ${ fonts.merriweather.className }`}>Bienvenid@ de nuevo <span className="text-secundary font-bold">{ session?.user?.name }</span> 🎉</p>
                 </div>
                 <UserMenu username={ session?.user?.name || "" } rol={ session?.user?.image || "" }  />
             </div>

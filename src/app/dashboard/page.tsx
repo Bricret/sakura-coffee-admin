@@ -1,4 +1,4 @@
-import NavBar from "../UI/dashboard/NavBar";
+import NavBar from "../UI/dashboard/nav-bar";
 
 
 export default function DashboardPage() {

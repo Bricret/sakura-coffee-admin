@@ -1,9 +1,9 @@
 'use client';
 
 import Link from "next/link";
-import NavLinks from "./NavLinks";
+import NavLinks from "./nav-links";
 import { Icons } from "@/app/plugins/Icons";
-import SakuraLogo from "./sakuraLogo";
+import SakuraLogo from "./sakura-logo";
 import { Button } from "@nextui-org/react";
 import { fonts } from "../Fonts";
 import { signOut } from "next-auth/react";

@@ -1,4 +1,4 @@
-import SideNav from "../UI/dashboard/SideNav";
+import SideNav from "../UI/dashboard/side-nav";
 import { Metadata } from "next"
 
 export const metadata: Metadata = {

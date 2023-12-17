@@ -8,3 +8,9 @@ export type User = {
     rol: number;
     status: boolean;
   };
+
+
+export interface DropdownContentProps {
+  variant: any;
+  color: any;
+}
