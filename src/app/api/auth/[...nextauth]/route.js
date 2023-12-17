@@ -34,11 +34,10 @@ export const authOptions = {
         if ( !verifyPass ) throw new Error('Contraseña incorrecta, verifique sus credenciales')
         
 
-        return {
-            id: userFind.id,
+        return {  
             name: userFind.name,
-            status: userFind.status,
-            rol_id: userFind.role_id,
+            email: userFind.status,
+            image: userFind.rol_id.toString(),
         }
 
       },
