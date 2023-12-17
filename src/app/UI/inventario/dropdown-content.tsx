@@ -3,9 +3,9 @@
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/react";
 import { DropdownContentProps } from "@/app/lib/definitions";
 import { Icons } from "@/app/plugins/Icons";
+import { filters } from "@/app/lib/data/Local-Data";
 
 const { FilterIcon } = Icons;
-
 
 export const DropdownContent = ({variant, color} : DropdownContentProps ) => (
     <Dropdown>
@@ -24,9 +24,14 @@ export const DropdownContent = ({variant, color} : DropdownContentProps ) => (
         color={color} 
         variant={variant}
       >
-        <DropdownItem key="edit">Categoria</DropdownItem>
-        <DropdownItem key="copy">Preparado en</DropdownItem>
-        <DropdownItem key="new">Por disponibilidad</DropdownItem>
+        {filters.map((filter) => (
+          <DropdownItem
+            key={filter.id}
+            className={filter.style}
+          >
+            {filter.title}
+          </DropdownItem>
+        ))}
       </DropdownMenu>
     </Dropdown>
   )

@@ -1,7 +1,7 @@
 'use client';
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Links } from "./Data";
+import { Links } from "../../lib/data/Local-Data";
 
 
 export default function NavLinks() {

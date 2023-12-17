@@ -28,3 +28,11 @@ export const Links = [
         href: '/dashboard/reportes',
     },
 ];
+
+
+const styleFilters = "hover:bg-third/40 transition-all duration-300 ease-in-out"
+export const filters = [
+  {id: 1, title: "Categoria", style: styleFilters},
+  {id: 2, title: "Preparado en", style: styleFilters},
+  {id: 3, title: "Por disponibilidad", style: styleFilters},
+]
