@@ -1,8 +1,9 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { fonts } from "../Fonts";
 import UserMenu from "./user-menu";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { CardSkeleton } from "../Skeleton";
 
 
 export default async function NavBar({ title, site } : { title: string, site?: boolean }) {
@@ -26,7 +27,9 @@ export default async function NavBar({ title, site } : { title: string, site?: b
                         } 🎉
                     </p>
                 </div>
-                <UserMenu username={ session?.user?.name || "" } rol={ session?.user?.image || "" }  />
+                <Suspense fallback={<CardSkeleton />}>
+                    <UserMenu username={ session?.user?.name || "" } rol={ session?.user?.image || "" }  />
+                </Suspense>
             </div>
         </div>
     )

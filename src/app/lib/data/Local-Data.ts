@@ -35,4 +35,32 @@ export const filters = [
   {id: 1, title: "Categoria", style: styleFilters},
   {id: 2, title: "Preparado en", style: styleFilters},
   {id: 3, title: "Por disponibilidad", style: styleFilters},
-]
+];
+
+
+export const TableColumns = [
+    {
+      key: "Nombre",
+      label: "NOMBRE",
+    },
+    {
+      key: "Precio",
+      label: "PRECIO",
+    },
+    {
+      key: "Disponibilidad",
+      label: "Disponibilidad",
+    },
+    {
+     key: "Categoria",
+     label: "CATEGORIA",
+    },
+    {
+        key: "Preparado_en",
+        label: "PREPARADO EN",
+    },
+    {
+        key: "action",
+        label: "ACCIONES",
+    }
+  ];
