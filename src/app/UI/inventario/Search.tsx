@@ -1,22 +1,29 @@
+'use client'
+import HandleParams from "@/app/lib/HandleParams";
 import { Icons } from "@/app/plugins/Icons";
 import { Input } from "@nextui-org/react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const { SearchIcon } = Icons;
 
 
-export default function Search() {
+export default function Search({ placeholder }: { placeholder: string } ) {
+    const searchParams = useSearchParams();
+    const pathname = usePathname();
+    const { replace } = useRouter();
+    const paramsName = 'query';
+
+    const handleParams = (term: any, ) => {
+        HandleParams({term, searchParams, paramsName, pathname, replace});
+    }
+
     return (
-        <div className="w-full gap-4">
-            <div className=" w-full mb-6 md:mb-0 gap-4">
-                <Input
-                type="text"
-                placeholder="Busque un producto o platillo"
-                labelPlacement="outside"
-                startContent={
-                    <SearchIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-                }
-                />
-            </div>
-        </div>
+        <Input
+            onChange={ (e) => handleParams(e.target.value) }
+            className="w-full sm:max-w-[44%]"
+            placeholder={placeholder}
+            startContent={ <SearchIcon /> }
+            defaultValue={ searchParams.get('query')?.toString() }
+          />
     )
 }

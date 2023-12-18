@@ -14,3 +14,12 @@ export interface DropdownContentProps {
   variant: any;
   color: any;
 }
+
+
+export interface HandleParamsProps {
+  term: string;
+  searchParams: any;
+  paramsName: string;
+  pathname: string;
+  replace: any;
+}
