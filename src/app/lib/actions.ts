@@ -37,5 +37,3 @@ export async function createUser(formData: FormData) {
        return { success: false, message: 'Usuario no creado correctamente' }
     }
 }
-
-

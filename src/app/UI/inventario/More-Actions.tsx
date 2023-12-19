@@ -1,4 +1,5 @@
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/react"
+'use client';
+import { Button, Chip, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/react"
 import { Icons } from "@/app/plugins/Icons";
 
 const { VerticalDotsIcon } = Icons;
@@ -19,4 +20,11 @@ export const Action = (
       </DropdownMenu>
     </Dropdown>
   </div>  
-  )
+  );
+
+
+export const Disponibilidad = ({disponibilidad}: {disponibilidad: string}) => (
+    <Chip className="capitalize" color={disponibilidad === 'Disponible' ? "success" : "danger"} size="sm" variant="flat">
+      {disponibilidad}
+  </Chip>
+  );

@@ -40,23 +40,19 @@ export const filters = [
 
 export const TableColumns = [
     {
-      key: "Nombre",
+      key: "nombre",
       label: "NOMBRE",
     },
     {
-      key: "Precio",
+      key: "precio",
       label: "PRECIO",
     },
     {
-      key: "Disponibilidad",
-      label: "Disponibilidad",
+      key: "disponibilidad",
+      label: "DISPONIBILIDAD",
     },
     {
-     key: "Categoria",
-     label: "CATEGORIA",
-    },
-    {
-        key: "Preparado_en",
+        key: "preparado_en",
         label: "PREPARADO EN",
     },
     {

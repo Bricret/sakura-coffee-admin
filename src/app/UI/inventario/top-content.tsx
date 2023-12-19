@@ -4,7 +4,7 @@ import RightButton from "./right-button";
 import InfoTable from "./Info-Table";
 
 
-export default function TopContent() {
+export default function TopContent({ totalProducts } : { totalProducts: any }) {
 
 
 return (
@@ -13,7 +13,7 @@ return (
             <Search placeholder="busca por nombre..."/>
             <RightButton />
         </div>
-        <InfoTable />
+        <InfoTable TotalProducts={ totalProducts }/>
     </div>
 )
 
