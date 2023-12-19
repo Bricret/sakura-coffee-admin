@@ -1,12 +1,22 @@
 'use client'
 import { TableColumns } from "@/app/lib/data/Local-Data";
 import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, getKeyValue} from "@nextui-org/react";
+import { Action, Disponibilidad } from "./More-Actions";
 
 export default function TableInventory({ products } : { products: any } ) {
 
   if (!products) return <div>cargando...</div>; // TODO: add a loading component
 
-  console.log(products);
+  const NewProducts = products.map((product: any) => {
+    return {
+      id: product.id,
+      nombre: product.nombre,
+      precio: product.precio,
+      preparado_en: product.preparado_en,
+      disponibilidad: Disponibilidad({disponibilidad: product.disponibilidad}),
+      action: Action,
+    };
+  });
 
   return (
     <div className="flex flex-col gap-3">
@@ -20,10 +30,10 @@ export default function TableInventory({ products } : { products: any } ) {
           tr: "hover:bg-secundary/80 focus:bg-secundary/80",
         }}
       >
-        <TableHeader columns={TableColumns}>
+        <TableHeader columns={ TableColumns }>
           {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
         </TableHeader>
-        <TableBody items={products}>
+        <TableBody items={ NewProducts }> 
           {(item : any) => (
             <TableRow key={item.id}>
               {(columnKey) => <TableCell>{getKeyValue(item, columnKey)}</TableCell>}

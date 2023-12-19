@@ -35,3 +35,12 @@ export async function FetchFilteredInventory(
         throw new Error(error);
     }
 }
+
+export async function FetchAllInventory() {
+    try {
+        const products = await prisma.productos.findMany();
+        return products;
+    } catch (error : any) {
+        throw new Error(error);
+    }
+}

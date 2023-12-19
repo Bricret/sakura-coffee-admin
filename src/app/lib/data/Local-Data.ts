@@ -45,7 +45,7 @@ export const TableColumns = [
     },
     {
       key: "precio",
-      label: "PRECIO",
+      label: "PRECIO (C$)",
     },
     {
       key: "disponibilidad",
@@ -58,5 +58,5 @@ export const TableColumns = [
     {
         key: "action",
         label: "ACCIONES",
-    }
+    },
   ];

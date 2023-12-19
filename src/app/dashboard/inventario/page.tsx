@@ -23,7 +23,7 @@ export default async function InventoryPage({ searchParams } : { searchParams?: 
     return (
         <>
         <NavBar title={"Catalogo"}/>
-        <TopContent totalProducts={ products }/>
+        <TopContent />
         <TableInventory products={ products }/>
         </>
     )

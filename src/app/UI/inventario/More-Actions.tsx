@@ -24,7 +24,7 @@ export const Action = (
 
 
 export const Disponibilidad = ({disponibilidad}: {disponibilidad: string}) => (
-    <Chip className="capitalize" color={disponibilidad === 'Disponible' ? "success" : "danger"} size="sm" variant="flat">
+    <Chip className="capitalize" color={disponibilidad === 'disponible' ? "success" : "danger"} size="sm" variant="flat">
       {disponibilidad}
   </Chip>
   );
