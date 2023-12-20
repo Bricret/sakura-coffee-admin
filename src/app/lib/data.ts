@@ -12,6 +12,16 @@ export async function FetchRols() {
     }
 }
 
+export async function FetchCategorys() {
+    try {
+        const data = await prisma.categorias.findMany();
+        return data;
+    } catch (error) {
+        console.log('Error en la base de datos');
+
+    }
+}
+
 
 export async function FetchFilteredInventory(
     query : string,

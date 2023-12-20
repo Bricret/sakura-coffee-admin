@@ -20,3 +20,18 @@ export const LoginUserSchema = z.object({
     username: z.string(),
     password: z.string()
 });
+
+export const CreateProductSchema = z.object({
+    id: z.string(),
+    nombre: z.string(),
+    descripcion: z.string(),
+    precio: z.string(),
+    preparado_en: z.string(),
+    categoria: z.string(),
+    status: z.boolean()
+});
+
+export const CreateProductFormSchema = CreateProductSchema.omit({
+    id: true,
+    status: true
+});
