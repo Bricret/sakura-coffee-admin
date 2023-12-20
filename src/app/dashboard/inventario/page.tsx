@@ -14,7 +14,7 @@ export default async function InventoryPage({ searchParams } : { searchParams?: 
     page?: string
 } }) {
 
-    const itemsForPage = Number(searchParams?.dataForPage) || 5;
+    const itemsForPage = Number(searchParams?.dataForPage) || 10;
     const query = searchParams?.query || "";
     const currentPage = Number(searchParams?.page) || 1;
 
