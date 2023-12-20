@@ -7,10 +7,10 @@ const { VerticalDotsIcon } = Icons;
 
 export const Action = (
     <div className="relative flex justify-center items-center gap-2">
-    <Dropdown className="bg-background border-1 border-default-200" aria-label="Menú de opciones">
+    <Dropdown className=" border-1 border-default-200" aria-label="Menú de opciones">
       <DropdownTrigger aria-label="Menú de opciones">
-        <Button isIconOnly radius="full" size="lg" variant="light" aria-label="Menú de opciones">
-          <VerticalDotsIcon className="text-default-400" />
+        <Button isIconOnly radius="full" size="lg"  variant="light" aria-label="Menú de opciones">
+          <VerticalDotsIcon className="text-black" />
         </Button>
       </DropdownTrigger>
       <DropdownMenu aria-label="Menú de opciones">

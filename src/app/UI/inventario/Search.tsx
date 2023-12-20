@@ -3,8 +3,10 @@ import HandleParams from "@/app/lib/HandleParams";
 import { Icons } from "@/app/plugins/Icons";
 import { Input } from "@nextui-org/react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useDebouncedCallback } from "use-debounce";
 
 const { SearchIcon } = Icons;
+const WAIT_INTERVAL = 350;
 
 
 export default function Search({ placeholder }: { placeholder: string } ) {
@@ -13,9 +15,9 @@ export default function Search({ placeholder }: { placeholder: string } ) {
     const { replace } = useRouter();
     const paramsName = 'query';
 
-    const handleParams = (term: any, ) => {
+    const handleParams = useDebouncedCallback((term: any, ) => {
         HandleParams({term, searchParams, paramsName, pathname, replace});
-    }
+    }, WAIT_INTERVAL);
 
     return (
         <Input
