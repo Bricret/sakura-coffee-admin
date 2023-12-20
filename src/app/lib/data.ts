@@ -44,3 +44,15 @@ export async function FetchAllInventory() {
         throw new Error(error);
     }
 }
+
+export async function FetchInventoryPageCount(
+    itemsPerPage : number,
+) {
+    try {
+        const productsCount = await prisma.productos.count();
+        const pageCount = Math.ceil(productsCount / itemsPerPage);
+        return pageCount;
+    } catch (error : any) {
+        throw new Error(error);
+    }
+}

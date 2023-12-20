@@ -2,10 +2,12 @@
 import { TableColumns } from "@/app/lib/data/Local-Data";
 import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, getKeyValue} from "@nextui-org/react";
 import { Action, Disponibilidad } from "./More-Actions";
+import Paginations from "./Pagination";
 
-export default function TableInventory({ products } : { products: any } ) {
+export default function TableInventory({ products, TotalPage } : { products: any, TotalPage: number } ) {
 
   if (!products) return <div>cargando...</div>; // TODO: add a loading component
+  if (!TotalPage) return <div>cargando...</div>; // TODO: add a loading component
 
   const NewProducts = products.map((product: any) => {
     return {
@@ -41,6 +43,8 @@ export default function TableInventory({ products } : { products: any } ) {
           )}
         </TableBody>
       </Table>
+
+      <Paginations totalPages={TotalPage} />
     </div>
   );
 }

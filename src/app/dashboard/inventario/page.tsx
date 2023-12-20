@@ -1,7 +1,7 @@
 import NavBar from "@/app/UI/dashboard/nav-bar";
 import TableInventory from "@/app/UI/inventario/Table-Inventory";
 import TopContent from "@/app/UI/inventario/top-content";
-import { FetchFilteredInventory } from "@/app/lib/data";
+import { FetchFilteredInventory, FetchInventoryPageCount } from "@/app/lib/data";
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -10,21 +10,22 @@ export const metadata: Metadata = {
 
 export default async function InventoryPage({ searchParams } : { searchParams?: {
     query?: string,
-    dataForPage?: string
+    dataForPage?: string,
+    page?: string
 } }) {
 
     const itemsForPage = Number(searchParams?.dataForPage) || 5;
     const query = searchParams?.query || "";
-    const currentPage = 1;
+    const currentPage = Number(searchParams?.page) || 1;
 
     const products = await FetchFilteredInventory(query, itemsForPage, currentPage);
-    console.log('antes del props', products);
+    const TotalPage = await FetchInventoryPageCount(itemsForPage);
 
     return (
         <>
         <NavBar title={"Catalogo"}/>
         <TopContent />
-        <TableInventory products={ products }/>
+        <TableInventory products={ products } TotalPage={ TotalPage }/>
         </>
     )
 }

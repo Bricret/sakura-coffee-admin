@@ -11,5 +11,7 @@ export default function HandleParams({ term, searchParams, paramsName, pathname,
         params.delete(paramsName);
     }
 
+    params.set('page', '1');
+
     replace(`${pathname}?${params.toString()}`)
 }
