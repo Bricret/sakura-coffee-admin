@@ -16,7 +16,7 @@ export default function TableInventory({ products, TotalPage } : { products: any
       precio: product.precio,
       preparado_en: product.preparado_en,
       disponibilidad: Disponibilidad({disponibilidad: product.disponibilidad}),
-      action: Action,
+      action: Action({id: product.id}),
     };
   });
 

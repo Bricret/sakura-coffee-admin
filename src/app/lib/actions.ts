@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { IncriptPass } from "../plugins/incript/argon2";
-import { CreateProductFormSchema, CreateUserFormSchema } from "../plugins/zod";
+import { CreateProductFormSchema, CreateUserFormSchema, UpdateProductFormSchema } from "../plugins/zod";
 import prisma from "./db";
 import { redirect } from "next/navigation";
 
@@ -70,4 +70,39 @@ export async function createProduct(formData: FormData) {
        return { success: false, message: 'Producto no fue creado correctamente' }
     }
 
+}
+
+export async function updateProduct(formData: FormData, id: string) {
+    const rawFormData = Object.fromEntries(formData.entries());
+    const { nombre, descripcion, precio, preparado_en, categoria} = UpdateProductFormSchema.parse(rawFormData);
+
+    const productFound = await prisma.productos.findFirst({
+        where: {
+            nombre: nombre
+        }
+    });
+
+    if (productFound) {
+        return { success: false, message: 'Producto ya existe en la base de datos' }
+    };
+
+    try {
+        await prisma.productos.update({
+            where: {
+                id: id
+            },
+            data: {
+                nombre: nombre,
+                descripcion: descripcion,
+                precio: Number(precio),
+                preparado_en: preparado_en,
+                categoria_id: categoria,
+            }
+        });
+        revalidatePath('/dashboard/inventario');
+        return { success: true, message: 'Producto actualizado correctamente' }
+    } catch ( error : any ) {
+       console.log('error', error);
+       return { success: false, message: 'Producto no fue actualizado correctamente' }
+    }
 }

@@ -8,7 +8,6 @@ export async function FetchRols() {
         return data;
     } catch (error) {
         console.log('Error en la base de datos');
-
     }
 }
 
@@ -62,6 +61,19 @@ export async function FetchInventoryPageCount(
         const productsCount = await prisma.productos.count();
         const pageCount = Math.ceil(productsCount / itemsPerPage);
         return pageCount;
+    } catch (error : any) {
+        throw new Error(error);
+    }
+}
+
+export async function FetchUnicProduct(id : number) {
+    try {
+        const product = await prisma.productos.findFirst({
+            where: {
+                id: id
+            }
+        });
+        return product;
     } catch (error : any) {
         throw new Error(error);
     }

@@ -5,7 +5,7 @@ import { Icons } from "@/app/plugins/Icons";
 const { VerticalDotsIcon } = Icons;
 
 
-export const Action = (
+export const Action = ({ id } : { id : string }) => (
     <div className="relative flex justify-center items-center gap-2">
     <Dropdown className=" border-1 border-default-200" aria-label="Menú de opciones">
       <DropdownTrigger aria-label="Menú de opciones">
@@ -15,7 +15,7 @@ export const Action = (
       </DropdownTrigger>
       <DropdownMenu aria-label="Menú de opciones">
         <DropdownItem aria-label="Ver mas">Ver mas</DropdownItem>
-        <DropdownItem aria-label="Editar">Editar</DropdownItem>
+        <DropdownItem aria-label="Editar" href={`/dashboard/inventario/${ id }`}>Editar</DropdownItem>
         <DropdownItem aria-label="Borrar">Borrar</DropdownItem>
       </DropdownMenu>
     </Dropdown>

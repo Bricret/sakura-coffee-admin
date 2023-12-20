@@ -1,18 +1,21 @@
 'use client'
 import { Toaster } from "sonner";
 import { Button } from "../../auth/button";
-import { createProduct } from "@/app/lib/actions";
+import { createProduct, updateProduct } from "@/app/lib/actions";
 import { ErrorToast, SuccessToast } from "@/app/plugins/sonner";
 import { redirect } from "next/navigation";
 
 const label = "font-bold text-lg mb-2"
 
-export default function ProductForm({ categorias } : { categorias: any }) {
-
-    if(!categorias) return <p>cargando...</p>
+export default function ProductForm({ categorias, ProductData } : { categorias?: any, ProductData?: any }) {
 
     async function ProductAction( formData: FormData ) {
-        const result = await createProduct(formData);
+        let result;
+        if( ProductData ) {
+        result = await updateProduct(formData, ProductData.id);
+        } else {
+        result = await createProduct(formData);
+        }
         if( result?.success === false ) {
             ErrorToast(result.message);
         } else {
@@ -31,6 +34,7 @@ export default function ProductForm({ categorias } : { categorias: any }) {
                     name="nombre"
                     type="text"
                     required
+                    defaultValue={ ProductData?.nombre || ''}
                     id="nombre"
                 />
             </div>
@@ -42,6 +46,7 @@ export default function ProductForm({ categorias } : { categorias: any }) {
                     name="descripcion"
                     type="text"
                     required
+                    defaultValue={ ProductData?.descripcion || ''}
                     id="descripcion"
                 />
             </div>
@@ -55,6 +60,7 @@ export default function ProductForm({ categorias } : { categorias: any }) {
                 min="0"
                 step="0.1"
                 id="precio"
+                defaultValue={ ProductData?.precio || ''}
                 required
             />
             </div>
@@ -63,7 +69,7 @@ export default function ProductForm({ categorias } : { categorias: any }) {
                 <select 
                     name="preparado_en" 
                     id="preparado_en"
-                    defaultValue={1}
+                    defaultValue={ ProductData?.preparado_en || ''}
                     required
                     className="border-2 border-secundary/70 bg-inherit p-3 rounded-xl" 
                     >
@@ -77,10 +83,11 @@ export default function ProductForm({ categorias } : { categorias: any }) {
                     name="categoria" 
                     id="categoria"
                     required
+                    defaultValue={ ProductData?.categoria_id || ''}
                     className="border-2 border-secundary/70 bg-inherit p-3 rounded-xl" 
                     >
                     {
-                        categorias.map((categoria: any) => (
+                        categorias?.map((categoria: any) => (
                             <option value={categoria.id} key={categoria.id}>{categoria.nombre}</option>
                         ))
                     }
