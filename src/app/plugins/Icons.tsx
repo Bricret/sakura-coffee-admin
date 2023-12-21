@@ -3,7 +3,7 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import { FaPowerOff, FaCashRegister, FaSearch, FaFilter, FaAngleLeft, FaAngleRight   } from "react-icons/fa";
 import { MdDashboard, MdOutlineInventory } from "react-icons/md";
 import { TbReportSearch } from "react-icons/tb";
-import { FaEllipsisVertical } from "react-icons/fa6";
+import { FaEllipsisVertical, FaPlus  } from "react-icons/fa6";
 
 
 const UserIcon = FaUserAlt;
@@ -18,6 +18,7 @@ const FilterIcon = FaFilter;
 const VerticalDotsIcon = FaEllipsisVertical;
 const ArrowLeftIcon = FaAngleLeft;
 const ArrowRightIcon = FaAngleRight;
+const PlusIcon = FaPlus;
 
 
 export const Icons = {
@@ -33,5 +34,5 @@ export const Icons = {
     VerticalDotsIcon,
     ArrowLeftIcon,
     ArrowRightIcon,
-
+    PlusIcon,
 };

@@ -82,27 +82,42 @@ export async function updateProduct(formData: FormData, id: string) {
         }
     });
 
-    if (productFound) {
+    if(!productFound || productFound.id === id) {
+        try {
+            await prisma.productos.update({
+                where: {
+                    id: id
+                },
+                data: {
+                    nombre: nombre,
+                    descripcion: descripcion,
+                    precio: Number(precio),
+                    preparado_en: preparado_en,
+                    categoria_id: categoria,
+                }
+            });
+            revalidatePath('/dashboard/inventario');
+            return { success: true, message: 'Producto actualizado correctamente' }
+        } catch ( error : any ) {
+           console.log('error', error);
+           return { success: false, message: 'Producto no fue actualizado correctamente' }
+        }
+    } else {
         return { success: false, message: 'Producto ya existe en la base de datos' }
-    };
+    }
+}
 
+export async function deleteProduct( id: string ) {
     try {
-        await prisma.productos.update({
+        await prisma.productos.delete({
             where: {
-                id: id
-            },
-            data: {
-                nombre: nombre,
-                descripcion: descripcion,
-                precio: Number(precio),
-                preparado_en: preparado_en,
-                categoria_id: categoria,
+                id: id.toString()
             }
         });
         revalidatePath('/dashboard/inventario');
-        return { success: true, message: 'Producto actualizado correctamente' }
+        return { success: true, message: 'Producto eliminado correctamente' }
     } catch ( error : any ) {
        console.log('error', error);
-       return { success: false, message: 'Producto no fue actualizado correctamente' }
+       return { success: false, message: 'Producto no fue eliminado correctamente' }
     }
 }

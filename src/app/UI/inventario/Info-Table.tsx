@@ -23,7 +23,7 @@ export default function InfoTable({ allProducts } : { allProducts: any }) {
                 id="cars"
                 name="cars"
                 onChange={ (e) => handleParams(e.target.value) }
-                defaultValue={ searchParams.get('dataForPage')?.toString() || 10 }
+                defaultValue={ searchParams.get('dataForPage')?.toString() || 5 }
             >
                 <option value="5">5</option>
                 <option value="10">10</option>

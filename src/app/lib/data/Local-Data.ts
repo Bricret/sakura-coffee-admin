@@ -53,10 +53,10 @@ export const TableColumns = [
     },
     {
         key: "preparado_en",
-        label: "PREPARADO EN",
+        label: "PREPARADO",
     },
     {
         key: "action",
-        label: "ACCIONES",
+        label: "MAS",
     },
   ];

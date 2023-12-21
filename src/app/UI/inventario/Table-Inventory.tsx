@@ -4,7 +4,7 @@ import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, getKeyV
 import { Action, Disponibilidad } from "./More-Actions";
 import Paginations from "./Pagination";
 
-export default function TableInventory({ products, TotalPage } : { products: any, TotalPage: number } ) {
+export default function TableInventory({ products, TotalPage } : { products: any, TotalPage?: number } ) {
 
   if (!products) return <div>cargando...</div>; // TODO: add a loading component
   if (!TotalPage) return <div>cargando...</div>; // TODO: add a loading component
@@ -15,8 +15,8 @@ export default function TableInventory({ products, TotalPage } : { products: any
       nombre: product.nombre,
       precio: product.precio,
       preparado_en: product.preparado_en,
-      disponibilidad: Disponibilidad({disponibilidad: product.disponibilidad}),
-      action: Action({id: product.id}),
+      disponibilidad: <Disponibilidad disponibilidad={product.disponibilidad} />,
+      action: <Action id={product.id} product={product} />,
     };
   });
 

@@ -23,3 +23,13 @@ export interface HandleParamsProps {
   pathname: string;
   replace: any;
 }
+
+
+export interface DialogProps {
+  isOpen: boolean;
+  onClose: () => void;
+  title: string;
+  body: string | null;
+  type: string;
+  id: string;
+}
