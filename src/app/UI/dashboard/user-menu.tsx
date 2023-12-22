@@ -8,7 +8,7 @@ export default function UserMenu({ username, rol }: { username: string, rol: str
         <div className=" items-center gap-2">
                     <Dropdown placement="bottom-start">
                         <DropdownTrigger>
-                            <div className="flex flex-row gap-2 items-center cursor-pointer mr-8">
+                            <div className="flex flex-row gap-2 items-center cursor-pointer md:mr-0">
                             <Image
                                 src='/Coffee-Avatar.png'
                                 alt="Picture of the author"

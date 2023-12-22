@@ -24,15 +24,13 @@ export default function SideNav() {
       <div className="flex grow flex-row justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">
         <NavLinks />
         <div className="hidden h-auto w-full grow rounded-md bg-primary md:block"></div>
-        <form>
-          <Button 
-            className={`flex flex-col md:flex-row h-[80px] md:h-[48px] w-full grow items-center justify-center gap-2 rounded-md bg-primary p-2 text-sm font-medium hover:bg-red-600/40 hover:text-red-700 md:flex-none md:justify-start md:p-2 md:px-3 text-zinc-700`}
+        <Button 
+            className={`flex flex-col md:flex-row h-[80px] md:h-[48px] grow items-center justify-center gap-2 rounded-md bg-primary p-3 text-sm font-medium hover:bg-secundary/40 text-zinc-700 hover:text-black md:flex-none md:justify-start md:p-2 md:px-3 transition-all duration-300 ease-in-out `}
             startContent={<PowerIcon className="w-6 h-4" />}
             onClick={() => signOut({ callbackUrl: '/' })}
           >
             <p className="hidden md:block">Salir</p>
           </Button>
-        </form>
       </div>
     </div>
   )

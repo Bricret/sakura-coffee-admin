@@ -14,7 +14,7 @@ export default async function NavBar({ title, site } : { title: string, site?: b
 
     return (
         <div >
-            <div className="flex flex-row justify-between items-center px-4 py-2 mb-10">
+            <div className="flex flex-row justify-between items-center  py-2 mb-10">
                 <div className="flex flex-row items-center gap-2">
                     <div className="w-8 h-8 bg-secundary rounded-full"></div>
                     <p 
