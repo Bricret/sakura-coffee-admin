@@ -9,6 +9,7 @@ export const  Dialog = ({ isOpen, onClose, title, body, type, id } : DialogProps
     await deleteProduct(id);
     onClose();
   };
+  
   return (
     <Modal isOpen={isOpen} onOpenChange={onClose} size="2xl" backdrop="blur">
       <ModalContent>

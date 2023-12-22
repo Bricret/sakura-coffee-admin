@@ -6,7 +6,7 @@ import Paginations from "./Pagination";
 
 export default function TableInventory({ products, TotalPage } : { products: any, TotalPage?: number } ) {
 
-  if (!products) return <div>cargando...</div>; // TODO: add a loading component
+  if (!products) return <div>Aqui va el skeleton</div>; // TODO: add a loading component
   if (!TotalPage) return <div>cargando...</div>; // TODO: add a loading component
 
   const NewProducts = products.map((product: any) => {

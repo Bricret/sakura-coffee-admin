@@ -29,7 +29,7 @@ export interface DialogProps {
   isOpen: boolean;
   onClose: () => void;
   title: string;
-  body: string | null;
+  body: any;
   type: string;
   id: string;
 }

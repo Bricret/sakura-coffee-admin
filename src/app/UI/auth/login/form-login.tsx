@@ -18,7 +18,7 @@ export default function FormLogin() {
     
       <form action={GetForm}> 
           {/* Input UserName */}
-          <label htmlFor="nickname" className={`text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 ${fonts.merriweather.className}`}>
+          <label htmlFor="nickname" className={`text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 w-auto h-auto ${fonts.merriweather.className}`}>
             Nombre de usuario
           </label>
           <Input

@@ -4,11 +4,13 @@ import UserMenu from "./user-menu";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { CardSkeleton } from "../Skeleton";
+import { FetchUnicRols } from "@/app/lib/data";
 
 
 export default async function NavBar({ title, site } : { title: string, site?: boolean }) {
 
     const session = await getServerSession(authOptions);
+    const Rol = await FetchUnicRols(Number(session?.user?.image?.toString()));
 
     return (
         <div >
@@ -16,7 +18,7 @@ export default async function NavBar({ title, site } : { title: string, site?: b
                 <div className="flex flex-row items-center gap-2">
                     <div className="w-8 h-8 bg-secundary rounded-full"></div>
                     <p 
-                        className={`text-lg md:text-xl font-semibold ${ fonts.merriweather.className }`}
+                        className={`text-lg md:text-xl font-semibold cursor-default ${ fonts.merriweather.className }`}
                     >
                         {title}
                         {
@@ -28,7 +30,7 @@ export default async function NavBar({ title, site } : { title: string, site?: b
                     </p>
                 </div>
                 <Suspense fallback={<CardSkeleton />}>
-                    <UserMenu username={ session?.user?.name || "" } rol={ session?.user?.image || "" }  />
+                    <UserMenu username={ session?.user?.name || "" } rol={ Rol.nombre || "" }  />
                 </Suspense>
             </div>
         </div>

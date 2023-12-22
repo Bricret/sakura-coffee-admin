@@ -11,6 +11,20 @@ export async function FetchRols() {
     }
 }
 
+export async function FetchUnicRols(id : number) {
+    try {
+        const data = await prisma.rols.findFirst({
+            where: {
+                id: id
+            }
+        });
+        return data;
+    } catch (error) {
+        console.log('Error en la base de datos');
+    }
+}
+
+
 export async function FetchCategorys() {
     try {
         const data = await prisma.categorias.findMany();
