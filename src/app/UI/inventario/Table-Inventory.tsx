@@ -1,25 +1,11 @@
-'use client'
+'use client';
+
+import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, getKeyValue } from "@nextui-org/react";
 import { TableColumns } from "@/app/lib/data/Local-Data";
-import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, getKeyValue} from "@nextui-org/react";
-import { Action, Disponibilidad } from "./More-Actions";
-import Paginations from "./Pagination";
 
-export default function TableInventory({ products, TotalPage } : { products?: any, TotalPage?: any } ) {
-
-  const NewProducts = products.map((product: any) => {
-    return {
-      id: product.id,
-      nombre: product.nombre,
-      precio: product.precio,
-      preparado_en: product.preparado_en,
-      disponibilidad: <Disponibilidad disponibilidad={product.disponibilidad} />,
-      action: <Action id={product.id} product={product} />,
-    };
-  });
-
-  return (
-    <div className="flex flex-col gap-3">
-      <Table 
+export default function TableInventory({ NewProducts } : { NewProducts?: any }) {
+    return (
+        <Table 
         aria-label="Table of inventory"
         selectionMode="multiple"
         selectionBehavior={'replace'}
@@ -40,8 +26,5 @@ export default function TableInventory({ products, TotalPage } : { products?: an
           )}
         </TableBody>
       </Table>
-
-      <Paginations totalPages={TotalPage} />
-    </div>
-  );
+    )
 }
