@@ -6,6 +6,7 @@ export const config = {
         '/registerUser',
         '/dashboard/caja',
         '/dashboard/inventario',
+        '/dashboard/inventario/newProduct',
         '/dashboard/reportes',
     ],
     

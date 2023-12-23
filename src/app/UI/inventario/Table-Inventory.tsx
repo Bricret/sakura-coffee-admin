@@ -4,10 +4,7 @@ import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, getKeyV
 import { Action, Disponibilidad } from "./More-Actions";
 import Paginations from "./Pagination";
 
-export default function TableInventory({ products, TotalPage } : { products: any, TotalPage?: number } ) {
-
-  if (!products) return <div>Aqui va el skeleton</div>; // TODO: add a loading component
-  if (!TotalPage) return <div>cargando...</div>; // TODO: add a loading component
+export default function TableInventory({ products, TotalPage } : { products?: any, TotalPage?: any } ) {
 
   const NewProducts = products.map((product: any) => {
     return {

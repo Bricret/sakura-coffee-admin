@@ -22,7 +22,7 @@ export default function Search({ placeholder }: { placeholder: string } ) {
     return (
         <Input
             onChange={ (e) => handleParams(e.target.value) }
-            className="w-full sm:max-w-[44%]"
+            className="w-full sm:max-w-[66%]"
             placeholder={placeholder}
             startContent={ <SearchIcon /> }
             defaultValue={ searchParams.get('query')?.toString() }

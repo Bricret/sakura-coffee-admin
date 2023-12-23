@@ -1,8 +1,10 @@
+import { LatestInvoicesSkeleton } from "@/app/UI/Skeleton";
 import NavBar from "@/app/UI/dashboard/nav-bar";
 import TableInventory from "@/app/UI/inventario/Table-Inventory";
 import TopContent from "@/app/UI/inventario/top-content";
 import { FetchFilteredInventory, FetchInventoryPageCount } from "@/app/lib/data";
 import { Metadata } from "next"
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
     title: 'Inventario | Sakura Coffee Shop',
@@ -25,7 +27,9 @@ export default async function InventoryPage({ searchParams } : { searchParams?: 
         <>
         <NavBar title={"Catalogo"}/>
         <TopContent />
-        <TableInventory products={ products } TotalPage={ TotalPage }/>
+        <Suspense fallback={<LatestInvoicesSkeleton />}>
+            <TableInventory products={ products } TotalPage={ TotalPage }/>
+        </Suspense>
         </>
     )
 }
