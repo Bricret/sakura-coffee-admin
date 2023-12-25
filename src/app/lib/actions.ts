@@ -4,7 +4,6 @@ import { revalidatePath } from "next/cache";
 import { IncriptPass } from "../plugins/incript/argon2";
 import { CreateProductFormSchema, CreateUserFormSchema, UpdateProductFormSchema } from "../plugins/zod";
 import prisma from "./db";
-import { redirect } from "next/navigation";
 
 export async function createUser(formData: FormData) {
     const { userName, password, rol } = CreateUserFormSchema.parse({
@@ -43,7 +42,7 @@ export async function createUser(formData: FormData) {
 
 export async function createProduct(formData: FormData) {
     const rawFormData = Object.fromEntries(formData.entries());
-    const { nombre, descripcion, precio, preparado_en, categoria } = CreateProductFormSchema.parse(rawFormData);
+    const { nombre, descripcion, precio, preparado_en, categoria, disponibilidad } = CreateProductFormSchema.parse(rawFormData);
     const productFound = await prisma.productos.findFirst({
         where: {
             nombre: nombre
@@ -60,7 +59,7 @@ export async function createProduct(formData: FormData) {
                 precio: Number(precio),
                 preparado_en: preparado_en,
                 categoria_id: categoria,
-                disponibilidad: 'disponible'
+                disponibilidad: disponibilidad
             }
         });
         revalidatePath('/dashboard/inventario');
@@ -74,7 +73,7 @@ export async function createProduct(formData: FormData) {
 
 export async function updateProduct(formData: FormData, id: string) {
     const rawFormData = Object.fromEntries(formData.entries());
-    const { nombre, descripcion, precio, preparado_en, categoria} = UpdateProductFormSchema.parse(rawFormData);
+    const { nombre, descripcion, precio, preparado_en, categoria, disponibilidad } = UpdateProductFormSchema.parse(rawFormData);
 
     const productFound = await prisma.productos.findFirst({
         where: {
@@ -94,6 +93,7 @@ export async function updateProduct(formData: FormData, id: string) {
                     precio: Number(precio),
                     preparado_en: preparado_en,
                     categoria_id: categoria,
+                    disponibilidad: disponibilidad
                 }
             });
             revalidatePath('/dashboard/inventario');

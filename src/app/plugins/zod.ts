@@ -28,12 +28,11 @@ export const CreateProductSchema = z.object({
     precio: z.string(),
     preparado_en: z.string(),
     categoria: z.string(),
-    status: z.boolean()
+    disponibilidad: z.string()
 });
 
 export const CreateProductFormSchema = CreateProductSchema.omit({
     id: true,
-    status: true
 });
 
 export const UpdateProductSchema = z.object({
@@ -43,10 +42,9 @@ export const UpdateProductSchema = z.object({
     precio: z.string(),
     preparado_en: z.string(),
     categoria: z.string(),
-    status: z.boolean()
+    disponibilidad: z.string()
 });
 
 export const UpdateProductFormSchema = UpdateProductSchema.omit({
     id: true,
-    status: true
 });

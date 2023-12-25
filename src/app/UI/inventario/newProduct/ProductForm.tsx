@@ -77,7 +77,7 @@ export default function ProductForm({ categorias, ProductData } : { categorias?:
                     <option value={'barra'}>Barra</option>
                 </select>
             </div>
-            <div className="flex flex-col w-full md:w-10/12 ">
+            <div className="flex flex-col w-full md:w-2/5 ">
                 <label htmlFor="categoria" className={ label }>Categoria</label>
                 <select 
                     name="categoria" 
@@ -93,7 +93,20 @@ export default function ProductForm({ categorias, ProductData } : { categorias?:
                     }
                 </select>
             </div>
-            <div className="flex flex-col w-1/5 md:w-40">
+            <div className="flex flex-col w-full md:w-2/5 ">
+                <label htmlFor="disponibilidad" className={ label }>Disponibilidad</label>
+                <select 
+                    name="disponibilidad" 
+                    id="disponibilidad"
+                    required
+                    defaultValue={ ProductData?.disponibilidad || ''}
+                    className="border-2 border-secundary/70 bg-inherit p-3 rounded-xl" 
+                    >
+                    <option value={'disponible'}>Disponible</option>
+                    <option value={'agotado'}>Agotado</option>
+                </select>
+            </div>
+            <div className="flex flex-col md:w-48 mt-4">
                 <Button>Guardar</Button>
             </div>
             <Toaster 
