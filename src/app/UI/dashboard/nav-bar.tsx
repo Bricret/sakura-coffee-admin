@@ -5,6 +5,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { CardSkeleton } from "../Skeleton";
 import { FetchUnicRols } from "@/app/lib/data";
+import Image from "next/image";
 
 
 export default async function NavBar({ title, site } : { title: string, site?: boolean }) {
@@ -14,11 +15,11 @@ export default async function NavBar({ title, site } : { title: string, site?: b
 
     return (
         <div >
-            <div className="flex flex-row justify-between items-center  py-2 mb-10">
+            <div className="flex flex-row justify-between items-center py-2 mb-10 mr-7 md:mr-0">
                 <div className="flex flex-row items-center gap-2">
-                    <div className="w-8 h-8 bg-secundary rounded-full"></div>
+                    <div className="w-8 h-8 flex flex-wrap bg-secundary rounded-full"></div>
                     <p 
-                        className={`text-lg md:text-xl font-semibold cursor-default ${ fonts.merriweather.className }`}
+                        className={`text-sm md:text-xl font-semibold cursor-default ${ fonts.merriweather.className }`}
                     >
                         {title}
                         {
@@ -26,8 +27,15 @@ export default async function NavBar({ title, site } : { title: string, site?: b
                             <span className="text-secundary font-bold">{ session?.user?.name }</span>
                             : null
                         
-                        } 🎉
+                        } 
                     </p>
+                    <Image 
+                        src="/logo-unic.png"
+                        width={ 60 }
+                        height={ 60 }
+                        alt="Logo"
+                        className="object-contain hidden md:block w-auto h-auto"
+                    />
                 </div>
                 <Suspense fallback={<CardSkeleton />}>
                     <UserMenu username={ session?.user?.name || "" } rol={ Rol.nombre || "" }  />

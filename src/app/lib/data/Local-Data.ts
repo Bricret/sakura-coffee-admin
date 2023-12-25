@@ -30,6 +30,25 @@ export const Links = [
 ];
 
 
+export const LinkCaja = [
+    {
+        title: 'Caja',
+        icon: CashRegisterIcon,
+        href: '/dashboard/caja',
+    },
+    {
+        title: 'Pedidos',
+        icon: InventoryIcon,
+        href: '/dashboard/caja/pedidos',
+    },
+    {
+        title: 'Cierre',
+        icon: ReportIcon,
+        href: '/dashboard/caja/cierre',
+    },
+];
+
+
 const styleFilters = "hover:bg-third/40 transition-all duration-300 ease-in-out"
 export const filters = [
   {id: 1, title: "Categoria", style: styleFilters},
