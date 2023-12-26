@@ -3,7 +3,6 @@ import { fonts } from "../Fonts";
 import UserMenu from "./user-menu";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { CardSkeleton } from "../Skeleton";
 import { FetchUnicRols } from "@/app/lib/data";
 import Image from "next/image";
 
@@ -25,7 +24,7 @@ export default async function NavBar({ title, site } : { title: string, site?: b
                         {
                             site ? 
                             <span className="text-secundary font-bold">{ session?.user?.name }</span>
-                            : null
+                            : null  
                         
                         } 
                     </p>
@@ -37,9 +36,7 @@ export default async function NavBar({ title, site } : { title: string, site?: b
                         className="object-contain hidden md:block w-auto h-auto"
                     />
                 </div>
-                <Suspense fallback={<CardSkeleton />}>
                     <UserMenu username={ session?.user?.name || "" } rol={ Rol.nombre || "" }  />
-                </Suspense>
             </div>
         </div>
     )

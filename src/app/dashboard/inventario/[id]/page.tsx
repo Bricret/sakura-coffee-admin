@@ -11,7 +11,6 @@ export default async function IdPage({ params } : IdPageProps) {
 
     const categorias = await FetchCategorys();
     const productData = await FetchUnicProduct(Number(params.id));
-    console.log(productData);
 
     return (
         <>
