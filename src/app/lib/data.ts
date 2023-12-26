@@ -92,3 +92,12 @@ export async function FetchUnicProduct(id : number) {
         throw new Error(error);
     }
 }
+
+export async function FetchTables() {
+    try {
+        const tables = await prisma.mesas.findMany();
+        return tables;
+    } catch (error : any) {
+        throw new Error(error);
+    }
+}

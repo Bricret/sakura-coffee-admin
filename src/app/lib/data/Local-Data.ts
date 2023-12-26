@@ -1,7 +1,7 @@
 import { Icons } from "@/app/plugins/Icons";
 
 
-const { CashRegisterIcon, DashBoardIcon, ReportIcon, InventoryIcon } = Icons;
+const { CashRegisterIcon, DashBoardIcon, ReportIcon, InventoryIcon, OrderIcon, CloseIcon } = Icons;
 
 
 
@@ -32,18 +32,18 @@ export const Links = [
 
 export const LinkCaja = [
     {
-        title: 'Caja',
+        title: 'Mesas',
         icon: CashRegisterIcon,
         href: '/dashboard/caja',
     },
     {
         title: 'Pedidos',
-        icon: InventoryIcon,
+        icon: OrderIcon,
         href: '/dashboard/caja/pedidos',
     },
     {
         title: 'Cierre',
-        icon: ReportIcon,
+        icon: CloseIcon,
         href: '/dashboard/caja/cierre',
     },
 ];
@@ -79,3 +79,18 @@ export const TableColumns = [
         label: "MAS",
     },
   ];
+
+export const TableColumsCash = [
+    {
+        key: "ubicacion",
+        label: "UBICACION",
+    },
+    {
+        key: "estado",
+        label: "ESTADO",
+    },
+    {
+        key: "action",
+        label: "ACCIONES",
+    },
+];
