@@ -1,5 +1,6 @@
 import { FetchTables } from "@/app/lib/data";
 import { TableColumsCash } from "@/app/lib/data/Local-Data";
+import TableCashOption from "./Table-Options";
 
 
 export default async function TableCash() {
@@ -41,7 +42,7 @@ export default async function TableCash() {
                             </p>
                         </td>
                         <td className="px-4 py-2 text-black first:rounded-l-2xl last:rounded-r-2xl text-center cursor-default">
-                            a
+                            <TableCashOption  state={ item.estado }/>
                         </td>
                     </tr>
                 ))

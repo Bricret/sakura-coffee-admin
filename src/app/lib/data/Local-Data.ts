@@ -1,7 +1,7 @@
 import { Icons } from "@/app/plugins/Icons";
 
 
-const { CashRegisterIcon, DashBoardIcon, ReportIcon, InventoryIcon, OrderIcon, CloseIcon } = Icons;
+const { CashRegisterIcon, DashBoardIcon, ReportIcon, InventoryIcon, OrderIcon, CloseIcon, TableIcon } = Icons;
 
 
 
@@ -33,7 +33,7 @@ export const Links = [
 export const LinkCaja = [
     {
         title: 'Mesas',
-        icon: CashRegisterIcon,
+        icon: TableIcon,
         href: '/dashboard/caja',
     },
     {
