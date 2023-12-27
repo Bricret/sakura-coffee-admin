@@ -2,10 +2,11 @@
 
 import { Icons } from "@/app/plugins/Icons";
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/react";
+import Link from "next/link";
 
 const { MoreIcon } = Icons;
  
-export default function TableCashOption({ state }: { state?: any }) {
+export default function TableCashOption({ state, idTable }: { state? : string, idTable? : string }) {
     return (
         <div className="">
             <Dropdown>
@@ -21,7 +22,11 @@ export default function TableCashOption({ state }: { state?: any }) {
                     {
                         state === 'libre' ?
                             <DropdownMenu aria-label="Static Actions">
-                            <DropdownItem color="success">Nueva Orden</DropdownItem>
+                                <DropdownItem color="success">
+                                    <Link 
+                                        href={`/dashboard/caja/newOrder/${idTable}`}
+                                    >Nueva Orden</Link>
+                                </DropdownItem>
                             </DropdownMenu>
                          :
                             <DropdownMenu aria-label="Static Actions"> 

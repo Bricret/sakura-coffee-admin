@@ -35,7 +35,6 @@ export async function FetchCategorys() {
     }
 }
 
-
 export async function FetchFilteredInventory(
     query : string,
     itemsPerPage : number,
@@ -85,6 +84,19 @@ export async function FetchUnicProduct(id : number) {
         const product = await prisma.productos.findFirst({
             where: {
                 id: id
+            }
+        });
+        return product;
+    } catch (error : any) {
+        throw new Error(error);
+    }
+}
+
+export async function FetchAllProductAvailability() {
+    try {
+        const product = await prisma.productos.findMany({
+            where: {
+                disponibilidad: 'disponible'
             }
         });
         return product;
