@@ -99,7 +99,13 @@ export async function FetchAllProductAvailability() {
                 disponibilidad: 'disponible'
             }
         });
-        return product;
+        const newPrice = product.map((item : any) => {
+            return {
+                ...item,
+                precio: item.precio * 1.5
+            }
+        })
+        return newPrice;
     } catch (error : any) {
         throw new Error(error);
     }
@@ -109,6 +115,19 @@ export async function FetchTables() {
     try {
         const tables = await prisma.mesas.findMany();
         return tables;
+    } catch (error : any) {
+        throw new Error(error);
+    }
+}
+
+export async function FetchDetailOrderByTable(idOrder : any) {
+    try {
+        const order = await prisma.detalle_ordens.findMany({
+            where: {
+                orden_id: idOrder
+            }
+        });
+        return order;
     } catch (error : any) {
         throw new Error(error);
     }

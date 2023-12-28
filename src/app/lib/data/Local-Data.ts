@@ -94,3 +94,27 @@ export const TableColumsCash = [
         label: "ACCIONES",
     },
 ];
+
+export const TableColumsDetailsOrders = [
+    {
+        key: "nombre",
+        label: "NOMBRE",
+    },
+    {
+        key: "cantidad",
+        label: "CANTIDAD",
+    },
+    {
+        key: "monto_C_",
+        label: "MONTO C$",
+    },
+    {
+        key: "monto_U_",
+        label: "MONTO U$",
+    },
+    {
+        key: "action",
+        label: "ACCIONES",
+    },
+
+]

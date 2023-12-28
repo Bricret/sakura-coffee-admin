@@ -133,16 +133,16 @@ export async function createNewOrder(idTable: string) {
  
         // Si no existe ninguna orden, crea una nueva
         if (!existingOrder) {
-            await prisma.ordens.create({
+            const newOrder = await prisma.ordens.create({
                 data: {
                    mesa_id: idTable,
                    sub_total_C_: 0,
                    sub_total_U_: 0,
                 }
             });
-            return { success: true, message: 'Orden creada correctamente' }
+            return { success: true, message: 'Orden creada correctamente', data: newOrder }
         } else {
-            return { success: false, message: 'Ya existe una orden para esta mesa' }
+            return { success: true, message: 'Ya existe una orden para esta mesa', data: existingOrder }
         }
     } catch ( error : any ) {
        console.log('error', error);
@@ -150,3 +150,40 @@ export async function createNewOrder(idTable: string) {
     }
  }
  
+export async function createNewDetailOrder(formData: FormData, idOrder: string, products: any, idTable: string) {
+
+    const rawFormData = Object.fromEntries(formData.entries());
+    const findProduct =  products.find((product: any) => product.nombre === rawFormData.product);
+
+    const orderFound = await prisma.detalle_ordens.findFirst({
+        where: {
+            producto_id: findProduct.id,
+            orden_id: idOrder
+        }
+    });
+
+    if (orderFound) {
+        return { success: false, message: 'Producto ya existe en la orden' }
+    };
+
+    const cantidad = Number(rawFormData.cantidad)
+    const monto_C_ = cantidad * findProduct.precio;
+    const monto_U_ = parseFloat((monto_C_ / 36.79).toFixed(2));
+
+    try {
+        await prisma.detalle_ordens.create({
+            data: {
+                orden_id: idOrder,
+                producto_id: findProduct.id,
+                cantidad: cantidad,
+                monto_C_: monto_C_,
+                monto_U_: monto_U_
+            }
+        });
+        revalidatePath(`/dashboard/caja/newOrder/${idTable}`);
+        return { success: true, message: 'Producto agregado correctamente' }
+    } catch ( error : any ) {
+       console.log('error', error);
+       return { success: false, message: 'Producto no fue agregado correctamente', data: error }
+    }
+}
