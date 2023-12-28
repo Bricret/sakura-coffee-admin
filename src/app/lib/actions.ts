@@ -121,3 +121,32 @@ export async function deleteProduct( id: string ) {
        return { success: false, message: 'Producto no fue eliminado correctamente' }
     }
 }
+
+export async function createNewOrder(idTable: string) {
+    try {
+        // Verifica si ya existe una orden para la mesa
+        const existingOrder = await prisma.ordens.findFirst({
+            where: {
+                mesa_id: idTable
+            }
+        });
+ 
+        // Si no existe ninguna orden, crea una nueva
+        if (!existingOrder) {
+            await prisma.ordens.create({
+                data: {
+                   mesa_id: idTable,
+                   sub_total_C_: 0,
+                   sub_total_U_: 0,
+                }
+            });
+            return { success: true, message: 'Orden creada correctamente' }
+        } else {
+            return { success: false, message: 'Ya existe una orden para esta mesa' }
+        }
+    } catch ( error : any ) {
+       console.log('error', error);
+       return { success: false, message: 'Error al intentar crear la orden' }
+    }
+ }
+ 
