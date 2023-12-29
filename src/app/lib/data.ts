@@ -102,7 +102,7 @@ export async function FetchAllProductAvailability() {
         const newPrice = product.map((item : any) => {
             return {
                 ...item,
-                precio: item.precio * 1.5
+                precio: Number(item.precio)
             }
         })
         return newPrice;

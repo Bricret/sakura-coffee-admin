@@ -203,3 +203,43 @@ export async function deleteDetailOrder( id: string, orderId: any, idTable: any 
        return { success: false, message: 'Producto no fue eliminado correctamente' }
     }
 }
+
+
+
+export async function updateDetailOrder( id: string, formData: FormData, product : any, idTable: any) {
+
+    const rawFormData = Object.fromEntries(formData.entries());
+    const { cantidad } = rawFormData;
+
+    const orderFound = await prisma.detalle_ordens.findFirst({
+        where: {
+            id: id
+        }
+    });
+
+    if (!orderFound) {
+        return { success: false, message: 'Producto no existe en la orden' }
+    };
+
+    const monto_C_ = Number(cantidad) * product.precio;
+    const monto_U_ = parseFloat((product.precio / 36.79).toFixed(2));
+
+    try {
+        await prisma.detalle_ordens.update({
+            where: {
+                id: id
+            },
+            data: {
+                cantidad: Number(cantidad),
+                monto_C_: monto_C_,
+                monto_U_: monto_U_
+            }
+        });
+        revalidatePath(`/dashboard/caja/newOrder/${idTable}`);
+        return { success: true, message: 'Producto actualizado correctamente' }
+    } catch ( error : any ) {
+       console.log('error', error);
+       return { success: false, message: 'Producto no fue actualizado correctamente' }
+    }
+    
+}
