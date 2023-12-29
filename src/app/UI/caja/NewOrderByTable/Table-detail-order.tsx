@@ -3,7 +3,7 @@ import { TableColumsDetailsOrders } from "@/app/lib/data/Local-Data";
 import ActionOrder from "./Action-Oder";
 
 
-export default async function TableDetailOrder({ idOrder, product }: { idOrder?: string, product : any } ) {
+export default async function TableDetailOrder({ idOrder, product, idTable }: { idOrder?: string, product : any, idTable : any } ) {
 
     const detailOrder = await FetchDetailOrderByTable(idOrder);
 
@@ -27,7 +27,6 @@ export default async function TableDetailOrder({ idOrder, product }: { idOrder?:
             </tr>
         </thead>
         <tbody>
-        {/* verificara si existe un producto para dar un mensaje a dependencia de la respuesta */}
         {
             detailOrder.map((item : any) => (
                 <tr 
@@ -42,7 +41,7 @@ export default async function TableDetailOrder({ idOrder, product }: { idOrder?:
                     <td className="px-4 py-2 text-sm text-center">{item.cantidad}</td>
                     <td className="px-4 py-2 text-sm text-center">{item.monto_C_}</td>
                     <td className="px-4 py-2 text-sm text-center">{item.monto_U_}</td>
-                    <td className="px-4 py-2 text-sm text-center"><ActionOrder /></td>
+                    <td className="px-4 py-2 text-sm text-center"><ActionOrder id={ item.id } orderId={idOrder} idTable={ idTable } /></td>
                 </tr>
             ))
         }

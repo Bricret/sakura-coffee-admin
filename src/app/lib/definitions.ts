@@ -32,4 +32,7 @@ export interface DialogProps {
   body: any;
   type: string;
   id: string;
+  by: string;
+  orderId?: string;
+  idTable?: string;
 }

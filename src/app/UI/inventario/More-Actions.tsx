@@ -1,9 +1,10 @@
 'use client';
+
 import { Button, Chip, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/react"
 import { Icons } from "@/app/plugins/Icons";
-import { useEffect, useState } from "react";
 import { Dialog } from "./Dialog";
-import { FetchUnicProduct } from "@/app/lib/data";
+import { useState } from "react";
+
 
 const { VerticalDotsIcon } = Icons;
 
@@ -39,6 +40,7 @@ export const Action = ({ id, product } : { id : string, product: any }) => {
       body="¿Esta seguro que desea eliminar este producto? Esta acción no se puede deshacer." 
       type="delete"
       id={id}
+      by="inventario"
     />
     <Dialog 
       isOpen={isView} 
@@ -47,6 +49,7 @@ export const Action = ({ id, product } : { id : string, product: any }) => {
       body={ product } 
       type="view"
       id={id}
+      by="inventario"
     />
   </div>
   );  

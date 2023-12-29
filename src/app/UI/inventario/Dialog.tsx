@@ -1,13 +1,26 @@
-import { deleteProduct } from "@/app/lib/actions";
-import { FetchUnicProduct } from "@/app/lib/data";
-import { DialogProps } from "@/app/lib/definitions";
-import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button } from "@nextui-org/react";
+'use client'
 
-export const  Dialog = ({ isOpen, onClose, title, body, type, id } : DialogProps) => {
+import { deleteDetailOrder, deleteProduct } from "@/app/lib/actions";
+import { DialogProps } from "@/app/lib/definitions";
+import { ErrorToast, SuccessToast } from "@/app/plugins/sonner";
+import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button } from "@nextui-org/react";
+import { Toaster } from "sonner";
+
+export const  Dialog = ({ isOpen, onClose, title, body, type, id, orderId, by, idTable } : DialogProps) => {
 
   const onDelete  = async () => {
-    await deleteProduct(id);
-    onClose();
+    if (by === 'inventario') {
+      await deleteProduct(id);
+      onClose();
+    } else {
+      const result = await deleteDetailOrder(id, orderId, idTable);
+      onClose();
+      if( result?.success === false ) {
+        ErrorToast(result.message);
+      } else {
+        SuccessToast(result.message);
+      }
+    }
   };
   
   return (
@@ -133,6 +146,13 @@ export const  Dialog = ({ isOpen, onClose, title, body, type, id } : DialogProps
           </>
         )}
       </ModalContent>
+      <Toaster 
+            dir="auto"
+            visibleToasts={2}
+            duration={1500}
+            closeButton
+            richColors
+        />
     </Modal>
   );
 };

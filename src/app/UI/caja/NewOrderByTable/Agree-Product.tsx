@@ -18,7 +18,7 @@ export default async function AgreeProduct({ idTable, idOrder } : { idTable? : s
                 Detalle de la orden
             </h1>
             <section className="p-4 z-0 flex flex-col relative justify-between gap-4 bg-content1 overflow-auto rounded-large shadow-small w-full">
-                <TableDetailOrder idOrder={ idOrder } product = { products }/>
+                <TableDetailOrder idOrder={ idOrder } product = { products } idTable={ idTable }/>
             </section>
         </article>
       );

@@ -187,3 +187,19 @@ export async function createNewDetailOrder(formData: FormData, idOrder: string, 
        return { success: false, message: 'Producto no fue agregado correctamente', data: error }
     }
 }
+
+export async function deleteDetailOrder( id: string, orderId: any, idTable: any ) {
+    try {
+        await prisma.detalle_ordens.delete({
+            where: {
+                id: id.toString(),
+                orden_id: orderId.toString(),
+            }
+        });
+        revalidatePath(`/dashboard/caja/newOrder/${idTable}`);
+        return { success: true, message: 'Producto eliminado correctamente' }
+    } catch ( error : any ) {
+       console.log('error', error);
+       return { success: false, message: 'Producto no fue eliminado correctamente' }
+    }
+}

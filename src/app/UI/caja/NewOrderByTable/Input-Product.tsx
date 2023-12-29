@@ -11,10 +11,10 @@ export default function InputProduct({ products, idOrder, idTable } : any ) {
     const result = await createNewDetailOrder(formData, idOrder, products, idTable);
     if( result?.success === false ) {
       ErrorToast(result.message);
-  } else {
-      SuccessToast(result.message);
-      
-  }
+    } else {
+        SuccessToast(result.message);
+        
+    }
   }
 
     return (
