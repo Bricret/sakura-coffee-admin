@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { IncriptPass } from "../plugins/incript/argon2";
 import { CreateProductFormSchema, CreateUserFormSchema, UpdateProductFormSchema } from "../plugins/zod";
 import prisma from "./db";
+import { redirect } from "next/navigation";
 
 export async function createUser(formData: FormData) {
     const { userName, password, rol } = CreateUserFormSchema.parse({
@@ -38,7 +39,6 @@ export async function createUser(formData: FormData) {
        return { success: false, message: 'Usuario no creado correctamente' }
     }
 }
-
 
 export async function createProduct(formData: FormData) {
     const rawFormData = Object.fromEntries(formData.entries());
@@ -149,6 +149,41 @@ export async function createNewOrder(idTable: string) {
        return { success: false, message: 'Error al intentar crear la orden' }
     }
  }
+
+export async function updateOrder(idOrder: any, subTotalC: number, subTotalU: number, idTable: any) {
+
+    try {
+        const updateOrder = await prisma.ordens.update({
+            where: {
+                id: idOrder.toString()
+            },
+            data: {
+                sub_total_C_: subTotalC,
+                sub_total_U_: subTotalU
+            }
+        });
+
+        if (updateOrder) {
+            try {
+                await prisma.mesas.update({
+                    where: {
+                        id: idTable
+                    },
+                    data: {
+                        estado: 'ocupada'
+                    }
+                });
+            } catch (error) {
+                throw new Error('Error al intentar actualizar la mesa');
+            }
+        }
+        revalidatePath(`/dashboard/caja`);
+        return { success: true, message: 'Orden actualizada correctamente' }
+    } catch ( error : any ) {
+       console.log('error', error);
+       return { success: false, message: 'Orden no fue actualizada correctamente', data: error }
+    }
+}
  
 export async function createNewDetailOrder(formData: FormData, idOrder: string, products: any, idTable: string) {
 
@@ -204,8 +239,6 @@ export async function deleteDetailOrder( id: string, orderId: any, idTable: any 
     }
 }
 
-
-
 export async function updateDetailOrder( id: string, formData: FormData, product : any, idTable: any) {
 
     const rawFormData = Object.fromEntries(formData.entries());
@@ -222,7 +255,7 @@ export async function updateDetailOrder( id: string, formData: FormData, product
     };
 
     const monto_C_ = Number(cantidad) * product.precio;
-    const monto_U_ = parseFloat((product.precio / 36.79).toFixed(2));
+    const monto_U_ = parseFloat((monto_C_ / 36.79).toFixed(2));
 
     try {
         await prisma.detalle_ordens.update({
