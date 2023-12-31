@@ -107,7 +107,7 @@ export async function updateProduct(formData: FormData, id: string) {
     }
 }
 
-export async function deleteProduct( id: string ) {
+export async function deleteProduct( id : string ) {
     try {
         await prisma.productos.delete({
             where: {
@@ -122,28 +122,27 @@ export async function deleteProduct( id: string ) {
     }
 }
 
-export async function createNewOrder(idTable: string) {
+export async function createNewOrder(idTable : string) {
     try {
-        // Verifica si ya existe una orden para la mesa
-        const existingOrder = await prisma.ordens.findFirst({
+        const orderFound = await prisma.ordens.findFirst({
             where: {
-                mesa_id: idTable
+                mesa_id: idTable,
+                estado: 'pendiente'
             }
         });
- 
-        // Si no existe ninguna orden, crea una nueva
-        if (!existingOrder) {
-            const newOrder = await prisma.ordens.create({
-                data: {
-                   mesa_id: idTable,
-                   sub_total_C_: 0,
-                   sub_total_U_: 0,
-                }
-            });
-            return { success: true, message: 'Orden creada correctamente', data: newOrder }
-        } else {
-            return { success: true, message: 'Ya existe una orden para esta mesa', data: existingOrder }
-        }
+        if (orderFound) {
+            return { success: false, message: 'Orden ya existe en la base de datos', data: orderFound }
+        };
+
+        const newOrder = await prisma.ordens.create({
+            data: {
+                mesa_id: idTable.toString(),
+                sub_total_C_: 0,
+                sub_total_U_: 0,
+                estado: 'pendiente'
+            }
+        });
+        return { success: true, message: 'Orden creada correctamente', data: newOrder }
     } catch ( error : any ) {
        console.log('error', error);
        return { success: false, message: 'Error al intentar crear la orden' }
@@ -215,7 +214,7 @@ export async function createNewDetailOrder(formData: FormData, idOrder: string, 
                 monto_U_: monto_U_
             }
         });
-        revalidatePath(`/dashboard/caja/newOrder/${idTable}`);
+        revalidatePath(`/dashboard/caja/newOrder/${idTable}/create`);
         return { success: true, message: 'Producto agregado correctamente' }
     } catch ( error : any ) {
        console.log('error', error);

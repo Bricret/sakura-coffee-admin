@@ -6,6 +6,7 @@ import { fonts } from "../../Fonts";
 
 export default async function AgreeProduct({ idTable, idOrder } : { idTable? : string, idOrder? : string }) {
     
+    // console.log(idOrder);
     const products = await FetchAllProductAvailability();
       return (
         <article>

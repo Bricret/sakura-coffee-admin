@@ -88,6 +88,7 @@ model ordens {
   id             BigInt           @id @default(autoincrement()) @db.UnsignedBigInt
   mesa_id        BigInt?          @db.UnsignedBigInt
   pedido_id      BigInt?          @db.UnsignedBigInt
+  estado         ordens_estado
   sub_total_C_   Float            @map("sub_total_C$")
   sub_total_U_   Float            @map("sub_total_U$")
   detalle_ordens detalle_ordens[]
@@ -200,4 +201,9 @@ enum pedidos_estado_pedido {
 enum pedidos_estado_pago {
   cancelado
   pendiente
+}
+
+enum ordens_estado {
+  pendiente
+  finalizada
 }

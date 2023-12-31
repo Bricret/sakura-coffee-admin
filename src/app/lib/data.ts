@@ -120,6 +120,20 @@ export async function FetchTables() {
     }
 }
 
+export async function FetchOrdersByIdTable(idTable : any) {
+    try {
+        const orders = await prisma.ordens.findFirst({
+            where: {
+                mesa_id: idTable,
+                estado: 'pendiente'
+            }
+        });
+        return orders;
+    } catch (error : any) {
+        throw new Error(error);
+    }
+}
+
 export async function FetchDetailOrderByTable(idOrder : any) {
     try {
         const order = await prisma.detalle_ordens.findMany({

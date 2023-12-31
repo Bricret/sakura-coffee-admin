@@ -11,8 +11,6 @@ export default async function TableDetailOrder({ idOrder, product, idTable }: { 
     const Total_U = detailOrder.reduce((acc : any, item : any) => acc + item.monto_U_, 0);
     const cantidad = detailOrder.reduce((acc : any, item : any) => acc + item.cantidad, 0);
 
-
-
     return (
         <form>
             <table 
