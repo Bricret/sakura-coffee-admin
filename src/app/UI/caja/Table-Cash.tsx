@@ -42,7 +42,7 @@ export default async function TableCash() {
                             </p>
                         </td>
                         <td className="px-4 py-2 text-black first:rounded-l-2xl last:rounded-r-2xl text-center cursor-default">
-                            <TableCashOption  state={ item.estado } idTable={ item.id.toString() }/>
+                            <TableCashOption tables={ tables } state={ item.estado } idTable={ item.id.toString() }/>
                         </td>
                     </tr>
                 ))
