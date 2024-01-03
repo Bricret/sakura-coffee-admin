@@ -118,3 +118,22 @@ export const TableColumsDetailsOrders = [
     },
 
 ]
+
+export const TableColumsDetailsOrdersView = [
+    {
+        key: "nombre",
+        label: "NOMBRE",
+    },
+    {
+        key: "cantidad",
+        label: "CANTIDAD",
+    },
+    {
+        key: "monto_C_",
+        label: "MONTO C$",
+    },
+    {
+        key: "monto_U_",
+        label: "MONTO U$",
+    },
+]

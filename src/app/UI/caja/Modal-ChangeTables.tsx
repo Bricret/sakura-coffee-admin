@@ -1,12 +1,13 @@
+import { updateOderTable } from "@/app/lib/actions";
+import { ErrorToast } from "@/app/plugins/sonner";
 import { Autocomplete, AutocompleteItem, Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@nextui-org/react";
+import { Toaster } from "sonner";
 
 export default function ModalChangeTable({ isOpen, onClose, tables, infoOrder } : { isOpen : boolean, onClose : any, tables : any, infoOrder : any }) {
 
     const onChange = async (formData : FormData ) => {
-        console.log(formData);
-        console.log('Change Table');
-        // onClose();
-        //TODO: Cambiar la mesa con verificacion si la mesa a la que desea cambiar esta libre o no
+        const res = await updateOderTable(formData, infoOrder);
+        if( res?.success === false ) ErrorToast(res.message);
     }
     return (
     <Modal isOpen={isOpen} onOpenChange={onClose} size="2xl" backdrop="blur">
@@ -48,13 +49,13 @@ export default function ModalChangeTable({ isOpen, onClose, tables, infoOrder } 
             </>
             )}
         </ModalContent>
-        {/* <Toaster 
+        <Toaster
                 dir="auto"
                 visibleToasts={2}
                 duration={1500}
                 closeButton
                 richColors
-            /> */}
+            />
     </Modal>
     )
 }

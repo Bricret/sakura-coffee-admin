@@ -121,7 +121,7 @@ export async function deleteProduct( id : string ) {
     }
 }
 
-export async function createNewOrder(idTable : string) {
+export async function createNewOrderByTable(idTable : string) {
     try {
         const orderFound = await prisma.ordens.findFirst({
             where: {
@@ -275,3 +275,56 @@ export async function updateDetailOrder( id: string, formData: FormData, product
     
 }
 
+export async function updateOderTable( formData : FormData, infoOder : any ) {
+
+        const table = formData.get('table');
+        const {id, mesa_id} = infoOder;
+        try {
+            const BusyTable = await prisma.mesas.findFirst({
+                where: {
+                    nombre: table,
+                    estado: 'ocupada'
+                }
+            });
+        if (BusyTable) return { success: false, message: 'La mesa ya esta ocupada' }
+
+        const tableFind = await prisma.mesas.findFirst({
+            where: {
+                nombre: table
+            }
+        });
+
+        await prisma.mesas.update({
+            where: {
+                id: tableFind.id.toString()
+            },
+            data: {
+                estado: 'ocupada'
+            }
+        });
+
+        await prisma.mesas.update({
+            where: {
+                id: mesa_id.toString()
+            },
+            data: {
+                estado: 'libre'
+            }
+        });
+
+        await prisma.ordens.update({
+            where: {
+                id: id.toString()
+            },
+            data: {
+                mesa_id: tableFind.id.toString()
+            }
+        });
+        revalidatePath(`/dashboard/caja`);
+        return { success: true, message: 'Cambio de mesa actualizado correctamente.' }
+
+        } catch ( error : any ) {
+        console.log('error', error);
+        return { success: false, message: 'Orden no fue actualizada correctamente' }
+        }
+}
