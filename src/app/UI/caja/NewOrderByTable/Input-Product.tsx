@@ -22,6 +22,7 @@ export default function InputProduct({ products, idOrder, idTable } : any ) {
       <form action={ProductAction} className="flex flex-row gap-4 items-end justify-between">
         <Autocomplete
           isRequired
+          aria-label="Producto"
           labelPlacement="outside"
           label="Producto"
           placeholder="Busca un producto..." 

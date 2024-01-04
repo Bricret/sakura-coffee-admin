@@ -11,7 +11,6 @@ export default function UpdateOrder({ idOrder, total_C, total_U, idTable } : { i
     async function HandleSubmit(e : any) {
         e.preventDefault();
         const res = await updateOrder( idOrder, total_C, total_U, idTable );
-        console.log(res);
         router.push('/dashboard/caja');
     }
 

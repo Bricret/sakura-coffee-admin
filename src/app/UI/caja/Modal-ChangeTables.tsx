@@ -20,7 +20,8 @@ export default function ModalChangeTable({ isOpen, onClose, tables, infoOrder } 
                         <Autocomplete
                             isRequired
                             labelPlacement="outside"
-                            label="Mesa"
+                            aria-labelledby="table"
+                            label="table"
                             placeholder="Elige una mesa..." 
                             className="w-6/12 md:w-7/12 text-lg font-semibold"
                             name="table"
@@ -28,7 +29,7 @@ export default function ModalChangeTable({ isOpen, onClose, tables, infoOrder } 
                             size="lg"
                             >
                                 {tables.map((table: any) => (
-                                <AutocompleteItem key={table.id} value={table.id}>
+                                <AutocompleteItem key={table.id} id="table" value={table.id}>
                                     {table.nombre}
                                     </AutocompleteItem>
                                 ))}

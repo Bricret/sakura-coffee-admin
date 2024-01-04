@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     title: 'Caja | Sakura Coffee Shop',
   };
 
-export default function CashPage() {
+export default async function CashPage() {
     return (
         <>
             <header className="flex justify-end mt-2 mb-6 gap-3 items-center md:items-end">

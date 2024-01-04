@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Button } from "../../auth/button";
 import { Toaster } from "sonner";
 import { ErrorToast } from "@/app/plugins/sonner";
-import { createNewInvoice } from "@/app/lib/actions";
+import { createNewInvoiceByTable } from "@/app/lib/actions";
 import ChangeMoney from "./Change-Money";
 import FormSectionInvoice from "./Form-Section-Invoice";
 import { useRouter } from "next/navigation";
@@ -21,9 +21,11 @@ export default function PayForm({ Order } : { Order : any }) {
         if (TypePay === null) {
             return ErrorToast('Seleccione un metodo de pago');
         }
-        const rest = await createNewInvoice(Order, TypePay);
+        const rest = await createNewInvoiceByTable(Order, TypePay);
         if (rest.success === true) {
             router.push('/dashboard/caja');
+        } else {
+            ErrorToast(rest.message);
         }
     }
 

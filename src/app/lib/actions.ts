@@ -331,7 +331,7 @@ export async function updateOderTable( formData : FormData, infoOder : any ) {
         }
 }
 
-export async function createNewInvoice(Order : any, TypePay : any ) {
+export async function createNewInvoiceByTable(Order : any, TypePay : any ) {
 
     const session = await getServerSession(authOptions);
     const client = session?.user?.name;
@@ -342,7 +342,7 @@ export async function createNewInvoice(Order : any, TypePay : any ) {
     const total_C = Order.sub_total_C_ + propina_C;
     const total_U = Order.sub_total_U_ + propina_U;
     //Todo: Buscar el ultimo numero de factura y sumarle 1 para crear la nueva factura
-    let numInvoice =+ 3;
+
 
     // Busca el usuario que esta logueado 
     const userFound = await prisma.users.findFirst({
@@ -352,6 +352,20 @@ export async function createNewInvoice(Order : any, TypePay : any ) {
     });
 
     if (userFound.status === 'inactivo') return { success: false, message: 'Usuario Inactivo, nisiquiera deberias poder hacer esto.' }
+
+    // Busca el ultimo numero de factura
+    const lastInvoice = await prisma.facturas.findFirst({
+        orderBy: {
+            numero_factura: 'desc'
+        }
+    });
+    
+    let numInvoice = 1;
+    if (lastInvoice) {
+        numInvoice = Number(lastInvoice.numero_factura) + 1;
+    }
+
+    console.log('numInvoice', numInvoice);
 
     // Crea la factura con los datos de la orden
     try {
