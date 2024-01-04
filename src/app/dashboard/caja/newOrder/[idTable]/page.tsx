@@ -1,6 +1,6 @@
 import { fonts } from "@/app/UI/Fonts";
 import { InventorySkeleton } from "@/app/UI/Skeleton";
-import Invoice from "@/app/UI/caja/Invoice";
+import Invoice from "@/app/UI/caja/invoice/Invoice";
 import { Suspense } from "react";
 
 

@@ -1,4 +1,3 @@
-import React, { Suspense } from "react";
 import { fonts } from "../Fonts";
 import UserMenu from "./user-menu";
 import { getServerSession } from "next-auth";
@@ -6,6 +5,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { FetchUnicRols } from "@/app/lib/data";
 import Image from "next/image";
 
+// user.image = idRol // user.email = estado del usuario
 
 export default async function NavBar({ title, site } : { title: string, site?: boolean }) {
 

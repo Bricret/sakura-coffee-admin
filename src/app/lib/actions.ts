@@ -4,6 +4,8 @@ import { revalidatePath } from "next/cache";
 import { IncriptPass } from "../plugins/incript/argon2";
 import { CreateProductFormSchema, CreateUserFormSchema, UpdateProductFormSchema } from "../plugins/zod";
 import prisma from "./db";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export async function createUser(formData: FormData) {
     const { userName, password, rol } = CreateUserFormSchema.parse({
@@ -201,7 +203,7 @@ export async function createNewDetailOrder(formData: FormData, idOrder: string, 
 
     const cantidad = Number(rawFormData.cantidad)
     const monto_C_ = cantidad * findProduct.precio;
-    const monto_U_ = parseFloat((monto_C_ / 36.79).toFixed(2));
+    const monto_U_ = parseFloat((monto_C_ / 36.6243).toFixed(2));
 
     try {
         await prisma.detalle_ordens.create({
@@ -253,7 +255,7 @@ export async function updateDetailOrder( id: string, formData: FormData, product
     };
 
     const monto_C_ = Number(cantidad) * product.precio;
-    const monto_U_ = parseFloat((monto_C_ / 36.79).toFixed(2));
+    const monto_U_ = parseFloat((monto_C_ / 36.6243).toFixed(2));
 
     try {
         await prisma.detalle_ordens.update({
@@ -327,4 +329,82 @@ export async function updateOderTable( formData : FormData, infoOder : any ) {
         console.log('error', error);
         return { success: false, message: 'Orden no fue actualizada correctamente' }
         }
+}
+
+export async function createNewInvoice(Order : any, TypePay : any ) {
+
+    const session = await getServerSession(authOptions);
+    const client = session?.user?.name;
+    const ActualDate = new Date().toISOString();
+    const ActualTime = new Date().toISOString();
+    const propina_C =parseFloat((Order.sub_total_C_ * 0.10).toFixed(2));
+    const propina_U = parseFloat((propina_C / 36.6243).toFixed(2));
+    const total_C = Order.sub_total_C_ + propina_C;
+    const total_U = Order.sub_total_U_ + propina_U;
+    //Todo: Buscar el ultimo numero de factura y sumarle 1 para crear la nueva factura
+    let numInvoice =+ 3;
+
+    // Busca el usuario que esta logueado 
+    const userFound = await prisma.users.findFirst({
+        where: {
+            name: client
+        }
+    });
+
+    if (userFound.status === 'inactivo') return { success: false, message: 'Usuario Inactivo, nisiquiera deberias poder hacer esto.' }
+
+    // Crea la factura con los datos de la orden
+    try {
+        const newInvoice = await prisma.facturas.create({
+            data: {
+                numero_factura: numInvoice.toString(),
+                fecha_emision: ActualDate,
+                hora_emision: ActualTime,
+                metodo_pago: TypePay,
+                user_id: userFound?.id,
+                propina_C_: propina_C,
+                propina_U_: propina_U,
+                descuento_C_: 0, //el descuento aun no se implementa pero se deja por si acaso
+                descuento_U_: 0,
+                total_C_: total_C,
+                total_U_: total_U,
+                orden_id: Order.id
+            }
+        });
+    } catch ( error : any ) {
+       console.log('error', error);
+       return { success: false, message: 'Error al intentar crear la factura' }
+    }
+
+    // Cambia el estado de la orden a finalizada
+    try {
+        await prisma.ordens.update({
+            where: {
+                id: Order.id
+            },
+            data: {
+                estado: 'finalizada'
+            }
+        });
+    } catch ( error : any ) {
+         console.log('error', error);
+         return { success: false, message: 'Orden no fue actualizada correctamente' }
+    }
+
+    // Cambia el estado de la mesa a libre
+    try {
+        await prisma.mesas.update({
+            where: {
+                id: Order.mesa_id
+            },
+            data: {
+                estado: 'libre'
+            }
+        });
+        revalidatePath(`/dashboard/caja`);
+        return { success: true, message: 'Factura creada correctamente' }
+    } catch ( error : any ) {
+         console.log('error', error);
+         return { success: false, message: 'Mesa no fue actualizada correctamente' }
+    }
 }

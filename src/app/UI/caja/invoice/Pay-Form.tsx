@@ -1,0 +1,71 @@
+'use client';
+
+import { Checkbox } from "@nextui-org/react";
+import { useState } from "react";
+import { Button } from "../../auth/button";
+import { Toaster } from "sonner";
+import { ErrorToast } from "@/app/plugins/sonner";
+import { createNewInvoice } from "@/app/lib/actions";
+import ChangeMoney from "./Change-Money";
+import FormSectionInvoice from "./Form-Section-Invoice";
+import { useRouter } from "next/navigation";
+
+
+export default function PayForm({ Order } : { Order : any }) {
+    const [isDollar, setIsDollar] = useState(false);
+    const router = useRouter();
+
+
+    async function ClientAction( formData : FormData ) {
+        const TypePay = formData.get('tipo')
+        if (TypePay === null) {
+            return ErrorToast('Seleccione un metodo de pago');
+        }
+        const rest = await createNewInvoice(Order, TypePay);
+        if (rest.success === true) {
+            router.push('/dashboard/caja');
+        }
+    }
+
+    return (
+        <>
+        <h1 className="text-2xl mb-2 mt-4 md:mt-0">Cambio</h1>
+        <div className="items-center justify-center h-full w-full bg-white rounded-lg shadow-large px-4 text-lg text-zinc-600 py-4">
+            <ChangeMoney isDollar={ isDollar } setIsDollar={ setIsDollar }/>
+            <form action={ClientAction}>
+                <FormSectionInvoice isDollar={ isDollar } Order={ Order }/>
+                <div className="flex flex-col">
+                    <h6 className="text-secundary">Metodo de pago</h6>
+                    <div className="flex flex-row gap-4 pb-4">
+                        <Checkbox 
+                            id="tipo"
+                            name="tipo"
+                            value="efectivo"
+                            required
+                        >
+                            Efectivo
+                        </Checkbox>
+                        <Checkbox
+                            id="tipo"
+                            name="tipo"
+                            value="tarjeta"
+                        >
+                            Tarjeta
+                        </Checkbox>
+                    </div>
+                </div>
+                <Button>
+                    Pagar
+                </Button>
+                <Toaster
+                    dir="auto"
+                    visibleToasts={2}
+                    duration={1500}
+                    closeButton
+                    richColors
+                />
+            </form>
+        </div>
+        </>
+    )
+}
