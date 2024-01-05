@@ -12,9 +12,9 @@ return (
     <div className="flex flex-col gap-4 mb-4">
         <div className="flex justify-between gap-3 items-center md:items-end">
             <Search placeholder="busca por nombre..."/>
-            <RightButton route={"/dashboard/inventario/newProduct"} />
+            <RightButton route={"/dashboard/inventario/newProduct"} title={"Nuevo"} />
         </div>
-        <InfoTable allProducts={ allProducts }/>
+        <InfoTable allProducts={ allProducts } type={"productos"}/>
     </div>
 )
 

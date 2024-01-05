@@ -137,3 +137,27 @@ export const TableColumsDetailsOrdersView = [
         label: "MONTO U$",
     },
 ]
+
+export const TableColumsOrdersTo = [
+    {
+        key: "nombre",
+        label: "NOMBRE",
+    },
+    {
+        key: "estado_pago",
+        label: "ESTADO PAGO",
+    },
+    {
+        key: "estado_pedido",
+        label: "ESTADO PEDIDO",
+    },
+    {
+        key: "fecha",
+        label: "FECHA ENTREGA",
+    },
+    {
+        key: "action",
+        label: "ACCIONES",
+    },
+
+]
