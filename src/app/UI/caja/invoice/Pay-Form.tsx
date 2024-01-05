@@ -24,14 +24,12 @@ export default function PayForm({ Order, ubi } : { Order : any, ubi : number }) 
         if (ubi === 1) {
             const res = await createNewInvoice(Order, TypePay);
             if (res.success === true) {
-                console.log('se ejecuto 1');
                 router.push('/dashboard/caja');
             }
         }
         if (ubi === 2) {
             const res = await createNewInvoiceByTable(Order, TypePay);
             if (res.success === true) {
-                console.log('se ejecuto 2');
                 router.push('/dashboard/caja');
             }
         }

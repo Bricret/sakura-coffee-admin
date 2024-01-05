@@ -469,41 +469,33 @@ export async function createNewInvoiceByTable(Order : any, TypePay : any ) {
                 orden_id: Order.id
             }
         });
+        if (newInvoice) {
+            try {
+                await prisma.ordens.update({
+                    where: {
+                        id: Order.id
+                    },
+                    data: {
+                        estado: 'finalizada'
+                    }
+                });
+                await prisma.mesas.update({
+                    where: {
+                        id: Order.mesa_id
+                    },
+                    data: {
+                        estado: 'libre'
+                    }
+                });
+            } catch (error) {
+                throw new Error('Error al intentar actualizar la orden');
+            }
+        }
+        revalidatePath(`/dashboard/caja`);
+        return { success: true, message: 'Factura creada correctamente', data: newInvoice}
     } catch ( error : any ) {
        console.log('error', error);
        return { success: false, message: 'Error al intentar crear la factura' }
-    }
-
-    // Cambia el estado de la orden a finalizada
-    try {
-        await prisma.ordens.update({
-            where: {
-                id: Order.id
-            },
-            data: {
-                estado: 'finalizada'
-            }
-        });
-    } catch ( error : any ) {
-         console.log('error', error);
-         return { success: false, message: 'Orden no fue actualizada correctamente' }
-    }
-
-    // Cambia el estado de la mesa a libre
-    try {
-        await prisma.mesas.update({
-            where: {
-                id: Order.mesa_id
-            },
-            data: {
-                estado: 'libre'
-            }
-        });
-        revalidatePath(`/dashboard/caja`);
-        return { success: true, message: 'Factura creada correctamente' }
-    } catch ( error : any ) {
-         console.log('error', error);
-         return { success: false, message: 'Mesa no fue actualizada correctamente' }
     }
 }
 
@@ -557,25 +549,24 @@ export async function createNewInvoice( Order : any, TypePay : any ) {
                 orden_id: Order.id
             }
         });
+        if (newInvoice) {
+            try {
+                await prisma.ordens.update({
+                    where: {
+                        id: Order.id
+                    },
+                    data: {
+                        estado: 'finalizada'
+                    }
+                });
+            } catch (error) {
+                throw new Error('Error al intentar actualizar la orden');
+            }
+        }
+        revalidatePath(`/dashboard/caja`);
+        return { success: true, message: 'Factura creada correctamente', data: newInvoice}
     } catch ( error : any ) {
     console.log('error', error);
     return { success: false, message: 'Error al intentar crear la factura' }
     }
-
-    // Cambia el estado de la orden a finalizada
-    try {
-        await prisma.ordens.update({
-            where: {
-                id: Order.id
-            },
-            data: { 
-                estado: 'finalizada'
-            }
-        });
-        revalidatePath(`/dashboard/caja`);
-        return { success: true, message: 'Factura creada correctamente' }
-    } catch ( error : any ) {
-            console.log('error', error);
-            return { success: false, message: 'Orden no fue actualizada correctamente' }
-        }
 }
