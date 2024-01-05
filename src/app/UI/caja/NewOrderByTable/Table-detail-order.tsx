@@ -4,7 +4,7 @@ import ActionOrder from "./Action-Oder";
 import UpdateOrder from "./Update-Order";
 
 
-export default async function TableDetailOrder({ idOrder, product, idTable, edit }: { idOrder?: string, product : any, idTable : any, edit?: boolean } ) {
+export default async function TableDetailOrder({ idOrder, product, idTable, edit, ubi }: { idOrder?: string, product : any, idTable? : any, edit?: boolean, ubi?: number } ) {
 
     const detailOrder = await FetchDetailOrderByTable(idOrder);
     const Total_C = detailOrder.reduce((acc : any, item : any) => acc + item.monto_C_, 0);
@@ -76,7 +76,7 @@ export default async function TableDetailOrder({ idOrder, product, idTable, edit
                 </table>
                 {
                     edit ?
-                    <UpdateOrder idOrder={ idOrder } total_C={ Total_C } total_U={ Total_U } idTable={ idTable }  />
+                    <UpdateOrder idOrder={ idOrder } total_C={ Total_C } total_U={ Total_U } idTable={ idTable } ubi={ ubi }/>
                     : null
                 }
             </form>

@@ -10,13 +10,13 @@ export default async function AgreeProduct({ idTable, idOrder } : { idTable? : s
       return (
         <article>
             <header >  
-                <InputProduct products={ products } idOrder={ idOrder } idTable={ idTable } />
+                <InputProduct products={ products } idOrder={ idOrder } idTable={ idTable } ubi={2} />
             </header>
-            <h1 
+            <h1
                 className={ `${ fonts.merriweather.className } font-semibold text-xl mt-10 mb-4` }>
                 Detalle de la orden
             </h1>
-            <TableDetailOrder idOrder={ idOrder } product = { products } idTable={ idTable } edit={true}/>
+            <TableDetailOrder idOrder={ idOrder } product = { products } idTable={ idTable } edit={true} ubi={2}/>
         </article>
       );
 }

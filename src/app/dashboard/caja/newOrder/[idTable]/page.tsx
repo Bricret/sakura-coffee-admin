@@ -13,7 +13,7 @@ export default async function facturePage({params : {idTable} } : {params : {idT
                 Facturacion de <span className="text-secundary">Orden</span>
         </h1>
         <Suspense fallback={<InventorySkeleton />}>
-            <Invoice idTable={idTable}/>
+            <Invoice idTable={idTable} ubi={2} />
         </Suspense>
     </>
     )

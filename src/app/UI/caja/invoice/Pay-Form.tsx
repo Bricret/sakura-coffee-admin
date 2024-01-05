@@ -5,13 +5,13 @@ import { useState } from "react";
 import { Button } from "../../auth/button";
 import { Toaster } from "sonner";
 import { ErrorToast } from "@/app/plugins/sonner";
-import { createNewInvoiceByTable } from "@/app/lib/actions";
+import { createNewInvoice, createNewInvoiceByTable } from "@/app/lib/actions";
 import ChangeMoney from "./Change-Money";
 import FormSectionInvoice from "./Form-Section-Invoice";
 import { useRouter } from "next/navigation";
 
 
-export default function PayForm({ Order } : { Order : any }) {
+export default function PayForm({ Order, ubi } : { Order : any, ubi : number }) {
     const [isDollar, setIsDollar] = useState(false);
     const router = useRouter();
 
@@ -21,14 +21,21 @@ export default function PayForm({ Order } : { Order : any }) {
         if (TypePay === null) {
             return ErrorToast('Seleccione un metodo de pago');
         }
-        const rest = await createNewInvoiceByTable(Order, TypePay);
-        if (rest.success === true) {
-            router.push('/dashboard/caja');
-        } else {
-            ErrorToast(rest.message);
+        if (ubi === 1) {
+            const res = await createNewInvoice(Order, TypePay);
+            if (res.success === true) {
+                console.log('se ejecuto 1');
+                router.push('/dashboard/caja');
+            }
+        }
+        if (ubi === 2) {
+            const res = await createNewInvoiceByTable(Order, TypePay);
+            if (res.success === true) {
+                console.log('se ejecuto 2');
+                router.push('/dashboard/caja');
+            }
         }
     }
-
     return (
         <>
         <h1 className="text-2xl mb-2 mt-4 md:mt-0">Cambio</h1>

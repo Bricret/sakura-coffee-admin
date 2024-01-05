@@ -1,19 +1,29 @@
 'use client';
 
-import { createNewDetailOrder } from "@/app/lib/actions";
+import { createNewDetailOrder, createNewDetailOrderByTable } from "@/app/lib/actions";
 import { ErrorToast, SuccessToast } from "@/app/plugins/sonner";
 import { Autocomplete, AutocompleteItem } from "@nextui-org/react";
 import { Toaster } from "sonner";
 
-export default function InputProduct({ products, idOrder, idTable } : any ) {
+export default function InputProduct({ products, idOrder, idTable, ubi } : { products : any, idOrder : any, idTable? : any, ubi: number } ) {
 
   const ProductAction = async (formData : FormData ) => {
-    const result = await createNewDetailOrder(formData, idOrder, products, idTable);
-    if( result?.success === false ) {
-      ErrorToast(result.message);
-    } else {
+    // condicion para saber si se esta creando una orden por mesa o por cliente
+    if (ubi === 2) {
+      const result = await createNewDetailOrderByTable(formData, idOrder, products, idTable);
+      if( result?.success === false ) {
+        ErrorToast(result.message);
+      } else {
+          SuccessToast(result.message);
+      }
+    } 
+    if (ubi === 1) {
+      const result = await createNewDetailOrder(formData, idOrder, products);
+      if( result?.success === false ) {
+        ErrorToast(result.message);
+      } else {
         SuccessToast(result.message);
-        
+      } 
     }
   }
 

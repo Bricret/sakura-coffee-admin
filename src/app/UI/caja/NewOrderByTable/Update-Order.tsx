@@ -1,17 +1,21 @@
 'use client';
-import { updateOrder } from "@/app/lib/actions";
+import { updateOrder, updateOrderByTable } from "@/app/lib/actions";
 import { fonts } from "../../Fonts";
 import { useRouter } from "next/navigation";
 
 
-export default function UpdateOrder({ idOrder, total_C, total_U, idTable } : { idOrder : any, total_C : number, total_U : number, idTable : any  }) {
+export default function UpdateOrder({ idOrder, total_C, total_U, idTable, ubi } : { idOrder : any, total_C : number, total_U : number, idTable? : any, ubi?: any }) {
     const router = useRouter();
-
 
     async function HandleSubmit(e : any) {
         e.preventDefault();
-        const res = await updateOrder( idOrder, total_C, total_U, idTable );
-        router.push('/dashboard/caja');
+        if (ubi === 2) {
+            const res = await updateOrderByTable( idOrder, total_C, total_U, idTable );
+            router.push('/dashboard/caja');
+        } 
+        if (ubi === 1) {
+            const res = await updateOrder( idOrder, total_C, total_U );
+        }
     }
 
     return (

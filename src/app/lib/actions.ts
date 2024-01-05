@@ -148,9 +148,36 @@ export async function createNewOrderByTable(idTable : string) {
        console.log('error', error);
        return { success: false, message: 'Error al intentar crear la orden' }
     }
+}
+
+ export async function createNewOrder() {
+    const OrderFound = await prisma.ordens.findFirst({
+        where: {
+            estado: 'pendiente',
+            mesa_id: null,
+            pedido_id: null
+        }
+    });
+    if (OrderFound) {
+        return { success: false, message: 'Orden ya existe en la base de datos', data: OrderFound }
+    };
+
+    try {
+        const newOrder = await prisma.ordens.create({
+            data: {
+                sub_total_C_: 0,
+                sub_total_U_: 0,
+                estado: 'pendiente'
+            }
+        });
+        return { success: true, message: 'Orden creada correctamente', data: newOrder }
+    } catch ( error : any ) {
+       console.log('error', error);
+       return { success: false, message: 'Error al intentar crear la orden' }
+    }
  }
 
-export async function updateOrder(idOrder: any, subTotalC: number, subTotalU: number, idTable: any) {
+export async function updateOrderByTable(idOrder: any, subTotalC: number, subTotalU: number, idTable: any) {
 
     try {
         const updateOrder = await prisma.ordens.update({
@@ -184,8 +211,28 @@ export async function updateOrder(idOrder: any, subTotalC: number, subTotalU: nu
        return { success: false, message: 'Orden no fue actualizada correctamente', data: error }
     }
 }
+
+export async function updateOrder( idOder : any, subTotalC : number, subTotalU : number ) {
+
+    try {
+        const updateOrder = await prisma.ordens.update({
+            where: {
+                id: idOder.toString()
+            },
+            data: {
+                sub_total_C_: subTotalC,
+                sub_total_U_: subTotalU
+            }
+        });
+        revalidatePath(`/dashboard/caja/newOrder`);
+        return { success: true, message: 'Orden actualizada correctamente' }
+    } catch ( error : any ) {
+       console.log('error', error);
+       return { success: false, message: 'Orden no fue actualizada correctamente', data: error }
+    }
+}
  
-export async function createNewDetailOrder(formData: FormData, idOrder: string, products: any, idTable: string) {
+export async function createNewDetailOrderByTable(formData: FormData, idOrder: string, products: any, idTable: string) {
 
     const rawFormData = Object.fromEntries(formData.entries());
     const findProduct =  products.find((product: any) => product.nombre === rawFormData.product);
@@ -221,6 +268,45 @@ export async function createNewDetailOrder(formData: FormData, idOrder: string, 
        console.log('error', error);
        return { success: false, message: 'Producto no fue agregado correctamente', data: error }
     }
+}
+
+export async function createNewDetailOrder(formData: FormData, idOrder: string, products: any) {
+    
+        const rawFormData = Object.fromEntries(formData.entries());
+        const findProduct =  products.find((product: any) => product.nombre === rawFormData.product);
+    
+        const orderFound = await prisma.detalle_ordens.findFirst({
+            where: {
+                producto_id: findProduct.id,
+                orden_id: idOrder
+            }
+        });
+    
+        if (orderFound) {
+            return { success: false, message: 'Producto ya existe en la orden' }
+        };
+    
+        const cantidad = Number(rawFormData.cantidad)
+        const monto_C_ = cantidad * findProduct.precio;
+        const monto_U_ = parseFloat((monto_C_ / 36.6243).toFixed(2));
+    
+        try {
+            await prisma.detalle_ordens.create({
+                data: {
+                    orden_id: idOrder,
+                    producto_id: findProduct.id,
+                    cantidad: cantidad,
+                    monto_C_: monto_C_,
+                    monto_U_: monto_U_
+                }
+            });
+            revalidatePath(`/dashboard/caja/newOrder/create`);
+            return { success: true, message: 'Producto agregado correctamente' }
+        } catch ( error : any ) {
+        console.log('error', error);
+        return { success: false, message: 'Producto no fue agregado correctamente', data: error }
+        }
+    
 }
 
 export async function deleteDetailOrder( id: string, orderId: any, idTable: any ) {
@@ -341,8 +427,6 @@ export async function createNewInvoiceByTable(Order : any, TypePay : any ) {
     const propina_U = parseFloat((propina_C / 36.6243).toFixed(2));
     const total_C = Order.sub_total_C_ + propina_C;
     const total_U = Order.sub_total_U_ + propina_U;
-    //Todo: Buscar el ultimo numero de factura y sumarle 1 para crear la nueva factura
-
 
     // Busca el usuario que esta logueado 
     const userFound = await prisma.users.findFirst({
@@ -421,4 +505,77 @@ export async function createNewInvoiceByTable(Order : any, TypePay : any ) {
          console.log('error', error);
          return { success: false, message: 'Mesa no fue actualizada correctamente' }
     }
+}
+
+export async function createNewInvoice( Order : any, TypePay : any ) {
+    
+    const session = await getServerSession(authOptions);
+    const client = session?.user?.name;
+    const ActualDate = new Date().toISOString();
+    const ActualTime = new Date().toISOString();
+    const propina_C =parseFloat((Order.sub_total_C_ * 0.10).toFixed(2));
+    const propina_U = parseFloat((propina_C / 36.6243).toFixed(2));
+    const total_C = Order.sub_total_C_ + propina_C;
+    const total_U = Order.sub_total_U_ + propina_U;
+
+    // Busca el usuario que esta logueado 
+    const userFound = await prisma.users.findFirst({
+        where: {
+            name: client
+        }
+    });
+
+    if (userFound.status === 'inactivo') return { success: false, message: 'Usuario Inactivo, nisiquiera deberias poder hacer esto.' }
+
+    // Generar numero de factura
+    const lastInvoice = await prisma.facturas.findFirst({
+        orderBy: {
+            numero_factura: 'desc'
+        }
+    });
+    
+    let numInvoice = 1;
+    if (lastInvoice) {
+      numInvoice = Number(lastInvoice.numero_factura) + 1;
+    }
+
+    // Crea la factura con los datos de la orden
+    try {
+        const newInvoice = await prisma.facturas.create({
+            data: {
+                numero_factura: numInvoice,
+                fecha_emision: ActualDate,
+                hora_emision: ActualTime,
+                metodo_pago: TypePay,
+                user_id: userFound?.id,
+                propina_C_: propina_C,
+                propina_U_: propina_U,
+                descuento_C_: 0, //el descuento aun no se implementa pero se deja por si acaso
+                descuento_U_: 0,
+                total_C_: total_C,
+                total_U_: total_U,
+                orden_id: Order.id
+            }
+        });
+    } catch ( error : any ) {
+    console.log('error', error);
+    return { success: false, message: 'Error al intentar crear la factura' }
+    }
+
+    // Cambia el estado de la orden a finalizada
+    try {
+        await prisma.ordens.update({
+            where: {
+                id: Order.id
+            },
+            data: { 
+                estado: 'finalizada'
+            }
+        });
+        revalidatePath(`/dashboard/caja`);
+        return { success: true, message: 'Factura creada correctamente' }
+    } catch ( error : any ) {
+            console.log('error', error);
+            return { success: false, message: 'Orden no fue actualizada correctamente' }
+        }
 }
