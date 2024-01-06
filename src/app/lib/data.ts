@@ -165,6 +165,9 @@ export async function FetchFilteredOrdersTo( query : string, itemsPerPage : numb
                     contains: query,
                 },
             },
+            orderBy: {
+                id: 'desc',
+            },
             take: itemsPerPage,
             skip: skip,
         });

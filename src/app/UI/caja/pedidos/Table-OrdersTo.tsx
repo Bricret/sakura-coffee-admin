@@ -8,9 +8,7 @@ export default async function TableOrderTo({ itemsForPage, query, currentPage } 
 
     const OrdersTo = await FetchFilteredOrdersTo(query, itemsForPage, currentPage);
     const TotalPage = await FetchOrdersToPageCount(itemsForPage);
-
-    console.log(OrdersTo, TotalPage);
-
+    
     return (
     <>
      <table 
@@ -53,7 +51,7 @@ export default async function TableOrderTo({ itemsForPage, query, currentPage } 
                         </p>
                     </td>
                     <td className={`px-4 py-2 text-black  first:rounded-l-2xl last:rounded-r-2xl text-center cursor-default`}>
-                        { item.fecha_entrega.toLocaleDateString() }
+                        { new Date(item.fecha_entrega).toLocaleDateString() }
                     </td>
                     <td className="px-4 py-2 text-black first:rounded-l-2xl last:rounded-r-2xl text-center cursor-default">
                         <p>Actions</p>

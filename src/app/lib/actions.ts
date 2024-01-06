@@ -570,3 +570,30 @@ export async function createNewInvoice( Order : any, TypePay : any ) {
     return { success: false, message: 'Error al intentar crear la factura' }
     }
 }
+
+export async function createNewOrderTo( formData : FormData ) {
+    
+    const rawFormData = Object.fromEntries(formData.entries());
+    const fecha_entrega = formData.get('fecha_entrega');
+    const fecha_pedido = new Date().toISOString();
+    let entregaDate = new Date(fecha_entrega as string ).toISOString();
+        try {
+            await prisma.pedidos.create({
+                data: {
+                    nombre_cliente: rawFormData.nombre,
+                    direccion_cliente: rawFormData.direccion_cliente,
+                    fecha_pedido: fecha_pedido,
+                    fecha_entrega: entregaDate,
+                    hora_entrega: entregaDate,
+                    telefono_cliente: rawFormData.telefono_cliente,
+                    telefono_adicional_cliente: rawFormData.telefono_adicional_cliente,
+                    observaciones: rawFormData.observaciones,
+                }
+            });
+            revalidatePath(`/dashboard/caja`);
+            return { success: true, message: 'Orden actualizada correctamente' }
+        } catch ( error : any ) {
+        console.log('error', error);
+        return { success: false, message: 'Orden no fue actualizada correctamente' }
+        }
+}
