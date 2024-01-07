@@ -2,16 +2,22 @@
 
 import { createNewOrderTo } from "@/app/lib/actions";
 import { Button } from "../../auth/button"
+import { useRouter } from "next/navigation";
 
 const label = "font-bold text-lg mb-2"
 
 export default function NewOrderToForm({ ProductData } : { ProductData?: any }) {
+    const router = useRouter();
 
     const ActionOrderTo = async ( formData : FormData ) => {
         const anticipo = formData.get('anticipo');
         const total = formData.get('total');
         const res = await createNewOrderTo(formData);
-        console.log(res);
+        if(res.success === true) {
+            router.push(`/dashboard/caja/pedidos`);
+        } else {
+            alert("Error al crear el pedido");
+        }
     }
     
     return (

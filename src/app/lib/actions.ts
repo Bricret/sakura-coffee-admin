@@ -572,11 +572,17 @@ export async function createNewInvoice( Order : any, TypePay : any ) {
 }
 
 export async function createNewOrderTo( formData : FormData ) {
-    
+
     const rawFormData = Object.fromEntries(formData.entries());
     const fecha_entrega = formData.get('fecha_entrega');
     const fecha_pedido = new Date().toISOString();
-    let entregaDate = new Date(fecha_entrega as string ).toISOString();
+    let entregaDate = new Date(fecha_entrega as string);
+    entregaDate = new Date(entregaDate.getTime() - entregaDate.getTimezoneOffset() * 60 * 1000);
+    let estado_pago = 'pendiente';
+
+    if (rawFormData.anticipo === rawFormData.total) {
+        estado_pago = 'cancelado';
+    }
         try {
             await prisma.pedidos.create({
                 data: {
@@ -588,12 +594,14 @@ export async function createNewOrderTo( formData : FormData ) {
                     telefono_cliente: rawFormData.telefono_cliente,
                     telefono_adicional_cliente: rawFormData.telefono_adicional_cliente,
                     observaciones: rawFormData.observaciones,
+                    estado_pago: estado_pago,
                 }
             });
             revalidatePath(`/dashboard/caja`);
-            return { success: true, message: 'Orden actualizada correctamente' }
+            return { success: true, message: 'Pedido Creado Correctamente' }
         } catch ( error : any ) {
         console.log('error', error);
-        return { success: false, message: 'Orden no fue actualizada correctamente' }
+        return { success: false, message: 'Pedido no pudo ser creado' }
         }
 }
+
