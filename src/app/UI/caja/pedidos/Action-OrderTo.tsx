@@ -4,13 +4,13 @@ import { DeleteIcon, EyeIcon } from "@/app/plugins/Icons";
 import { Tooltip } from "@nextui-org/react";
 import { useState } from "react";
 import { Dialog } from "../../inventario/Dialog";
+import MoreInfoDialog from "./MoreInfo-Dialog";
 
-export default function ActionOrderTo( { id } : { id: string } ) {
-
+export default function ActionOrderTo( { ordenTo } : { ordenTo: any } ) {
     const [isOpen, setIsOpen] = useState(false);
     const onOpen = () => setIsOpen(true);
     const onClose = () => setIsOpen(false);
-    const [View, setView] = useState(false);
+    const [isView, setView] = useState(false);
     const onView = () => setView(true);
     const onNever = () => setView(false);
 
@@ -33,8 +33,13 @@ export default function ActionOrderTo( { id } : { id: string } ) {
             title="Eliminar Producto" 
             body="¿Esta seguro que desea eliminar este producto? Esta acción no se puede deshacer." 
             type="delete"
-            id={ id }
+            id={ ordenTo.id }
             by="pedidos"
+          />
+          <MoreInfoDialog 
+            isOpen={ isView }
+            onClose={ onNever }
+            ordenTo={ ordenTo }
           />
           </div>
         </>

@@ -55,7 +55,7 @@ export default async function TableOrderTo({ itemsForPage, query, currentPage } 
                         { new Date(item.fecha_entrega).toLocaleDateString() }
                     </td>
                     <td className="px-4 py-2 text-black first:rounded-l-2xl last:rounded-r-2xl text-center cursor-default">
-                        <ActionOrderTo id={item.id} />
+                        <ActionOrderTo ordenTo={item} />
                     </td>
                 </tr>
             ))
