@@ -2,6 +2,7 @@
 import { FetchFilteredOrdersTo, FetchOrdersToPageCount } from "@/app/lib/data";
 import { TableColumsOrdersTo } from "@/app/lib/data/Local-Data";
 import Pagination from "../../inventario/Pagination";
+import ActionOrderTo from "./Action-OrderTo";
 
 
 export default async function TableOrderTo({ itemsForPage, query, currentPage } : { itemsForPage: number, query: string, currentPage: number }) {
@@ -54,7 +55,7 @@ export default async function TableOrderTo({ itemsForPage, query, currentPage } 
                         { new Date(item.fecha_entrega).toLocaleDateString() }
                     </td>
                     <td className="px-4 py-2 text-black first:rounded-l-2xl last:rounded-r-2xl text-center cursor-default">
-                        <p>Actions</p>
+                        <ActionOrderTo id={item.id} />
                     </td>
                 </tr>
             ))

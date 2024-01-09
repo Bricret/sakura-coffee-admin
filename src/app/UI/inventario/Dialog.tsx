@@ -1,6 +1,6 @@
 'use client'
 
-import { deleteDetailOrder, deleteProduct } from "@/app/lib/actions";
+import { deleteDetailOrder, deleteOrderTo, deleteProduct } from "@/app/lib/actions";
 import { DialogProps } from "@/app/lib/definitions";
 import { ErrorToast, SuccessToast } from "@/app/plugins/sonner";
 import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button } from "@nextui-org/react";
@@ -12,7 +12,7 @@ export const  Dialog = ({ isOpen, onClose, title, body, type, id, orderId, by, i
     if (by === 'inventario') {
       await deleteProduct(id);
       onClose();
-    } else {
+    } else if (by === 'ordenes') {
       const result = await deleteDetailOrder(id, orderId, idTable);
       onClose();
       if( result?.success === false ) {
@@ -20,8 +20,11 @@ export const  Dialog = ({ isOpen, onClose, title, body, type, id, orderId, by, i
       } else {
         SuccessToast(result.message);
       }
+      } else if (by === 'pedidos') {
+        await deleteOrderTo(id);
+        onClose();
+      };
     }
-  };
   
   return (
     <Modal isOpen={isOpen} onOpenChange={onClose} size="2xl" backdrop="blur">

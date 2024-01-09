@@ -605,3 +605,17 @@ export async function createNewOrderTo( formData : FormData ) {
         }
 }
 
+export async function deleteOrderTo( id : string ) {
+    try {
+        await prisma.pedidos.delete({
+            where: {
+                id: id.toString()
+            }
+        });
+        revalidatePath(`/dashboard/caja/pedidos`);
+        return { success: true, message: 'Pedido eliminado correctamente' }
+    } catch ( error : any ) {
+       console.log('error', error);
+       return { success: false, message: 'Pedido no fue eliminado correctamente' }
+    }
+}
