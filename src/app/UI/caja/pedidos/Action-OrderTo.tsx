@@ -7,6 +7,8 @@ import { Dialog } from "../../inventario/Dialog";
 import MoreInfoDialog from "./MoreInfo-Dialog";
 import Link from "next/link";
 import { finishOrderTo } from "@/app/lib/utils";
+import { Toaster } from "sonner";
+import { ErrorToast, SuccessToast } from "@/app/plugins/sonner";
 
 const { StatusGood } = Icons;
 
@@ -19,8 +21,13 @@ export default function ActionOrderTo( { ordenTo } : { ordenTo: any } ) {
     const onView = () => setView(true);
     const onNever = () => setView(false);
 
-    const handleFinishOrderTO = () => {
-        finishOrderTo(ordenTo.id);
+    const handleFinishOrderTO = async () => {
+      const res = await finishOrderTo(ordenTo.id);
+      if(res.success === true) {
+        SuccessToast(res.message, 'bottom-right');
+      } else {
+        ErrorToast(res.message, 'bottom-right');
+      }
     }
 
     return (
@@ -41,11 +48,15 @@ export default function ActionOrderTo( { ordenTo } : { ordenTo: any } ) {
               <DeleteIcon />
             </span>
           </Tooltip>
-          <Tooltip color="success" closeDelay={2} delay={500} content="Finalizar Pedido">
-            <span onClick={handleFinishOrderTO} className="text-3xl text-success-500 cursor-pointer active:opacity-50">
-              <StatusGood />
-            </span>
-          </Tooltip>
+          {
+            ordenTo.estado_pedido === 'pendiente' && (
+              <Tooltip color="success" closeDelay={2} delay={500} content="Finalizar Pedido">
+                <span onClick={handleFinishOrderTO} className="text-3xl text-success cursor-pointer active:opacity-50">
+                  <StatusGood />
+                </span>
+              </Tooltip>
+            )
+          }
           <Dialog 
             isOpen={ isOpen } 
             onClose={ onClose } 
@@ -61,6 +72,13 @@ export default function ActionOrderTo( { ordenTo } : { ordenTo: any } ) {
             ordenTo={ ordenTo }
           />
           </div>
+          <Toaster 
+            dir="auto"
+            visibleToasts={2}
+            duration={1500}
+            closeButton
+            richColors
+        />
         </>
     )
 }

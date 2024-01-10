@@ -42,5 +42,5 @@ export function capitalize(str: string) {
 
 export async function finishOrderTo( idOrderto : any ) {
   const res = await updateOrderToStatusAndUpdateOrdens(idOrderto);
-  console.log(res);
+  return res;
 }

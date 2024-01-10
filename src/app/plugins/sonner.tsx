@@ -2,16 +2,16 @@
 
 import { toast } from "sonner";
 
-export const ErrorToast = ( message : string ) => {
+export const ErrorToast = ( message : string, position? : any ) => {
     console.log()
     toast.error(message, {
-        position: 'top-right',
+        position: position || 'top-right',
     });
 }
 
-export const SuccessToast = ( message : string ) => {
+export const SuccessToast = ( message : string, position? : any ) => {
     toast.success(message, {
-        position: 'top-right'
+        position: position || 'top-right',
     });
 }
 
