@@ -101,19 +101,19 @@ model ordens {
 }
 
 model pedidos {
-  id                          BigInt                @id @default(autoincrement()) @db.UnsignedBigInt
-  nombre_cliente              String                @db.VarChar(255)
-  direccion_cliente           String?               @db.VarChar(255)
-  direccion_adicional_cliente String?               @db.VarChar(255)
-  fecha_pedido                DateTime              @db.Date
-  fecha_entrega               DateTime              @db.Date
-  hora_entrega                DateTime?             @db.Time(0)
-  telefono_cliente            String?               @db.VarChar(255)
-  telefono_adicional_cliente  String?               @db.VarChar(255)
-  estado_pedido               pedidos_estado_pedido @default(pendiente)
-  estado_pago                 pedidos_estado_pago   @default(pendiente)
-  observaciones               String?               @db.Text
-  ordens                      ordens[]
+  id                         BigInt                @id @default(autoincrement()) @db.UnsignedBigInt
+  nombre_cliente             String                @db.VarChar(255)
+  direccion_cliente          String?               @db.VarChar(255)
+  anticipo                   Int?
+  fecha_pedido               DateTime              @db.Date
+  fecha_entrega              DateTime              @db.Date
+  hora_entrega               DateTime?             @db.Time(0)
+  telefono_cliente           String?               @db.VarChar(255)
+  telefono_adicional_cliente String?               @db.VarChar(255)
+  estado_pedido              pedidos_estado_pedido @default(pendiente)
+  estado_pago                pedidos_estado_pago   @default(pendiente)
+  observaciones              String?               @db.Text
+  ordens                     ordens[]
 
   @@index([nombre_cliente], map: "pedidos_nombre_cliente_index")
 }

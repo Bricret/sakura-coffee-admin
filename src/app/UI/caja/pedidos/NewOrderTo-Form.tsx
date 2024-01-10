@@ -1,23 +1,46 @@
 'use client';
 
-import { createNewOrderTo } from "@/app/lib/actions";
+import { createNewOrderTo, createNewOrdersByOrderTo, updateOrderTo } from "@/app/lib/actions";
 import { Button } from "../../auth/button"
 import { useRouter } from "next/navigation";
+import { Toaster } from "sonner";
+import { ErrorToast } from "@/app/plugins/sonner";
 
 const label = "font-bold text-lg mb-2"
 
-export default function NewOrderToForm({ ProductData } : { ProductData?: any }) {
+export default function NewOrderToForm({ OrderTo, type } : { OrderTo?: any, type : string }) {
     const router = useRouter();
 
     const ActionOrderTo = async ( formData : FormData ) => {
         const anticipo = formData.get('anticipo');
         const total = formData.get('total');
-        const res = await createNewOrderTo(formData);
-        if(res.success === true) {
-            router.push(`/dashboard/caja/pedidos`);
-        } else {
-            alert("Error al crear el pedido");
+        if (Number(anticipo) > Number(total)) {
+            return ErrorToast('El anticipo no puede ser mayor al total');
         }
+        if (type === 'new') {
+            const res = await createNewOrderTo(formData);
+            if(res.success === true) {
+                await createNewOrdersByOrderTo(res.data.id, total);
+                router.push(`/dashboard/caja/pedidos`);
+            } else {
+                ErrorToast(res.message);
+            }
+        } else if (type === 'edit') {
+            const res = await updateOrderTo(formData, OrderTo.id);
+            if(res.success === true) {
+                router.push(`/dashboard/caja/pedidos`);
+            } else {
+                ErrorToast(res.message);
+            }
+
+        }
+
+    }
+
+    let fechaEntregaFormatoLocal = '';
+    if(OrderTo?.fecha_entrega) {
+        const fechaEntrega = new Date(OrderTo.fecha_entrega).toISOString();
+        fechaEntregaFormatoLocal = fechaEntrega.substring(0, fechaEntrega.length - 8);
     }
     
     return (
@@ -31,7 +54,7 @@ export default function NewOrderToForm({ ProductData } : { ProductData?: any }) 
                 name="nombre"
                 type="text"
                 required
-                defaultValue={ ProductData?.nombre || ''}
+                defaultValue={ OrderTo?.nombre_cliente || ''}
                 id="nombre"
             />
         </div>
@@ -43,7 +66,7 @@ export default function NewOrderToForm({ ProductData } : { ProductData?: any }) 
                 name="direccion_cliente"
                 type="text"
                 required
-                defaultValue={ ProductData?.direccion_cliente || ''}
+                defaultValue={ OrderTo?.direccion_cliente || ''}
                 id="direccion_cliente"
             />
         </div>
@@ -53,10 +76,9 @@ export default function NewOrderToForm({ ProductData } : { ProductData?: any }) 
             className="border-2 border-secundary/70 bg-inherit p-3 rounded-xl" 
             name="fecha_entrega"
             type="datetime-local"
-            placeholder="100"
             id="fecha_entrega"
-            defaultValue={ ProductData?.fecha_entrega || ''}
             required
+            defaultValue={ fechaEntregaFormatoLocal || '' }
         />
         </div>
         <div className="flex flex-col w-full md:w-2/5">
@@ -66,7 +88,7 @@ export default function NewOrderToForm({ ProductData } : { ProductData?: any }) 
                 id="telefono_cliente"
                 type="number"
                 placeholder="78695496"
-                defaultValue={ ProductData?.telefono_cliente || ''}
+                defaultValue={ OrderTo?.telefono_cliente || ''}
                 required
                 className="border-2 border-secundary/70 bg-inherit p-3 rounded-xl" 
             />
@@ -77,9 +99,8 @@ export default function NewOrderToForm({ ProductData } : { ProductData?: any }) 
                 name="telefono_adicional_cliente" 
                 id="telefono_adicional_cliente"
                 type="number"
-                placeholder="786952932"
-                required
-                defaultValue={ ProductData?.telefono_adicional_cliente || ''}
+                placeholder="No ingresado"
+                defaultValue={ OrderTo?.telefono_adicional_cliente || ''}
                 className="border-2 border-secundary/70 bg-inherit p-3 rounded-xl" 
             />
         </div>
@@ -92,7 +113,7 @@ export default function NewOrderToForm({ ProductData } : { ProductData?: any }) 
                 placeholder="100"
                 min="0"
                 step="0.1"
-                defaultValue={ ProductData?.total || ''}
+                defaultValue={ OrderTo?.total || ''}
                 required
                 className="border-2 border-secundary/70 bg-inherit p-3 rounded-xl" 
             />
@@ -106,7 +127,7 @@ export default function NewOrderToForm({ ProductData } : { ProductData?: any }) 
                 placeholder="100"
                 min="0"
                 step="0.1"
-                defaultValue={ ProductData?.anticipo || ''}
+                defaultValue={ OrderTo?.anticipo || ''}
                 required
                 className="border-2 border-secundary/70 bg-inherit p-3 rounded-xl" 
             />
@@ -118,20 +139,22 @@ export default function NewOrderToForm({ ProductData } : { ProductData?: any }) 
                 id="observaciones"
                 placeholder="Detalles relevantes del pedido"
                 required
-                defaultValue={ProductData?.observaciones || ''}
+                defaultValue={OrderTo?.observaciones || ''}
                 className="resize-y max-h-80 border-2 border-secundary/70 bg-inherit p-3 rounded-xl" 
             />
         </div>
         <div className="flex flex-col md:w-48 mt-4">
-            <Button>Guardar</Button>
+            <Button>
+                { type === 'new' ? 'Crear Pedido' : 'Editar Pedido' }
+            </Button>
         </div>
-            {/* <Toaster 
+            <Toaster 
             dir="auto"
             visibleToasts={2}
             duration={1500}
             closeButton
             richColors
-        /> */}
+        />
     </form>
     </>
     )

@@ -1,10 +1,11 @@
 'use client';
 
-import { DeleteIcon, EyeIcon } from "@/app/plugins/Icons";
+import { DeleteIcon, EditIcon, EyeIcon } from "@/app/plugins/Icons";
 import { Tooltip } from "@nextui-org/react";
 import { useState } from "react";
 import { Dialog } from "../../inventario/Dialog";
 import MoreInfoDialog from "./MoreInfo-Dialog";
+import Link from "next/link";
 
 export default function ActionOrderTo( { ordenTo } : { ordenTo: any } ) {
     const [isOpen, setIsOpen] = useState(false);
@@ -21,6 +22,11 @@ export default function ActionOrderTo( { ordenTo } : { ordenTo: any } ) {
             <span onClick={onView} className="text-lg text-default-400 cursor-pointer active:opacity-50">
                 <EyeIcon />
             </span>
+          </Tooltip>
+          <Tooltip closeDelay={2} delay={500} content="Editar Pedido">
+            <Link href={`/dashboard/caja/pedidos/${ordenTo.id}`} className="text-lg text-default-400 cursor-pointer active:opacity-50">
+              <EditIcon />
+            </Link>
           </Tooltip>
           <Tooltip color="danger" closeDelay={2} delay={500} content="Borrar Producto">
             <span onClick={onOpen} className="text-lg text-danger cursor-pointer active:opacity-50">

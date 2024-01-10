@@ -150,6 +150,34 @@ export async function createNewOrderByTable(idTable : string) {
     }
 }
 
+export async function createNewOrdersByOrderTo(idOrderTo : any,  total : any) {
+    try {
+        const orderFound = await prisma.ordens.findFirst({
+            where: {
+                pedido_id: idOrderTo,
+                estado: 'pendiente'
+            }
+        });
+        if (orderFound) {
+            return { success: false, message: 'Orden ya existe en la base de datos', data: orderFound }
+        };
+        const total_U_ = parseFloat((total / 36.6243).toFixed(2));
+
+        const newOrder = await prisma.ordens.create({
+            data: {
+                pedido_id: idOrderTo.toString(),
+                sub_total_C_: Number(total),
+                sub_total_U_: total_U_,
+                estado: 'pendiente'
+            }
+        });
+        return { success: true, message: 'Orden creada correctamente', data: newOrder }
+    } catch ( error : any ) {
+       console.log('error', error);
+       return { success: false, message: 'Error al intentar crear la orden' }
+    }
+ }
+
  export async function createNewOrder() {
     const OrderFound = await prisma.ordens.findFirst({
         where: {
@@ -364,57 +392,56 @@ export async function updateDetailOrder( id: string, formData: FormData, product
 }
 
 export async function updateOderTable( formData : FormData, infoOder : any ) {
-
-        const table = formData.get('table');
-        const {id, mesa_id} = infoOder;
-        try {
-            const BusyTable = await prisma.mesas.findFirst({
-                where: {
-                    nombre: table,
-                    estado: 'ocupada'
-                }
-            });
-        if (BusyTable) return { success: false, message: 'La mesa ya esta ocupada' }
-
-        const tableFind = await prisma.mesas.findFirst({
+    const table = formData.get('table');
+    const {id, mesa_id} = infoOder;
+    try {
+        const BusyTable = await prisma.mesas.findFirst({
             where: {
-                nombre: table
-            }
-        });
-
-        await prisma.mesas.update({
-            where: {
-                id: tableFind.id.toString()
-            },
-            data: {
+                nombre: table,
                 estado: 'ocupada'
             }
         });
+    if (BusyTable) return { success: false, message: 'La mesa ya esta ocupada' }
 
-        await prisma.mesas.update({
-            where: {
-                id: mesa_id.toString()
-            },
-            data: {
-                estado: 'libre'
-            }
-        });
-
-        await prisma.ordens.update({
-            where: {
-                id: id.toString()
-            },
-            data: {
-                mesa_id: tableFind.id.toString()
-            }
-        });
-        revalidatePath(`/dashboard/caja`);
-        return { success: true, message: 'Cambio de mesa actualizado correctamente.' }
-
-        } catch ( error : any ) {
-        console.log('error', error);
-        return { success: false, message: 'Orden no fue actualizada correctamente' }
+    const tableFind = await prisma.mesas.findFirst({
+        where: {
+            nombre: table
         }
+    });
+
+    await prisma.mesas.update({
+        where: {
+            id: tableFind.id.toString()
+        },
+        data: {
+            estado: 'ocupada'
+        }
+    });
+
+    await prisma.mesas.update({
+        where: {
+            id: mesa_id.toString()
+        },
+        data: {
+            estado: 'libre'
+        }
+    });
+
+    await prisma.ordens.update({
+        where: {
+            id: id.toString()
+        },
+        data: {
+            mesa_id: tableFind.id.toString()
+        }
+    });
+    revalidatePath(`/dashboard/caja`);
+    return { success: true, message: 'Cambio de mesa actualizado correctamente.' }
+
+    } catch ( error : any ) {
+    console.log('error', error);
+    return { success: false, message: 'Orden no fue actualizada correctamente' }
+    }
 }
 
 export async function createNewInvoiceByTable(Order : any, TypePay : any ) {
@@ -448,8 +475,6 @@ export async function createNewInvoiceByTable(Order : any, TypePay : any ) {
     if (lastInvoice) {
         numInvoice = Number(lastInvoice.numero_factura) + 1;
     }
-
-    console.log('numInvoice', numInvoice);
 
     // Crea la factura con los datos de la orden
     try {
@@ -584,10 +609,11 @@ export async function createNewOrderTo( formData : FormData ) {
         estado_pago = 'cancelado';
     }
         try {
-            await prisma.pedidos.create({
+            const data = await prisma.pedidos.create({
                 data: {
                     nombre_cliente: rawFormData.nombre,
                     direccion_cliente: rawFormData.direccion_cliente,
+                    anticipo: Number(rawFormData.anticipo),
                     fecha_pedido: fecha_pedido,
                     fecha_entrega: entregaDate,
                     hora_entrega: entregaDate,
@@ -598,7 +624,7 @@ export async function createNewOrderTo( formData : FormData ) {
                 }
             });
             revalidatePath(`/dashboard/caja`);
-            return { success: true, message: 'Pedido Creado Correctamente' }
+            return { success: true, message: 'Pedido Creado Correctamente', data: data }
         } catch ( error : any ) {
         console.log('error', error);
         return { success: false, message: 'Pedido no pudo ser creado' }
@@ -618,4 +644,31 @@ export async function deleteOrderTo( id : string ) {
        console.log('error', error);
        return { success: false, message: 'Pedido no fue eliminado correctamente' }
     }
+}
+
+export async function updateOrderTo( formData : FormData, orderToId : any ) {
+    
+        const rawFormData = Object.fromEntries(formData.entries());
+        const fecha_entrega = formData.get('fecha_entrega');
+        const entregaDate = new Date(fecha_entrega as string);
+        try {
+            await prisma.pedidos.update({
+                where: {
+                    id: orderToId.toString()
+                },
+                data: {
+                    nombre_cliente: rawFormData.nombre,
+                    direccion_cliente: rawFormData.direccion_cliente,
+                    fecha_entrega: entregaDate,
+                    telefono_cliente: rawFormData.telefono_cliente,
+                    telefono_adicional_cliente: rawFormData.telefono_adicional_cliente,
+                    observaciones: rawFormData.observaciones,
+                }
+            });
+            revalidatePath(`/dashboard/caja/pedidos`);
+            return { success: true, message: 'Pedido actualizado correctamente' }
+        } catch ( error : any ) {
+        console.log('error', error);
+        return { success: false, message: 'Pedido no fue actualizado correctamente' }
+        }
 }

@@ -11,7 +11,7 @@ export default function NewOrderToPage() {
                 className={`${fonts.merriweather.className} text-4xl font-bold mb-4`}>
                 Creando Nuevo <span className="text-secundary">Pedido</span>
         </h1>
-        <NewOrderToForm />
+        <NewOrderToForm type="new" />
         </div>
     )
 }

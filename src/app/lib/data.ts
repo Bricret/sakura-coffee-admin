@@ -186,3 +186,16 @@ export async function FetchOrdersToPageCount( itemsPerPage : number ) {
         throw new Error(error);
     }
 }
+
+export async function FetchOrdersToById(id : number) {
+    try {
+        const orders = await prisma.pedidos.findFirst({
+            where: {
+                id: id
+            }
+        });
+        return orders;
+    } catch (error : any) {
+        throw new Error(error);
+    }
+}
