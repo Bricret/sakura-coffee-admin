@@ -10,6 +10,7 @@ export default function ActiveCajaForm({ caja } : { caja: any }) {
 
     return (
     <>
+    <h1 className="text-3xl text-red-500 font-semibold">Caja Desactivada</h1>
     <button 
         onClick={onClick}
         className="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 w-full text-lg font-semibold text-center cursor-pointer"
