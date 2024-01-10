@@ -199,3 +199,12 @@ export async function FetchOrdersToById(id : number) {
         throw new Error(error);
     }
 }
+
+export async function FetchCaja() {
+    try {
+        const caja = await prisma.cajas.findMany();
+        return caja;
+    } catch (error : any) {
+        throw new Error(error);
+    }
+}

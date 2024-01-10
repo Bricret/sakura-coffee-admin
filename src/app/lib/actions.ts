@@ -719,3 +719,57 @@ export async function updateOrderToStatusAndUpdateOrdens( idOrderTo : any ) {
        return { success: false, message: 'Pedido no fue actualizado correctamente' }
     }
 }
+
+export async function createNewCashFlow( formData: FormData ) {
+    
+        const rawFormData = Object.fromEntries(formData.entries());
+        const fecha = new Date().toISOString();
+        const monto_C = Number(rawFormData.monto);
+        const monto_U = parseFloat((monto_C / 36.6243).toFixed(2));
+
+        const session = await getServerSession(authOptions);
+        const client = session?.user?.name;
+
+        const userFound = await prisma.users.findFirst({
+            where: {
+                name: client
+            }
+        });
+
+        const cajaFound = await prisma.cajas.findFirst({
+            where: {
+                id: rawFormData.caja
+            }
+        });
+
+        if (userFound.status === 'inactivo') return { success: false, message: 'Usuario Inactivo, nisiquiera deberias poder hacer esto.' }
+    
+        try {
+            await prisma.flujo_cajas.create({
+                data: {
+                    fecha_apertura: fecha,
+                    hora_apertura: fecha,
+                    monto_inicial_C_: monto_C,
+                    monto_inicial_U_: monto_U,
+                    caja_id: rawFormData.caja,
+                    user_id: userFound.id
+                }
+            });
+
+            await prisma.cajas.update({
+                where: {
+                    id: cajaFound.id.toString()
+                },
+                data: {
+                    estado: 'abierto'
+                }
+            });
+
+            revalidatePath(`/dashboard/caja`);
+            revalidatePath(`/dashboard/caja/cierre`);
+            return { success: true, message: 'Flujo de caja creado correctamente' }
+        } catch ( error : any ) {
+        console.log('error', error);
+        return { success: false, message: 'Flujo de caja no fue creado correctamente' }
+        }
+}

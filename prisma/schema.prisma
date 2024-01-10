@@ -11,6 +11,7 @@ model cajas {
   id          BigInt        @id @default(autoincrement()) @db.UnsignedBigInt
   numero_caja String        @unique(map: "cajas_numero_caja_unique") @db.VarChar(255)
   descripcion String?       @db.Text
+  estado      cajas_estado
   flujo_cajas flujo_cajas[]
 }
 
@@ -207,4 +208,9 @@ enum pedidos_estado_pago {
 enum ordens_estado {
   pendiente
   finalizada
+}
+
+enum cajas_estado {
+  abierto
+  cerrado
 }
