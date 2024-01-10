@@ -1,9 +1,10 @@
 import { FaUserAlt } from "react-icons/fa";
 import { RiLockPasswordLine, RiDoorClosedLine } from "react-icons/ri";
 import { FaPowerOff, FaCashRegister, FaSearch, FaFilter, FaAngleLeft, FaAngleRight, FaClipboardList, FaRegEye } from "react-icons/fa";
-import { MdDashboard, MdOutlineInventory, MdMoreHoriz, MdAutorenew } from "react-icons/md";
+import { MdDashboard, MdOutlineInventory, MdAutorenew } from "react-icons/md";
 import { TbReportSearch } from "react-icons/tb";
 import { FaEllipsisVertical, FaPlus  } from "react-icons/fa6";
+import { GrStatusGood } from "react-icons/gr";
 import Image from "next/image";
 
 const UserIcon = FaUserAlt;
@@ -23,6 +24,7 @@ const OrderIcon = FaClipboardList;
 const CloseIcon = RiDoorClosedLine;
 const MoreIcon = FaRegEye;
 const ChangeIcon = MdAutorenew;
+const StatusGood = GrStatusGood;
 const TableIcon = () => <Image src="/iconTable.svg" width={25} height={25} alt="" />;
 
 
@@ -45,6 +47,7 @@ export const Icons = {
     TableIcon,
     MoreIcon,
     ChangeIcon,
+    StatusGood,
 };
 
 export const EditIcon = () => (

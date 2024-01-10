@@ -686,3 +686,36 @@ export async function updateOrderTo( formData : FormData, orderToId : any ) {
         return { success: false, message: 'Pedido no fue actualizado correctamente' }
         }
 }
+
+export async function updateOrderToStatusAndUpdateOrdens( idOrderTo : any ) {
+    try {
+        await prisma.pedidos.update({
+            where: {
+                id: idOrderTo.toString()
+            },
+            data: {
+                estado_pedido: 'entregado',
+                estado_pago: 'cancelado'
+            }
+        });
+        const findOrder = await prisma.ordens.findFirst({
+            where: {
+                pedido_id: idOrderTo.toString()
+            }
+        });
+        await prisma.ordens.update({
+            where: {
+                id: findOrder.id.toString(),
+                pedido_id: idOrderTo.toString()
+            },
+            data: {
+                estado: 'finalizada'
+            }
+        });
+        revalidatePath(`/dashboard/caja/pedidos`);
+        return { success: true, message: 'Pedido actualizado correctamente' }
+    } catch ( error : any ) {
+       console.log('error', error);
+       return { success: false, message: 'Pedido no fue actualizado correctamente' }
+    }
+}

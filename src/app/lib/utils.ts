@@ -1,3 +1,4 @@
+import { updateOrderToStatusAndUpdateOrdens } from "./actions";
 
 
 export const generatePagination = (currentPage: number, totalPages: number) => {
@@ -39,3 +40,7 @@ export function capitalize(str: string) {
 }
 
 
+export async function finishOrderTo( idOrderto : any ) {
+  const res = await updateOrderToStatusAndUpdateOrdens(idOrderto);
+  console.log(res);
+}
