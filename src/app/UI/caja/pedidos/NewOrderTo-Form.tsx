@@ -139,6 +139,7 @@ export default function NewOrderToForm({ OrderTo, type } : { OrderTo?: any, type
                 id="observaciones"
                 placeholder="Detalles relevantes del pedido"
                 required
+                maxLength={ 400 }
                 defaultValue={OrderTo?.observaciones || ''}
                 className="resize-y max-h-80 border-2 border-secundary/70 bg-inherit p-3 rounded-xl" 
             />

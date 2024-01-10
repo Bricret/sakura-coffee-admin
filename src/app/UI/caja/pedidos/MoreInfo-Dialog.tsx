@@ -22,6 +22,9 @@ export default function MoreInfoDialog({ isOpen, onClose, ordenTo } : { isOpen :
                                 <p>Fecha de Entrega:</p>
                                 <p>Telefono del Cliente:</p>
                                 <p>Telefono Adicional:</p>
+                                <p>Anticipo:</p>
+                                <p>Total:</p>
+                                <p>Faltante:</p>
                             </div>
                             <div className="flex flex-col gap-1 text-lg">
                                 <p>{ ordenTo.nombre_cliente }</p>
@@ -32,6 +35,9 @@ export default function MoreInfoDialog({ isOpen, onClose, ordenTo } : { isOpen :
                                 <p>{ new Date(ordenTo.fecha_entrega).toLocaleDateString() }</p>
                                 <p>{ ordenTo.telefono_cliente }</p>
                                 <p>{ ordenTo.telefono_adicional_cliente || 'No registrado.' }</p>
+                                <p>{ ordenTo.anticipo }</p>
+                                <p>{ ordenTo.total }</p>
+                                <p>{ Number( ordenTo.total - ordenTo.anticipo ) }</p>
                             </div>
                         </div>
                         <div className="flex flex-col gap-1">

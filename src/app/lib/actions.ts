@@ -614,6 +614,7 @@ export async function createNewOrderTo( formData : FormData ) {
                     nombre_cliente: rawFormData.nombre,
                     direccion_cliente: rawFormData.direccion_cliente,
                     anticipo: Number(rawFormData.anticipo),
+                    total: Number(rawFormData.total),
                     fecha_pedido: fecha_pedido,
                     fecha_entrega: entregaDate,
                     hora_entrega: entregaDate,
@@ -650,7 +651,15 @@ export async function updateOrderTo( formData : FormData, orderToId : any ) {
     
         const rawFormData = Object.fromEntries(formData.entries());
         const fecha_entrega = formData.get('fecha_entrega');
-        const entregaDate = new Date(fecha_entrega as string);
+        const fecha_pedido = new Date().toISOString();
+        let entregaDate = new Date(fecha_entrega as string);
+        entregaDate = new Date(entregaDate.getTime() - entregaDate.getTimezoneOffset() * 60 * 1000);
+
+        let estado_pago = 'pendiente';
+        if (rawFormData.anticipo === rawFormData.total) {
+            estado_pago = 'cancelado';
+        }
+        
         try {
             await prisma.pedidos.update({
                 where: {
@@ -659,10 +668,15 @@ export async function updateOrderTo( formData : FormData, orderToId : any ) {
                 data: {
                     nombre_cliente: rawFormData.nombre,
                     direccion_cliente: rawFormData.direccion_cliente,
+                    anticipo: Number(rawFormData.anticipo),
+                    total: Number(rawFormData.total),
+                    fecha_pedido: fecha_pedido,
                     fecha_entrega: entregaDate,
+                    hora_entrega: entregaDate,
                     telefono_cliente: rawFormData.telefono_cliente,
                     telefono_adicional_cliente: rawFormData.telefono_adicional_cliente,
                     observaciones: rawFormData.observaciones,
+                    estado_pago: estado_pago,
                 }
             });
             revalidatePath(`/dashboard/caja/pedidos`);

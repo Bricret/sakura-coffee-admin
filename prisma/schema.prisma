@@ -113,6 +113,7 @@ model pedidos {
   estado_pedido              pedidos_estado_pedido @default(pendiente)
   estado_pago                pedidos_estado_pago   @default(pendiente)
   observaciones              String?               @db.Text
+  total                      Int
   ordens                     ordens[]
 
   @@index([nombre_cliente], map: "pedidos_nombre_cliente_index")
