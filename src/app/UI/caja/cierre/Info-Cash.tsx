@@ -1,7 +1,7 @@
 
 export default function InfoCash({ cajaActiva, Cashflow, fechaEntregaFormatoLocal } : { cajaActiva: any, Cashflow: any, fechaEntregaFormatoLocal: any}) {
     return (
-        <div className="flex flex-row items-end justify-between gap-4">
+        <div className="flex flex-row items-end justify-between gap-4 cursor-default">
             <h1 className="text-3xl text-green-500 font-semibold w-1/3">Caja Activa</h1>
             <div className="flex flex-row items-center justify-between gap-4 w-full">
                 <h2 className="text-xl font-semibold">Caja N°:
