@@ -32,7 +32,13 @@ export default async function TableOrderTo({ itemsForPage, query, currentPage } 
         </thead>
         <tbody>
         {
-            OrdersTo.map((item : any) => (
+            OrdersTo.map((item : any) => {
+                let fechaEntregaFormatoLocal = '';
+                    if(item.fecha_entrega) {
+                        const fechaEntrega = new Date(item.fecha_entrega).toISOString();
+                        fechaEntregaFormatoLocal = fechaEntrega.substring(0, fechaEntrega.length - 8);
+                    }
+            return (
                 <tr 
                     key={item.id}
                     className="h-10 hover:bg-gray-100 border-b border-gray-200 text-base font-medium text-gray-700 hover:text-gray-900 cursor-default"
@@ -52,13 +58,14 @@ export default async function TableOrderTo({ itemsForPage, query, currentPage } 
                         </p>
                     </td>
                     <td className={`px-4 py-2 text-black  first:rounded-l-2xl last:rounded-r-2xl text-center cursor-default`}>
-                        { new Date(item.fecha_entrega).toLocaleDateString() }
+                        { fechaEntregaFormatoLocal.split('T')[0] }
                     </td>
                     <td className="px-4 py-2 text-black first:rounded-l-2xl last:rounded-r-2xl text-center cursor-default">
                         <ActionOrderTo ordenTo={item} />
                     </td>
                 </tr>
-            ))
+            );
+        })
         }
         </tbody>
     </table>

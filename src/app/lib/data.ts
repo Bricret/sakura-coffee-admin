@@ -208,3 +208,12 @@ export async function FetchCaja() {
         throw new Error(error);
     }
 }
+
+export async function FetchCashFlow() {
+    try {
+        const cashFlow = await prisma.flujo_cajas.findFirst();
+        return cashFlow;
+    } catch (error : any) {
+        throw new Error(error);
+    }
+}
