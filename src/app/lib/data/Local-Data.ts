@@ -3,9 +3,6 @@ import { Icons } from "@/app/plugins/Icons";
 
 const { CashRegisterIcon, DashBoardIcon, ReportIcon, InventoryIcon, OrderIcon, CloseIcon, TableIcon } = Icons;
 
-
-
-
 export const Links = [
     {
         title: 'Panel',
@@ -29,7 +26,6 @@ export const Links = [
     },
 ];
 
-
 export const LinkCaja = [
     {
         title: 'Mesas',
@@ -48,14 +44,12 @@ export const LinkCaja = [
     },
 ];
 
-
 const styleFilters = "hover:bg-third/40 transition-all duration-300 ease-in-out"
 export const filters = [
   {id: 1, title: "Categoria", style: styleFilters},
   {id: 2, title: "Preparado en", style: styleFilters},
   {id: 3, title: "Por disponibilidad", style: styleFilters},
 ];
-
 
 export const TableColumns = [
     {
@@ -160,4 +154,109 @@ export const TableColumsOrdersTo = [
         label: "ACCIONES",
     },
 
+]
+
+export const TableNominationNationalBanknote = [
+    {
+        name: "C$5",
+        label: "Billetes de 5",
+        montoid: "monto_Billete_C$5",
+        factor: 5,
+    },
+    {
+        name: "C$10",
+        label: "Billetes de 10",
+        montoid: "monto_Billete_C$10",
+        factor: 10,
+    },
+    {
+        name: "C$20",
+        label: "Billetes de 20",
+        montoid: "monto_Billete_C$20",
+        factor: 20,
+    },
+    {
+        name: "C$50",
+        label: "Billetes de 50",
+        montoid: "monto_Billete_C$50",
+        factor: 50,
+    },
+    {
+        name: "C$100",
+        label: "Billetes de 100",
+        montoid: "monto_Billete_C$100",
+        factor: 100,
+    },
+    {
+        name: "C$200",
+        label: "Billetes de 200",
+        montoid: "monto_Billete_C$200",
+        factor: 200,
+    },
+    {
+        name: "C$500",
+        label: "Billetes de 500",
+        montoid: "monto_Billete_C$500",
+        factor: 500,
+    },
+    {
+        name: "C$1000",
+        label: "Billetes de 1000",
+        montoid: "monto_Billete_C$1000",
+        factor: 1000,
+    },
+]
+
+export const TableNominationNationalCoin = [
+    {
+        name: "C_0.50",
+        label: "Monedas de 50 centavos",
+        montoid: "monto_Moneda_C$0.50",
+        factor: 0.50,
+    },
+    {
+        name: "C_1",
+        label: "Monedas de 1",
+        montoid: "monto_Moneda_C$1",
+        factor: 1,
+    },
+    {
+        name: "C_5",
+        label: "Monedas de 5",
+        montoid: "monto_Moneda_C$5",
+        factor: 5,
+    },
+]
+
+export const TableNominationDolarsBanknote = [
+    {
+        name: "$1",
+        label: "Billetes de 1",
+        montoid: "monto_Billete_U$_1",
+        factor: 1,
+    },
+    {
+        name: "$2",
+        label: "Billetes de 2",
+        montoid: "monto_Billete_U$_2",
+        factor: 2,
+    },
+    {
+        name: "$5",
+        label: "Billetes de 5",
+        montoid: "monto_Billete_U$_5",
+        factor: 5,
+    },
+    {
+        name: "$10",
+        label: "Billetes de 10",
+        montoid: "monto_Billete_U$_10",
+        factor: 10,
+    },
+    {
+        name: "$20",
+        label: "Billetes de 20",
+        montoid: "monto_Billete_U$_20",
+        factor: 20,
+    },
 ]
