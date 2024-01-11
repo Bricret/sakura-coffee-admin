@@ -209,6 +209,19 @@ export async function FetchCaja() {
     }
 }
 
+export async function FetchCajaActive() {
+    try {
+        const caja = await prisma.cajas.findFirst({
+            where: {
+                estado: 'abierto'
+            }
+        });
+        return caja;
+    } catch (error : any) {
+        throw new Error(error);
+    }
+}
+
 export async function FetchCashFlow() {
     try {
         const cashFlow = await prisma.flujo_cajas.findFirst();

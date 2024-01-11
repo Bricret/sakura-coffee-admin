@@ -3,7 +3,7 @@ import { TableColumsCash } from "@/app/lib/data/Local-Data";
 import TableCashOption from "./Table-Options";
 
 
-export default async function TableCash() {
+export default async function TableCash({ caja } : { caja : any }) {
 
     const tables = await FetchTables();
 
@@ -41,9 +41,12 @@ export default async function TableCash() {
                                 { item.estado }
                             </p>
                         </td>
-                        <td className="px-4 py-2 text-black first:rounded-l-2xl last:rounded-r-2xl text-center cursor-default">
+                        {
+                            caja !== null ?
+                            <td className="px-4 py-2 text-black first:rounded-l-2xl last:rounded-r-2xl text-center cursor-default">
                             <TableCashOption tables={ tables } state={ item.estado } idTable={ item.id.toString() }/>
-                        </td>
+                        </td> : null
+                        }
                     </tr>
                 ))
             }
