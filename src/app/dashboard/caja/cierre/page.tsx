@@ -1,5 +1,6 @@
 import ActiveCajaForm from "@/app/UI/caja/cierre/ActiveCaja-Form";
 import InfoCash from "@/app/UI/caja/cierre/Info-Cash";
+import NominationForms from "@/app/UI/caja/cierre/Nomination-Forms";
 import { FetchCaja, FetchCajaActive, FetchCashFlow } from "@/app/lib/data";
 
 
@@ -31,17 +32,7 @@ export default async function CierrePage() {
     ) : (
         <>
         <InfoCash cajaActiva={cajaActiva} Cashflow={Cashflow} fechaEntregaFormatoLocal={fechaEntregaFormatoLocal} />
-        <main>
-            <article>
-                <h2>Tabla de billetes C$</h2>
-            </article>
-            <article>
-                <h2>Tabla de billetes US$</h2>
-            </article>
-            <article>
-                <h2>Tabla de monedas</h2>
-            </article>
-        </main>
+        <NominationForms />
         </>
         
     )}
