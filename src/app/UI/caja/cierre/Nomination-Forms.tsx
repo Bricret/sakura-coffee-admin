@@ -169,6 +169,7 @@ export default function NominationForms() {
                             />
                         </div>
                     </div> */}
+                    {/* //TODO: Terminar la parte del cierre y crear nuevos campos en la tabla para el flujo (Observaciones Sobrante de caja, faltante de caja) */}
                     <h1 className="text-5xl font-bold text-green-500">{totalMonto}</h1>
                 </section>
             </section>

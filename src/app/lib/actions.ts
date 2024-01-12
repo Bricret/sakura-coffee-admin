@@ -233,7 +233,7 @@ export async function updateOrderByTable(idOrder: any, subTotalC: number, subTot
             }
         }
         revalidatePath(`/dashboard/caja`);
-        return { success: true, message: 'Orden actualizada correctamente' }
+        return { success: true, message: 'Orden actualizada correctamente', data: updateOrder }
     } catch ( error : any ) {
        console.log('error', error);
        return { success: false, message: 'Orden no fue actualizada correctamente', data: error }

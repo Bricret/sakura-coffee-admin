@@ -230,3 +230,16 @@ export async function FetchCashFlow() {
         throw new Error(error);
     }
 }
+
+export async function FetchDetailOrderByOrderId(id : number) {
+    try {
+        const order = await prisma.detalle_ordens.findMany({
+            where: {
+                orden_id: id
+            }
+        });
+        return order;
+    } catch (error : any) {
+        throw new Error(error);
+    }
+}
