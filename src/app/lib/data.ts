@@ -235,7 +235,7 @@ export async function FetchDetailOrderByOrderId(id : number) {
     try {
         const order = await prisma.detalle_ordens.findMany({
             where: {
-                orden_id: id
+                orden_id: id.toString()
             }
         });
         return order;

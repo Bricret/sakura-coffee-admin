@@ -1,0 +1,20 @@
+/* Archivo style.css */
+
+@media print {
+    .comanda {
+      page-break-after: always;
+    }
+    .comanda:last-child {
+      page-break-after: auto;
+    }
+  }
+
+@page {
+    margin: 0;
+}
+
+@page {
+    size: 80mm 297mm;
+    margin: 0;
+}
+   

@@ -1,15 +1,23 @@
+import TableComanda from "@/app/UI/print/comanda/Table-Comanda";
 import { FetchAllInventory, FetchDetailOrderByOrderId } from "@/app/lib/data";
+import { Metadata } from "next";
 
-export default async function PrintComandaPage({ params } : { params : any }) {
+export const metadata: Metadata = {
+    title: 'Impresion | Sakura Coffee Shop',
+  };
+
+export default async function PrintComandaBarPage({ params } : { params : any }) {
 
     const { idOrderPrint } = params;
+    const idOrder = idOrderPrint.split('-')[0];
+    const idTable = idOrderPrint.split('-')[1];
 
-    const details_orders = await FetchDetailOrderByOrderId(Number(idOrderPrint));
+    const details_orders = await FetchDetailOrderByOrderId(Number(idOrder));
     const productos = await FetchAllInventory();
 
     return (
-        <div>
-            <h1>printComandaPage {idOrderPrint}</h1>
+        <div className="flex items-center justify-center">
+            <TableComanda details_orders={details_orders} productos={productos} idTable={ idTable } idOrder={idOrder} />
         </div>
     )
 }

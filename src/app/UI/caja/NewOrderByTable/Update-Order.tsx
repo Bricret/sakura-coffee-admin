@@ -11,8 +11,9 @@ export default function UpdateOrder({ idOrder, total_C, total_U, idTable, ubi } 
         e.preventDefault();
         if (ubi === 2) {
             const res = await updateOrderByTable( idOrder, total_C, total_U, idTable );
-            const url = `http://localhost:3000/print/printComanda/${res.data.id.toString()}`;
-
+            const { data } = res;
+            const orderIdAndTableId = `${data.id.toString()}-${idTable.toString()}`
+            const url = `http://localhost:3000/print/printComanda/${orderIdAndTableId}`;
             window.open(url, '_blank');
             router.push('/dashboard/caja');
         } 
