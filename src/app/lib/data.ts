@@ -243,3 +243,16 @@ export async function FetchDetailOrderByOrderId(id : number) {
         throw new Error(error);
     }
 }
+
+export async function FetchInvoiceById(id : number) {
+    try {
+        const invoice = await prisma.facturas.findFirst({
+            where: {
+                id: id
+            }
+        });
+        return invoice;
+    } catch (error : any) {
+        throw new Error(error);
+    }
+}

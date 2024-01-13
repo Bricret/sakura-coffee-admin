@@ -1,10 +1,10 @@
-import { EditIcon, Icons } from "@/app/plugins/Icons";
+import { Icons } from "@/app/plugins/Icons";
 import { Tooltip } from "@nextui-org/react";
 import Link from "next/link";
 import ChangeTables from "./Change-Tables";
 import { FetchOrdersByIdTable } from "@/app/lib/data";
 
-const { MoreIcon } = Icons;
+const { MoreIcon, CashRegisterIcon } = Icons;
  
 
 export default async function TableCashOption({ tables, state, idTable }: { tables : any, state? : string, idTable? : string }) {
@@ -36,7 +36,7 @@ export default async function TableCashOption({ tables, state, idTable }: { tabl
                         href={`/dashboard/caja/newOrder/${idTable}`}
                         className="text-2xl text-black/70 cursor-pointer active:opacity-50"
                     >
-                        <EditIcon />
+                        <CashRegisterIcon />
                     </Link>
                 </Tooltip>
                 <ChangeTables tables={ tables } infoOrder={ infoOrder } />

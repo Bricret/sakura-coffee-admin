@@ -25,11 +25,20 @@ export default function PayForm({ Order, ubi } : { Order : any, ubi : number }) 
             const res = await createNewInvoice(Order, TypePay);
             if (res.success === true) {
                 router.push('/dashboard/caja');
+                const { data } = res;
+                const url = `http://localhost:3000/print/printInvoice/${data.id}`;
+                const windowFeatures = 'noopener,noreferrer';
+                window.open(url, '_blank', windowFeatures);
+                router.push('/dashboard/caja');
             }
         }
         if (ubi === 2) {
             const res = await createNewInvoiceByTable(Order, TypePay);
             if (res.success === true) {
+                const { data } = res;
+                const url = `http://localhost:3000/print/printInvoice/${data.id}`;
+                const windowFeatures = 'noopener,noreferrer';
+                window.open(url, '_blank', windowFeatures);
                 router.push('/dashboard/caja');
             }
         }
