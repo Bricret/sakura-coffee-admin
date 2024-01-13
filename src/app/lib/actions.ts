@@ -253,7 +253,7 @@ export async function updateOrder( idOder : any, subTotalC : number, subTotalU :
             }
         });
         revalidatePath(`/dashboard/caja/newOrder`);
-        return { success: true, message: 'Orden actualizada correctamente' }
+        return { success: true, message: 'Orden actualizada correctamente', data: updateOrder }
     } catch ( error : any ) {
        console.log('error', error);
        return { success: false, message: 'Orden no fue actualizada correctamente', data: error }

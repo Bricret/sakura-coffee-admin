@@ -14,11 +14,16 @@ export default function UpdateOrder({ idOrder, total_C, total_U, idTable, ubi } 
             const { data } = res;
             const orderIdAndTableId = `${data.id.toString()}-${idTable.toString()}`
             const url = `http://localhost:3000/print/printComanda/${orderIdAndTableId}`;
-            window.open(url, '_blank');
+            const windowFeatures = 'noopener,noreferrer';
+            window.open(url, '_blank', windowFeatures);
             router.push('/dashboard/caja');
         } 
         if (ubi === 1) {
             const res = await updateOrder( idOrder, total_C, total_U );
+            const { data } = res;
+            const url = `http://localhost:3000/print/printComanda/${data.id}`;
+            const windowFeatures = 'noopener,noreferrer';
+            window.open(url, '_blank', windowFeatures);
         }
     }
 
