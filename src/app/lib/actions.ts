@@ -448,8 +448,9 @@ export async function createNewInvoiceByTable(Order : any, TypePay : any ) {
 
     const session = await getServerSession(authOptions);
     const client = session?.user?.name;
-    const ActualDate = new Date().toISOString();
-    const ActualTime = new Date().toISOString();
+    const actualDate = new Date().toISOString();
+    let emisionDate = new Date(actualDate as string);
+    emisionDate = new Date(emisionDate.getTime() - emisionDate.getTimezoneOffset() * 60 * 1000);
     const propina_C =parseFloat((Order.sub_total_C_ * 0.10).toFixed(2));
     const propina_U = parseFloat((propina_C / 36.6243).toFixed(2));
     const total_C = Order.sub_total_C_ + propina_C;
@@ -481,8 +482,8 @@ export async function createNewInvoiceByTable(Order : any, TypePay : any ) {
         const newInvoice = await prisma.facturas.create({
             data: {
                 numero_factura: numInvoice.toString(),
-                fecha_emision: ActualDate,
-                hora_emision: ActualTime,
+                fecha_emision: emisionDate,
+                hora_emision: emisionDate,
                 metodo_pago: TypePay,
                 user_id: userFound?.id,
                 propina_C_: propina_C,
@@ -528,8 +529,9 @@ export async function createNewInvoice( Order : any, TypePay : any ) {
     
     const session = await getServerSession(authOptions);
     const client = session?.user?.name;
-    const ActualDate = new Date().toISOString();
-    const ActualTime = new Date().toISOString();
+    const actualDate = new Date().toISOString();
+    let emisionDate = new Date(actualDate as string);
+    emisionDate = new Date(emisionDate.getTime() - emisionDate.getTimezoneOffset() * 60 * 1000);
     const propina_C =parseFloat((Order.sub_total_C_ * 0.10).toFixed(2));
     const propina_U = parseFloat((propina_C / 36.6243).toFixed(2));
     const total_C = Order.sub_total_C_ + propina_C;
@@ -561,8 +563,8 @@ export async function createNewInvoice( Order : any, TypePay : any ) {
         const newInvoice = await prisma.facturas.create({
             data: {
                 numero_factura: numInvoice,
-                fecha_emision: ActualDate,
-                hora_emision: ActualTime,
+                fecha_emision: emisionDate,
+                hora_emision: emisionDate,
                 metodo_pago: TypePay,
                 user_id: userFound?.id,
                 propina_C_: propina_C,

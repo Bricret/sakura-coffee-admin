@@ -40,7 +40,7 @@ export default function PrintInvoiceTable({ invoice, details_orders, user, produ
                 <div className="flex flex-col items-center justify-center">
                     <h3 className="text-lg">================================</h3>
                     <div className="flex flex-row items-center justify-between w-full px-2">
-                        <div className="flex flex-row gap-8 w-48">
+                        <div className="flex flex-row gap-8 w-32">
                             <h3 className="text-sm w-12">Cant</h3>
                             <h3 className="text-sm w-full break-words">Producto</h3>
                         </div>
@@ -81,11 +81,11 @@ export default function PrintInvoiceTable({ invoice, details_orders, user, produ
                         <h3 className="text-sm w-1/2">Propina Sugerida</h3>
                         <h3 className="text-sm">{invoice.propina_C_}</h3>
                     </div>
-                    <div className="flex flex-row items-start justify-between w-full">
+                    <div className="flex flex-row items-start font-bold justify-between w-full">
                         <h3 className="text-sm w-1/3">Total C$</h3>
                         <h3 className="text-sm">{invoice.total_C_}</h3>
                     </div>
-                    <div className="flex flex-row items-start justify-between w-full">
+                    <div className="flex flex-row items-start font-bold justify-between w-full">
                         <h3 className="text-sm w-1/3">Total U$</h3>
                         <h3 className="text-sm">{invoice.total_U_}</h3>
                     </div>
