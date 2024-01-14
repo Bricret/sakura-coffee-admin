@@ -256,3 +256,16 @@ export async function FetchInvoiceById(id : number) {
         throw new Error(error);
     }
 }
+
+export async function FetchUserById(id : number) {
+    try {
+        const user = await prisma.users.findFirst({
+            where: {
+                id: id.toString()
+            }
+        });
+        return user;
+    } catch (error : any) {
+        throw new Error(error);
+    }
+}
