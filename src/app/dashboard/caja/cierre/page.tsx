@@ -1,7 +1,7 @@
 import ActiveCajaForm from "@/app/UI/caja/cierre/ActiveCaja-Form";
 import InfoCash from "@/app/UI/caja/cierre/Info-Cash";
 import NominationForms from "@/app/UI/caja/cierre/Nomination-Forms";
-import { FetchCaja, FetchCajaActive, FetchCashFlow } from "@/app/lib/data";
+import { FetchCaja, FetchCajaActive, FetchCashFlow, FetchInvoiceByDate } from "@/app/lib/data";
 
 
 
@@ -10,6 +10,7 @@ export default async function CierrePage() {
     const caja = await FetchCaja();
     const Cashflow = await FetchCashFlow();
     const cajaActiva = await FetchCajaActive();
+    const InvoiceForDay = await FetchInvoiceByDate();
 
     let fechaEntregaFormatoLocal = '';
     if(Cashflow?.fecha_apertura) {
@@ -32,7 +33,7 @@ export default async function CierrePage() {
     ) : (
         <>
         <InfoCash cajaActiva={cajaActiva} Cashflow={Cashflow} fechaEntregaFormatoLocal={fechaEntregaFormatoLocal} />
-        <NominationForms Cashflow={Cashflow} />
+        <NominationForms Cashflow={ Cashflow } Invoice={ InvoiceForDay }  />
         </>
         
     )}

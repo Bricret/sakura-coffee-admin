@@ -44,3 +44,19 @@ export async function finishOrderTo( idOrderto : any ) {
   const res = await updateOrderToStatusAndUpdateOrdens(idOrderto);
   return res;
 }
+
+
+export const handleInputChangeMontos = (e : React.ChangeEvent<HTMLInputElement>, factor: number, name: string, setMontos : React.Dispatch<React.SetStateAction<{ [key: string]: number }>>) => {
+  const value = parseFloat(e.target.value) || 0;
+  let result = value * factor;
+  if (name.includes("$")) {
+      const conversionRate = parseFloat(process.env.NEXT_PUBLIC_CONVERSION_RATE as string) || 1;
+      result *= conversionRate; // Factor de conversión a córdobas
+  }
+  setMontos(prevMontos => ({ ...prevMontos, [name]: result }));
+};
+
+export const calcularTotalMonto = ( montos : any, montoInicial : any, setTotalMonto : any ) => {
+  const totalCalculado = Object.values(montos).reduce((sum : any, monto) => sum + monto, 0);
+  setTotalMonto(montoInicial + totalCalculado);
+};

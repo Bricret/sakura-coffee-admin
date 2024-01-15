@@ -6,33 +6,17 @@ import {
     TableNominationNationalBanknote, 
     TableNominationNationalCoin } 
 from "@/app/lib/data/Local-Data";
+import { calcularTotalMonto, handleInputChangeMontos } from "@/app/lib/utils";
 
 import { useEffect, useState } from "react";
 
-export default function NominationForms({ Cashflow } : { Cashflow: any }) {
+export default function NominationForms({ Cashflow, Invoice } : { Cashflow: any, Invoice: any }) {
 
     const [montos, setMontos] = useState<Record<string, number>>({});
     const [totalMonto, setTotalMonto] = useState<number>(Cashflow.monto_inicial_C_);
 
-    const handleInputChange = (e : React.ChangeEvent<HTMLInputElement>, factor: number, name: string) => {
-        const value = parseFloat(e.target.value) || 0;
-        let result = value * factor;
-        if (name.includes("$")) {
-            const conversionRate = parseFloat(process.env.NEXT_PUBLIC_CONVERSION_RATE as string) || 1;
-            result *= conversionRate; // Factor de conversión a córdobas
-        }
-        setMontos(prevMontos => ({ ...prevMontos, [name]: result }));
-      };
-
-
-      const calcularTotalMonto = () => {
-        const totalCalculado = Object.values(montos).reduce((sum, monto) => sum + monto, 0);
-        setTotalMonto(Cashflow.monto_inicial_C_ + totalCalculado);
-    };
-    
-
     useEffect(() => {
-        calcularTotalMonto();
+        calcularTotalMonto(montos, Cashflow.monto_inicial_C_, setTotalMonto);
     }, [montos]);
 
     return (
@@ -52,7 +36,7 @@ export default function NominationForms({ Cashflow } : { Cashflow: any }) {
                                 min="0"
                                 max="200"
                                 className="w-full p-1 border rounded shadow-sm bg-white my-1 transition ease-in-out focus:border-blue-500 focus:ring"
-                                onChange={(e) => handleInputChange(e, item.factor, item.name)}
+                                onChange={(e) => handleInputChangeMontos(e, item.factor, item.name, setMontos)}
                                 />
                             </div>
                             <div className="flex flex-col w-full">
@@ -88,7 +72,7 @@ export default function NominationForms({ Cashflow } : { Cashflow: any }) {
                                 min="0"
                                 max="200"
                                 className="w-full p-1 border rounded shadow-sm bg-white my-1 transition ease-in-out focus:border-blue-500 focus:ring"
-                                onChange={(e) => handleInputChange(e, item.factor, item.name)}
+                                onChange={(e) => handleInputChangeMontos(e, item.factor, item.name, setMontos)}
                                 />
                             </div>
                             <div className="flex flex-col w-full">
@@ -123,7 +107,7 @@ export default function NominationForms({ Cashflow } : { Cashflow: any }) {
                                 min="0"
                                 max="200"
                                 className="w-full p-1 border rounded shadow-sm bg-white my-1 transition ease-in-out focus:border-blue-500 focus:ring"
-                                onChange={(e) => handleInputChange(e, item.factor, item.name)}
+                                onChange={(e) => handleInputChangeMontos(e, item.factor, item.name, setMontos)}
                                 />
                             </div>
                             <div className="flex flex-col w-full">
@@ -158,14 +142,24 @@ export default function NominationForms({ Cashflow } : { Cashflow: any }) {
                                     min="0"
                                     max="200"
                                     className="w-full p-1 border rounded shadow-sm bg-white my-1 transition ease-in-out focus:border-blue-500 focus:ring"
-                                    onChange={(e) => handleInputChange(e, item.factor, item.name)}
+                                    onChange={(e) => handleInputChangeMontos(e, item.factor, item.name, setMontos)}
                                     />
                                 </div>
                         ))
                     }
                 </form>
-                <section>
-                    <h1 className="text-5xl font-bold text-green-500">{totalMonto.toFixed(2)}</h1>
+                <section className="border-2 border-black/40 p-2 rounded-md mt-4">
+                    <h2 className="text-xl font-semibold ">Cierre de Caja</h2>
+                    <div className="flex gap-4 items-center text-start">
+                        <h3 className="text-lg w-10/12">Total Contable:</h3>
+                        <p className={`text-2xl font-semibold text-green-500 ${
+                            Number(totalMonto.toFixed(2)) >= 500 ? 'text-green-500' : 'text-red-500'
+                        }`}>{totalMonto.toFixed(2)}</p>
+                    </div>
+                    <div className="flex gap-4 items-center text-start">
+                        <h3 className="text-lg w-10/12">Total Registrado:</h3>
+                        <p className="text-2xl font-semibold text-green-500">{(500).toFixed(2)}</p>
+                    </div>
                 </section>
             </section>
         </main>

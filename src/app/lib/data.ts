@@ -269,3 +269,22 @@ export async function FetchUserById(id : number) {
         throw new Error(error);
     }
 }
+
+export async function FetchInvoiceByDate() {
+
+
+    let date = new Date();
+    date.setHours(0, 0, 0, 0);
+    let dateString = date.toISOString().split('T')[0] + 'T00:00:00.000Z';
+
+    try {
+        const invoice = await prisma.facturas.findMany({
+            where: {
+                fecha_emision: new Date(dateString)
+            }
+        });
+        return invoice;
+    } catch (error : any) {
+        throw new Error(error);
+    }
+}
