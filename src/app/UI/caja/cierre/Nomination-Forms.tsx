@@ -1,6 +1,7 @@
 'use client';
 
 import { 
+    TableNominationCardCash,
     TableNominationDolarsBanknote, 
     TableNominationNationalBanknote, 
     TableNominationNationalCoin } 
@@ -15,7 +16,11 @@ export default function NominationForms({ Cashflow } : { Cashflow: any }) {
 
     const handleInputChange = (e : React.ChangeEvent<HTMLInputElement>, factor: number, name: string) => {
         const value = parseFloat(e.target.value) || 0;
-        const result = value * factor;
+        let result = value * factor;
+        if (name.includes("$")) {
+            const conversionRate = parseFloat(process.env.NEXT_PUBLIC_CONVERSION_RATE as string) || 1;
+            result *= conversionRate; // Factor de conversión a córdobas
+        }
         setMontos(prevMontos => ({ ...prevMontos, [name]: result }));
       };
 
@@ -142,35 +147,25 @@ export default function NominationForms({ Cashflow } : { Cashflow: any }) {
             <section>
                 <h2 className="text-xl font-semibold ">Pago con <span className="text-blue-500">Tarjeta</span></h2>
                 <form action="" className="border-2 border-black/40 w-full p-2 rounded-md">
-                    <div className="flex flex-row gap-2 w-full">
-                        <div className="flex flex-col w-full">
-                            <label htmlFor="cheques">Cantidad</label>
-                            <input 
-                            type="number" 
-                            name="cheques"
-                            id="cheques"
-                            min="0"
-                            max="200"
-                            className="w-full p-1 border rounded shadow-sm bg-white my-1 transition ease-in-out focus:border-blue-500 focus:ring"
-                            />
-                        </div>
-                    </div>
+                    {
+                        TableNominationCardCash.map((item) => (
+                                <div className="flex flex-col w-full" key={item.montoid}>
+                                    <label htmlFor={item.name}>{item.label}</label>
+                                    <input 
+                                    type="number" 
+                                    name={item.name}
+                                    id={item.name}
+                                    min="0"
+                                    max="200"
+                                    className="w-full p-1 border rounded shadow-sm bg-white my-1 transition ease-in-out focus:border-blue-500 focus:ring"
+                                    onChange={(e) => handleInputChange(e, item.factor, item.name)}
+                                    />
+                                </div>
+                        ))
+                    }
                 </form>
                 <section>
-                    {/* <div className="flex flex-row gap-2">
-                        <div className="flex flex-col w-full">
-                            <label htmlFor="total">Total Recuento</label>
-                            <input 
-                            type="number" 
-                            name="total"
-                            id="total"
-                            readOnly
-                            value={totalMonto}
-                            className="w-full p-1 border rounded shadow-sm bg-white my-1 transition ease-in-out focus:border-blue-500 focus:ring"
-                            />
-                        </div>
-                    </div> */}
-                    <h1 className="text-5xl font-bold text-green-500">{totalMonto}</h1>
+                    <h1 className="text-5xl font-bold text-green-500">{totalMonto.toFixed(2)}</h1>
                 </section>
             </section>
         </main>

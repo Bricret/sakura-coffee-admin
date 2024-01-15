@@ -158,49 +158,49 @@ export const TableColumsOrdersTo = [
 
 export const TableNominationNationalBanknote = [
     {
-        name: "C$5",
+        name: "C5",
         label: "Billetes de 5",
         montoid: "monto_Billete_C$5",
         factor: 5,
     },
     {
-        name: "C$10",
+        name: "C10",
         label: "Billetes de 10",
         montoid: "monto_Billete_C$10",
         factor: 10,
     },
     {
-        name: "C$20",
+        name: "C20",
         label: "Billetes de 20",
         montoid: "monto_Billete_C$20",
         factor: 20,
     },
     {
-        name: "C$50",
+        name: "C50",
         label: "Billetes de 50",
         montoid: "monto_Billete_C$50",
         factor: 50,
     },
     {
-        name: "C$100",
+        name: "C100",
         label: "Billetes de 100",
         montoid: "monto_Billete_C$100",
         factor: 100,
     },
     {
-        name: "C$200",
+        name: "C200",
         label: "Billetes de 200",
         montoid: "monto_Billete_C$200",
         factor: 200,
     },
     {
-        name: "C$500",
+        name: "C500",
         label: "Billetes de 500",
         montoid: "monto_Billete_C$500",
         factor: 500,
     },
     {
-        name: "C$1000",
+        name: "C1000",
         label: "Billetes de 1000",
         montoid: "monto_Billete_C$1000",
         factor: 1000,
@@ -258,5 +258,14 @@ export const TableNominationDolarsBanknote = [
         label: "Billetes de 20",
         montoid: "monto_Billete_U$_20",
         factor: 20,
+    },
+]
+
+export const TableNominationCardCash = [
+    {
+        name: "CardCash",
+        label: "Cordobas",
+        montoid: "monto_C$",
+        factor: 1,
     },
 ]

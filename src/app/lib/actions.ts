@@ -161,7 +161,7 @@ export async function createNewOrdersByOrderTo(idOrderTo : any,  total : any) {
         if (orderFound) {
             return { success: false, message: 'Orden ya existe en la base de datos', data: orderFound }
         };
-        const total_U_ = parseFloat((total / 36.6243).toFixed(2));
+        const total_U_ = parseFloat((total / parseFloat(process.env.NEXT_PUBLIC_CONVERSION_RATE as string)).toFixed(2));
 
         const newOrder = await prisma.ordens.create({
             data: {
@@ -278,7 +278,7 @@ export async function createNewDetailOrderByTable(formData: FormData, idOrder: s
 
     const cantidad = Number(rawFormData.cantidad)
     const monto_C_ = cantidad * findProduct.precio;
-    const monto_U_ = parseFloat((monto_C_ / 36.6243).toFixed(2));
+    const monto_U_ = parseFloat((monto_C_ / parseFloat(process.env.NEXT_PUBLIC_CONVERSION_RATE as string)).toFixed(2));
 
     try {
         await prisma.detalle_ordens.create({
@@ -316,7 +316,7 @@ export async function createNewDetailOrder(formData: FormData, idOrder: string, 
     
         const cantidad = Number(rawFormData.cantidad)
         const monto_C_ = cantidad * findProduct.precio;
-        const monto_U_ = parseFloat((monto_C_ / 36.6243).toFixed(2));
+        const monto_U_ = parseFloat((monto_C_ / parseFloat(process.env.NEXT_PUBLIC_CONVERSION_RATE as string)).toFixed(2));
     
         try {
             await prisma.detalle_ordens.create({
@@ -369,7 +369,7 @@ export async function updateDetailOrder( id: string, formData: FormData, product
     };
 
     const monto_C_ = Number(cantidad) * product.precio;
-    const monto_U_ = parseFloat((monto_C_ / 36.6243).toFixed(2));
+    const monto_U_ = parseFloat((monto_C_ / parseFloat(process.env.NEXT_PUBLIC_CONVERSION_RATE as string)).toFixed(2));
 
     try {
         await prisma.detalle_ordens.update({
@@ -452,7 +452,7 @@ export async function createNewInvoiceByTable(Order : any, TypePay : any ) {
     let emisionDate = new Date(actualDate as string);
     emisionDate = new Date(emisionDate.getTime() - emisionDate.getTimezoneOffset() * 60 * 1000);
     const propina_C =parseFloat((Order.sub_total_C_ * 0.10).toFixed(2));
-    const propina_U = parseFloat((propina_C / 36.6243).toFixed(2));
+    const propina_U = parseFloat((propina_C / parseFloat(process.env.NEXT_PUBLIC_CONVERSION_RATE as string)).toFixed(2));
     const total_C = Order.sub_total_C_ + propina_C;
     const total_U = Order.sub_total_U_ + propina_U;
 
@@ -533,7 +533,7 @@ export async function createNewInvoice( Order : any, TypePay : any ) {
     let emisionDate = new Date(actualDate as string);
     emisionDate = new Date(emisionDate.getTime() - emisionDate.getTimezoneOffset() * 60 * 1000);
     const propina_C =parseFloat((Order.sub_total_C_ * 0.10).toFixed(2));
-    const propina_U = parseFloat((propina_C / 36.6243).toFixed(2));
+    const propina_U = parseFloat((propina_C / parseFloat(process.env.NEXT_PUBLIC_CONVERSION_RATE as string)).toFixed(2));
     const total_C = Order.sub_total_C_ + propina_C;
     const total_U = Order.sub_total_U_ + propina_U;
 
@@ -729,7 +729,7 @@ export async function createNewCashFlow( formData: FormData ) {
         let openDate = new Date(actualDate as string);
         openDate = new Date(openDate.getTime() - openDate.getTimezoneOffset() * 60 * 1000);
         const monto_C = Number(rawFormData.monto);
-        const monto_U = parseFloat((monto_C / 36.6243).toFixed(2));
+        const monto_U = parseFloat((monto_C / parseFloat(process.env.NEXT_PUBLIC_CONVERSION_RATE as string)).toFixed(2));
 
         const session = await getServerSession(authOptions);
         const client = session?.user?.name;
