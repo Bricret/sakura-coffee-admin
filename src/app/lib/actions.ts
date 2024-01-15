@@ -725,7 +725,9 @@ export async function updateOrderToStatusAndUpdateOrdens( idOrderTo : any ) {
 export async function createNewCashFlow( formData: FormData ) {
     
         const rawFormData = Object.fromEntries(formData.entries());
-        const fecha = new Date().toISOString();
+        const actualDate = new Date().toISOString();
+        let openDate = new Date(actualDate as string);
+        openDate = new Date(openDate.getTime() - openDate.getTimezoneOffset() * 60 * 1000);
         const monto_C = Number(rawFormData.monto);
         const monto_U = parseFloat((monto_C / 36.6243).toFixed(2));
 
@@ -749,8 +751,8 @@ export async function createNewCashFlow( formData: FormData ) {
         try {
             await prisma.flujo_cajas.create({
                 data: {
-                    fecha_apertura: fecha,
-                    hora_apertura: fecha,
+                    fecha_apertura: openDate,
+                    hora_apertura: openDate,
                     monto_inicial_C_: monto_C,
                     monto_inicial_U_: monto_U,
                     caja_id: rawFormData.caja,
