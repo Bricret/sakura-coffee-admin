@@ -756,7 +756,9 @@ export async function createNewCashFlow( formData: FormData ) {
                     monto_inicial_C_: monto_C,
                     monto_inicial_U_: monto_U,
                     caja_id: rawFormData.caja,
-                    user_id: userFound.id
+                    user_id: userFound.id,
+                    observaciones: 'Apertura de caja',
+                    sobrante_caja: 0,
                 }
             });
 

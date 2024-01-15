@@ -8,22 +8,23 @@ from "@/app/lib/data/Local-Data";
 
 import { useEffect, useState } from "react";
 
-export default function NominationForms() {
+export default function NominationForms({ Cashflow } : { Cashflow: any }) {
 
     const [montos, setMontos] = useState<Record<string, number>>({});
-    const [totalMonto, setTotalMonto] = useState<number>(0);
+    const [totalMonto, setTotalMonto] = useState<number>(Cashflow.monto_inicial_C_);
 
     const handleInputChange = (e : React.ChangeEvent<HTMLInputElement>, factor: number, name: string) => {
         const value = parseFloat(e.target.value) || 0;
-        const result = value * factor; // Multiplica el valor ingresado por el factor
-        setMontos(prevMontos => ({ ...prevMontos, [name]: result })); // Actualiza el estado con el resultado
+        const result = value * factor;
+        setMontos(prevMontos => ({ ...prevMontos, [name]: result }));
       };
 
 
-    const calcularTotalMonto = () => {
-        const total = Object.values(montos).reduce((sum, monto) => sum + monto, 0);
-        setTotalMonto(total);
+      const calcularTotalMonto = () => {
+        const totalCalculado = Object.values(montos).reduce((sum, monto) => sum + monto, 0);
+        setTotalMonto(Cashflow.monto_inicial_C_ + totalCalculado);
     };
+    
 
     useEffect(() => {
         calcularTotalMonto();
@@ -121,7 +122,7 @@ export default function NominationForms() {
                                 />
                             </div>
                             <div className="flex flex-col w-full">
-                                <label htmlFor={item.montoid}>Monto</label>
+                                <label htmlFor={item.montoid}>Monto en <span className="text-blue-500">CORDOBAS</span></label>
                                 <input 
                                 type="number" 
                                 name={item.montoid}
@@ -169,7 +170,6 @@ export default function NominationForms() {
                             />
                         </div>
                     </div> */}
-                    {/* //TODO: Terminar la parte del cierre y crear nuevos campos en la tabla para el flujo (Observaciones Sobrante de caja, faltante de caja) */}
                     <h1 className="text-5xl font-bold text-green-500">{totalMonto}</h1>
                 </section>
             </section>

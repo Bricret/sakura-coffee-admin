@@ -65,6 +65,9 @@ model flujo_cajas {
   hora_apertura    DateTime  @db.Time(0)
   fecha_cierre     DateTime? @db.Date
   hora_cierre      DateTime? @db.Time(0)
+  observaciones    String    @db.VarChar(150)
+  faltante_caja    Float?
+  sobrante_caja    Float
   monto_inicial_C_ Float     @map("monto_inicial_C$")
   monto_inicial_U_ Float     @map("monto_inicial_U$")
   monto_final_C_   Float?    @map("monto_final_C$")

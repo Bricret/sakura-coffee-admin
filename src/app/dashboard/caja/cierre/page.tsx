@@ -32,7 +32,7 @@ export default async function CierrePage() {
     ) : (
         <>
         <InfoCash cajaActiva={cajaActiva} Cashflow={Cashflow} fechaEntregaFormatoLocal={fechaEntregaFormatoLocal} />
-        <NominationForms />
+        <NominationForms Cashflow={Cashflow} />
         </>
         
     )}
