@@ -27,7 +27,7 @@ export default function PayForm({ Order, ubi } : { Order : any, ubi : number }) 
                 router.push('/dashboard/caja');
                 const { data } = res;
                 const orderIdAndTableId = `${data.id.toString()}-${Order.id.toString()}`
-                const url = `http://localhost:3000/print/printInvoice/${orderIdAndTableId}`;
+                const url = `${process.env.NEXT_PUBLIC_URL}print/printInvoice/${orderIdAndTableId}`;
                 const windowFeatures = 'noopener,noreferrer';
                 window.open(url, '_blank', windowFeatures);
                 router.push('/dashboard/caja');
@@ -38,7 +38,7 @@ export default function PayForm({ Order, ubi } : { Order : any, ubi : number }) 
             if (res.success === true) {
                 const { data } = res;
                 const orderIdAndTableId = `${data.id.toString()}-${Order.id.toString()}`
-                const url = `http://localhost:3000/print/printInvoice/${orderIdAndTableId}`;
+                const url = `${process.env.NEXT_PUBLIC_URL}print/printInvoice/${orderIdAndTableId}`;
                 const windowFeatures = 'noopener,noreferrer';
                 window.open(url, '_blank', windowFeatures);
                 router.push('/dashboard/caja');
