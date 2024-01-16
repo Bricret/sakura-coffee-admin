@@ -23,7 +23,7 @@ export default function NominationForms({ Cashflow, Invoice } : { Cashflow: any,
         return acc + item.propina_C_;
     }, 0);
 
-    const absolutetotalinvoice = totalinvoice + propinainvoice + Cashflow.monto_inicial_C_;
+    const absolutetotalinvoice = totalinvoice + Cashflow.monto_inicial_C_;
 
     const allInvoiceTarjeta = Invoice?.filter((item: any) => item.metodo_pago === 'tarjeta');
 
@@ -176,15 +176,15 @@ export default function NominationForms({ Cashflow, Invoice } : { Cashflow: any,
                     }
                 </form>
                 <section className="border-2 border-black/40 p-2 rounded-md mt-4">
-                    <h2 className="text-xl font-semibold ">Cierre de Caja</h2>
+                    <h2 className="text-xl font-semibold ">Cierre de Caja Cordoba</h2>
                     <div className="flex gap-4 items-center text-start">
                         <h3 className="text-lg w-10/12">Total Contable:</h3>
                         <p className={`text-2xl font-semibold text-green-500 ${
                             Number(totalMonto.toFixed(2)) >= absolutetotalinvoice ? 'text-green-500' : 'text-red-500'
                         }`}>{totalMonto.toFixed(2)}</p>
                     </div>
-                    <div className="flex gap-4 items-center text-start border-b-1 border-b-black/30">
-                        <h3 className="text-lg w-10/12">Total Registrado:</h3>
+                    <div className="flex gap-4 items-center text-start">
+                        <h3 className="text-lg w-10/12">Total Ingresos:</h3>
                         <p className="text-2xl font-semibold">{absolutetotalinvoice.toFixed(2)}</p>
                     
                     </div>
@@ -194,6 +194,23 @@ export default function NominationForms({ Cashflow, Invoice } : { Cashflow: any,
                             Number(totalMonto.toFixed(2)) >= absolutetotalinvoice ? 'text-green-500' : 'text-red-500'
                         }`}>{(totalMonto - absolutetotalinvoice).toFixed(2)}</p>
                     </div>
+                    <div className="flex gap-4 items-center text-start border-b-1 border-b-black/30">
+                        <h3 className="text-lg w-10/12">Propina:</h3>
+                        <p className={`text-2xl font-semibold`}>{propinainvoice.toFixed(2)}</p>
+                    </div>
+                    <form action="">
+                        <label htmlFor="feedback" className="text-xl font-semibold">Observaciones</label>
+                        <textarea 
+                            name="feedback" 
+                            id="feedback" 
+                            cols={30} 
+                            rows={10}
+                            minLength={150}
+                            className="w-full p-1 border rounded shadow-sm bg-white my-1 transition ease-in-out focus:border-blue-500 focus:ring" 
+                            placeholder="Escriba aqui sus observaciones sobre el cierre de caja y el monto de diferencia."
+                        />
+                        
+                    </form>
                 </section>
             </section>
         </main>

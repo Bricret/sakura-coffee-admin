@@ -270,17 +270,13 @@ export async function FetchUserById(id : number) {
     }
 }
 
-export async function FetchInvoiceByDate() {
+export async function FetchInvoiceByDate( fecha_apertura : any ) {
 
-
-    let date = new Date();
-    date.setHours(0, 0, 0, 0);
-    let dateString = date.toISOString().split('T')[0] + 'T00:00:00.000Z';
 
     try {
         const invoice = await prisma.facturas.findMany({
             where: {
-                fecha_emision: new Date(dateString)
+                fecha_emision: new Date(fecha_apertura)
             }
         });
         return invoice;

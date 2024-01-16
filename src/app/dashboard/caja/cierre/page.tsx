@@ -10,7 +10,7 @@ export default async function CierrePage() {
     const caja = await FetchCaja();
     const Cashflow = await FetchCashFlow();
     const cajaActiva = await FetchCajaActive();
-    const InvoiceForDay = await FetchInvoiceByDate();
+    const InvoiceForDay = await FetchInvoiceByDate(Cashflow.fecha_apertura);
 
     let fechaEntregaFormatoLocal = '';
     if(Cashflow?.fecha_apertura) {

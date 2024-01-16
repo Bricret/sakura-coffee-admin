@@ -210,7 +210,7 @@ export const TableNominationNationalBanknote = [
 export const TableNominationNationalCoin = [
     {
         name: "C_0.50",
-        label: "Monedas de 50 centavos",
+        label: "Monedas 50 centavos",
         montoid: "monto_Moneda_C$0.50",
         factor: 0.50,
     },
