@@ -10,6 +10,7 @@ import ChangeMoney from "./Change-Money";
 import FormSectionInvoice from "./Form-Section-Invoice";
 import { useRouter } from "next/navigation";
 
+const dir = process.env.NEXT_PUBLIC_URL;
 
 export default function PayForm({ Order, ubi } : { Order : any, ubi : number }) {
     const [isDollar, setIsDollar] = useState(false);
@@ -27,7 +28,7 @@ export default function PayForm({ Order, ubi } : { Order : any, ubi : number }) 
                 router.push('/dashboard/caja');
                 const { data } = res;
                 const orderIdAndTableId = `${data.id.toString()}-${Order.id.toString()}`
-                const url = `${process.env.NEXT_PUBLIC_URL}print/printInvoice/${orderIdAndTableId}`;
+                const url = `${dir}print/printInvoice/${orderIdAndTableId}`;
                 const windowFeatures = 'noopener,noreferrer';
                 window.open(url, '_blank', windowFeatures);
                 router.push('/dashboard/caja');
@@ -38,7 +39,7 @@ export default function PayForm({ Order, ubi } : { Order : any, ubi : number }) 
             if (res.success === true) {
                 const { data } = res;
                 const orderIdAndTableId = `${data.id.toString()}-${Order.id.toString()}`
-                const url = `${process.env.NEXT_PUBLIC_URL}print/printInvoice/${orderIdAndTableId}`;
+                const url = `${dir}print/printInvoice/${orderIdAndTableId}`;
                 const windowFeatures = 'noopener,noreferrer';
                 window.open(url, '_blank', windowFeatures);
                 router.push('/dashboard/caja');

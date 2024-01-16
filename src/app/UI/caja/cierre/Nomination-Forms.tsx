@@ -15,6 +15,19 @@ export default function NominationForms({ Cashflow, Invoice } : { Cashflow: any,
     const [montos, setMontos] = useState<Record<string, number>>({});
     const [totalMonto, setTotalMonto] = useState<number>(Cashflow.monto_inicial_C_);
 
+    const totalinvoice = Invoice?.reduce((acc: number, item: any) => {
+        return acc + item.total_C_;
+    }, 0);
+
+    const propinainvoice = Invoice?.reduce((acc: number, item: any) => {
+        return acc + item.propina_C_;
+    }, 0);
+
+    const absolutetotalinvoice = totalinvoice + propinainvoice + Cashflow.monto_inicial_C_;
+
+    const allInvoiceTarjeta = Invoice?.filter((item: any) => item.metodo_pago === 'tarjeta');
+
+
     useEffect(() => {
         calcularTotalMonto(montos, Cashflow.monto_inicial_C_, setTotalMonto);
     }, [montos]);
@@ -133,18 +146,32 @@ export default function NominationForms({ Cashflow, Invoice } : { Cashflow: any,
                 <form action="" className="border-2 border-black/40 w-full p-2 rounded-md">
                     {
                         TableNominationCardCash.map((item) => (
-                                <div className="flex flex-col w-full" key={item.montoid}>
-                                    <label htmlFor={item.name}>{item.label}</label>
-                                    <input 
-                                    type="number" 
-                                    name={item.name}
-                                    id={item.name}
-                                    min="0"
-                                    max="200"
+                        <div className="flex flex-row gap-2" key={item.montoid}>
+                            <div className="flex flex-col w-full">
+                                <label htmlFor={item.name}>{item.label}</label>
+                                <input 
+                                type="number" 
+                                name={item.name}
+                                id={item.name}
+                                min="0"
+                                max="200"
+                                readOnly={allInvoiceTarjeta.length === 0 ? true : false}
+                                className="w-full p-1 border rounded shadow-sm bg-white my-1 transition ease-in-out focus:border-blue-500 focus:ring"
+                                onChange={(e) => handleInputChangeMontos(e, item.factor, item.name, setMontos)}
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="lengthPays">Cantidad</label>
+                                <input
+                                    type="number"
+                                    name="lengthPays"
+                                    id="lengthPays"
+                                    readOnly
+                                    value={allInvoiceTarjeta.length || 0}
                                     className="w-full p-1 border rounded shadow-sm bg-white my-1 transition ease-in-out focus:border-blue-500 focus:ring"
-                                    onChange={(e) => handleInputChangeMontos(e, item.factor, item.name, setMontos)}
-                                    />
-                                </div>
+                                />
+                            </div>
+                        </div>
                         ))
                     }
                 </form>
@@ -153,12 +180,19 @@ export default function NominationForms({ Cashflow, Invoice } : { Cashflow: any,
                     <div className="flex gap-4 items-center text-start">
                         <h3 className="text-lg w-10/12">Total Contable:</h3>
                         <p className={`text-2xl font-semibold text-green-500 ${
-                            Number(totalMonto.toFixed(2)) >= 500 ? 'text-green-500' : 'text-red-500'
+                            Number(totalMonto.toFixed(2)) >= absolutetotalinvoice ? 'text-green-500' : 'text-red-500'
                         }`}>{totalMonto.toFixed(2)}</p>
                     </div>
-                    <div className="flex gap-4 items-center text-start">
+                    <div className="flex gap-4 items-center text-start border-b-1 border-b-black/30">
                         <h3 className="text-lg w-10/12">Total Registrado:</h3>
-                        <p className="text-2xl font-semibold text-green-500">{(500).toFixed(2)}</p>
+                        <p className="text-2xl font-semibold">{absolutetotalinvoice.toFixed(2)}</p>
+                    
+                    </div>
+                    <div className="flex gap-4 items-center text-start">
+                        <h3 className="text-lg w-10/12">Diferencia:</h3>
+                        <p className={`text-2xl font-semibold ${
+                            Number(totalMonto.toFixed(2)) >= absolutetotalinvoice ? 'text-green-500' : 'text-red-500'
+                        }`}>{(totalMonto - absolutetotalinvoice).toFixed(2)}</p>
                     </div>
                 </section>
             </section>
