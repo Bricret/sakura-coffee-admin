@@ -222,9 +222,17 @@ export async function FetchCajaActive() {
     }
 }
 
-export async function FetchCashFlow() {
+export async function FetchCashFlowByDate() {
+    const actualDate = new Date().toISOString();
+    let date = new Date(actualDate as string);
+    date = new Date(date.getTime() - date.getTimezoneOffset() * 60 * 1000);
+    const openOnlyDate = date.toISOString().split('T')[0] + 'T00:00:00.000Z';
     try {
-        const cashFlow = await prisma.flujo_cajas.findFirst();
+        const cashFlow = await prisma.flujo_cajas.findFirst({
+            where: {
+                fecha_apertura: new Date(openOnlyDate)
+            }
+        });
         return cashFlow;
     } catch (error : any) {
         throw new Error(error);

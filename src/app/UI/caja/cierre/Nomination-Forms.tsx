@@ -29,7 +29,6 @@ export default function NominationForms({ Cashflow, Invoice } : { Cashflow: any,
 
     const absolutetotalinvoice = totalinvoice + Cashflow.monto_inicial_C_;
     const allInvoiceTarjeta = Invoice?.filter((item: any) => item.metodo_pago === 'tarjeta');
-
     const diferencia = totalMonto - absolutetotalinvoice;
 
     useEffect(() => {

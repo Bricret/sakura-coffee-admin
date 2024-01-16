@@ -11,7 +11,7 @@ export default async function Invoice({ idTable, ubi, product, Orders } : { idTa
     let edit = true;
     (ubi === 2) ? Order = await FetchOrdersByIdTable(idTable) : null;
     (ubi === 2) ? products = await FetchAllProductAvailability() : null;
-    (ubi === 2) ? id = Order.id : null;
+    (ubi === 2) ? id = Order?.id : null;
     (ubi === 2) ? edit = false : null;
 
     return (
