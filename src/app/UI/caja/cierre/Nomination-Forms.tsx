@@ -1,20 +1,19 @@
 'use client';
 
 import { updateCashFlow } from "@/app/lib/actions";
-import { PropinaInvoice, TotalInvoice, calcularTotalMonto, handleInputChangeMontos } from "@/app/lib/utils";
+import { PropinaInvoice, TotalInvoice, calcularTotalMonto } from "@/app/lib/utils";
 import { ErrorToast } from "@/app/plugins/sonner";
 import { useEffect, useState } from "react";
 import { Toaster } from "sonner";
 import NominationTable from "./NominationTable";
 import FormToCloseCash from "./FormToCloseCash";
 
-
 export default function NominationForms({ Cashflow, Invoice } : { Cashflow: any, Invoice: any }) {
 
     const [montos, setMontos] = useState<Record<string, number>>({});
     const [totalMonto, setTotalMonto] = useState<number>(Cashflow.monto_inicial_C_);
 
-    const absolutetotalinvoice = TotalInvoice(Invoice) + Cashflow.monto_inicial_C_;
+    const absolutetotalinvoice = (TotalInvoice(Invoice) + Cashflow.monto_inicial_C_) - PropinaInvoice(Invoice);
     const allInvoiceTarjeta = Invoice?.filter((item: any) => item.metodo_pago === 'tarjeta');
     const diferencia = totalMonto - absolutetotalinvoice;
 
@@ -44,7 +43,7 @@ export default function NominationForms({ Cashflow, Invoice } : { Cashflow: any,
             duration={1500}
             closeButton
             richColors
-        />
+            />
         </main>
     )
 }
