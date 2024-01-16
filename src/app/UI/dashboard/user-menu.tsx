@@ -1,6 +1,7 @@
 'use client';
 
 import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, User} from "@nextui-org/react";
+import { signOut } from "next-auth/react";
 import Image from "next/image";
 
 export default function UserMenu({ username, rol }: { username: string, rol: string }) {
@@ -25,6 +26,7 @@ export default function UserMenu({ username, rol }: { username: string, rol: str
             <DropdownItem key="Create-User" href="/registerUser">Crear usuaro</DropdownItem>
             <DropdownItem key="Create-Rol">Crear Rol</DropdownItem>
             <DropdownItem key="Create-Permissions">Crear Permisos</DropdownItem>
+            <DropdownItem key="signout" color="danger" onClick={() => signOut({ callbackUrl: '/' })}>Cerrar Sesion</DropdownItem>
             </DropdownMenu>
         </Dropdown>
     )

@@ -1,3 +1,4 @@
+import NavBar from "@/app/UI/dashboard/nav-bar";
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -6,8 +7,6 @@ export const metadata: Metadata = {
 
 export default function ReportsPage() {
     return (
-        <div>
-            <h1>Reports Page</h1>
-        </div>
+        <NavBar title={"Reportes de Movimiento"}/>
     )
 }
