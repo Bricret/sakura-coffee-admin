@@ -60,3 +60,18 @@ export const calcularTotalMonto = ( montos : any, montoInicial : any, setTotalMo
   const totalCalculado = Object.values(montos).reduce((sum : any, monto) => sum + monto, 0);
   setTotalMonto(montoInicial + totalCalculado);
 };
+
+
+export const TotalInvoice = ( Invoice : any ) => {
+  const totalinvoice = Invoice?.reduce((acc: number, item: any) => {
+    return acc + item.total_C_;
+  }, 0);
+  return totalinvoice;
+};
+
+export const PropinaInvoice = ( Invoice : any ) => {
+  const propinainvoice = Invoice?.reduce((acc: number, item: any) => {
+    return acc + item.propina_C_;
+  }, 0);
+  return propinainvoice;
+}
