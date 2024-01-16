@@ -779,3 +779,55 @@ export async function createNewCashFlow( formData: FormData ) {
         return { success: false, message: 'Flujo de caja no fue creado correctamente' }
         }
 }
+
+export async function updateCashFlow( formData : FormData, diferencia : number, idCashFlow : any, absolutetotalinvoice : number ) {
+
+    const observaciones = formData.get('feedback');
+    const actualDate = new Date().toISOString();
+    let closeDate = new Date(actualDate as string);
+    closeDate = new Date(closeDate.getTime() - closeDate.getTimezoneOffset() * 60 * 1000);
+    const monto_final_U_ = parseFloat((absolutetotalinvoice / parseFloat(process.env.NEXT_PUBLIC_CONVERSION_RATE as string)).toFixed(2));
+    let faltante = 0;
+    let sobrante = 0;
+    if (diferencia < 0 ) {
+        faltante = Math.abs(diferencia);
+    } else {
+        sobrante = diferencia;
+    }
+
+    try {
+        await prisma.flujo_cajas.update({
+            where: {
+                id: idCashFlow.toString()
+            },
+            data: {
+                fecha_cierre: closeDate,
+                hora_cierre: closeDate,
+                monto_final_C_: absolutetotalinvoice,
+                monto_final_U_: monto_final_U_,
+                sobrante_caja: sobrante,
+                faltante_caja: faltante,
+                observaciones: observaciones
+            }
+        });
+        const findCashFlow = await prisma.flujo_cajas.findFirst({
+            where: {
+                id: idCashFlow.toString()
+            }
+        });
+        await prisma.cajas.update({
+            where: {
+                id: findCashFlow.caja_id.toString()
+            },
+            data: {
+                estado: 'cerrado'
+            }
+        });
+        revalidatePath(`/dashboard/caja`);
+        revalidatePath(`/dashboard/caja/cierre`);
+        return { success: true, message: 'Flujo de caja actualizado correctamente' }
+    } catch ( error : any ) {
+       console.log('error', error);
+       return { success: false, message: 'Flujo de caja no fue actualizado correctamente' }
+    }
+}
