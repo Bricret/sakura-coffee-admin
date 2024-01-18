@@ -1,3 +1,4 @@
+import { revalidatePath } from "next/cache";
 import prisma from "./db";
 
 
@@ -222,7 +223,7 @@ export async function FetchCajaActive() {
     }
 }
 
-export async function FetchCashFlowByDate() {
+export async function FetchCashFlowByDate( dayDate? : any ) {
     const actualDate = new Date().toISOString();
     let date = new Date(actualDate as string);
     date = new Date(date.getTime() - date.getTimezoneOffset() * 60 * 1000);
@@ -230,9 +231,10 @@ export async function FetchCashFlowByDate() {
     try {
         const cashFlow = await prisma.flujo_cajas.findFirst({
             where: {
-                fecha_apertura: new Date(openOnlyDate)
+                fecha_apertura: dayDate || openOnlyDate
             }
         });
+        revalidatePath('/dashboard/caja/cierre');
         return cashFlow;
     } catch (error : any) {
         throw new Error(error);
