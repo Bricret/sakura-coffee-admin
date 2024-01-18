@@ -34,7 +34,7 @@ export default function MoreInfoDialog({ isOpen, onClose, ordenTo } : { isOpen :
                                 <p>Telefono Adicional:</p>
                                 <p>Anticipo:</p>
                                 <p>Total:</p>
-                                <p>Faltante:</p>
+                                <p>Pediente de Pago:</p>
                             </div>
                             <div className="flex flex-col gap-1 text-lg">
                                 <p>{ ordenTo.nombre_cliente }</p>
