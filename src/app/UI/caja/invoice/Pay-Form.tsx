@@ -46,6 +46,11 @@ export default function PayForm({ Order, ubi } : { Order : any, ubi : number }) 
             }
         }
     }
+
+    const handleFinish = () => {
+        console.log('Finish');
+    }
+
     return (
         <>
         <h1 className="text-2xl mb-2 mt-4 md:mt-0">Cambio</h1>
@@ -73,9 +78,20 @@ export default function PayForm({ Order, ubi } : { Order : any, ubi : number }) 
                         </Checkbox>
                     </div>
                 </div>
-                <Button>
-                    Pagar
-                </Button>
+                <div className="flex gap-2">
+                    <div className="w-1/2">
+                        <Button>
+                            Imprimir
+                        </Button>
+                    </div>
+                    <button 
+                        className="p-1 rounded-md bg-green-500 text-center text-white font-semibold w-1/2"
+                        onClick={handleFinish}
+                        type="button"
+                    >
+                        Terminar
+                    </button>
+                </div>
                 <Toaster
                     dir="auto"
                     visibleToasts={2}

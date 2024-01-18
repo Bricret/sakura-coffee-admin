@@ -23,10 +23,10 @@ export default function MainInvoice({ details_orders, products } : { details_ord
                 products.map((product : any) => {
                     if(product.id === detail_order.producto_id) {
                         return (
-                            <>
+                            <div className="flex flex-row" key={product.id}>
                                 <h3 className="text-sm w-1/2 break-words">{product.nombre}</h3>
-                                <h3 className="text-sm pl-3 w-20">{product.precio}</h3>
-                            </>
+                                <h3 className="text-sm pl-3 w-20">{product.precio.toString()}</h3>
+                            </div>
                         )
                     }
                 })
