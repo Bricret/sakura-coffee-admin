@@ -25,7 +25,7 @@ export default function BottomInvoice({ invoice } : { invoice : any }){
                 </section>
                 <section className="flex flex-row items-start justify-between w-full">
                     <h3 className="text-sm w-1/3">Subtotal U$</h3>
-                    <h3 className="text-sm">{(invoice.total_U_ - invoice.propina_U_).toString()}</h3>
+                    <h3 className="text-sm">{(invoice.total_U_ - invoice.propina_U_).toFixed(2)}</h3>
                 </section>
                 <section className="flex flex-row items-start justify-between w-full">
                     <h3 className="text-sm w-1/2">Propina Sugerida C$</h3>

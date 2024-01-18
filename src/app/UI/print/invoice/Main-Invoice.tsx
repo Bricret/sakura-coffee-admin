@@ -25,7 +25,7 @@ export default function MainInvoice({ details_orders, products } : { details_ord
                         return (
                             <>
                                 <h3 className="text-sm w-1/2 break-words">{product.nombre}</h3>
-                                <h3 className="text-sm w-20">{product.precio}</h3>
+                                <h3 className="text-sm pl-3 w-20">{product.precio}</h3>
                             </>
                         )
                     }

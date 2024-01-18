@@ -1,10 +1,19 @@
+import Image from "next/image";
 
 export default function TopInvoice({ invoice, fechaEmisionFormatoLocal, horaEmisionFormatoLocal, user } : { invoice : any, fechaEmisionFormatoLocal : any, horaEmisionFormatoLocal : any, user : any}) {
 
     return (
     <>
     <header className="flex flex-col items-center justify-center pb-2">
-        <h1 className="text-2xl font-bold pb-2 p-4">Sakura Coffee Shop</h1>
+        <Image
+            src="/logo-unic.png"
+            alt="Sakura Coffee Shop"
+            width={100}
+            height={100}
+            priority
+            className="object-contain rounded-full w-auto h-auto"
+        />
+        <h1 className="text-2xl font-bold pb-2 p-4 pt-2">Sakura Coffee Shop</h1>
         <h3 className="text-lg">C4P8+HR2, Barrio Zaragoza, León</h3>
         <h3 className="text-base">RUC: 123456789-0</h3>
         <h3 className="text-sm">FACTURA ORIGINAL</h3>
