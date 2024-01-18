@@ -33,7 +33,7 @@ export const LinkCaja = [
         href: '/dashboard/caja',
     },
     {
-        title: 'Pedidos',
+        title: 'Pasteleria',
         icon: OrderIcon,
         href: '/dashboard/caja/pedidos',
     },
@@ -209,6 +209,12 @@ export const TableNominationNationalBanknote = [
 
 export const TableNominationNationalCoin = [
     {
+        name: "C_0.25",
+        label: "Monedas 25 centavos",
+        montoid: "monto_Moneda_C$0.20",
+        factor: 0.25,
+    },
+    {
         name: "C_0.50",
         label: "Monedas 50 centavos",
         montoid: "monto_Moneda_C$0.50",
@@ -258,6 +264,18 @@ export const TableNominationDolarsBanknote = [
         label: "Billetes de 20",
         montoid: "monto_Billete_U$_20",
         factor: 20,
+    },
+    {
+        name: "$50",
+        label: "Billetes de 50",
+        montoid: "monto_Billete_U$_50",
+        factor: 50,
+    },
+    {
+        name: "$100",
+        label: "Billetes de 100",
+        montoid: "monto_Billete_U$_100",
+        factor: 100,
     },
 ]
 
