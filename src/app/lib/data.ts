@@ -120,6 +120,20 @@ export async function FetchTables() {
     }
 }
 
+export async function FetchTablesActives() {
+    try {
+        const tables = await prisma.mesas.findMany({
+            where: {
+                estado: 'libre'
+            }
+        });
+        return tables;
+    } catch (error : any) {
+        throw new Error(error);
+    }
+
+}
+
 export async function FetchOrdersByIdTable(idTable : any) {
     try {
         const orders = await prisma.ordens.findFirst({

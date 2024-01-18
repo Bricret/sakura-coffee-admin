@@ -2,14 +2,15 @@ import { Icons } from "@/app/plugins/Icons";
 import { Tooltip } from "@nextui-org/react";
 import Link from "next/link";
 import ChangeTables from "./Change-Tables";
-import { FetchOrdersByIdTable } from "@/app/lib/data";
+import { FetchOrdersByIdTable, FetchTablesActives } from "@/app/lib/data";
 
 const { MoreIcon, CashRegisterIcon } = Icons;
  
 
-export default async function TableCashOption({ tables, state, idTable }: { tables : any, state? : string, idTable? : string }) {
+export default async function TableCashOption({ state, idTable }: { state? : string, idTable? : string }) {
 
     const infoOrder = await FetchOrdersByIdTable(idTable);
+    const TablesActives = await FetchTablesActives();
 
     return (
         <div className="relative flex items-center justify-center">
@@ -39,7 +40,7 @@ export default async function TableCashOption({ tables, state, idTable }: { tabl
                         <CashRegisterIcon />
                     </Link>
                 </Tooltip>
-                <ChangeTables tables={ tables } infoOrder={ infoOrder } />
+                <ChangeTables tables={ TablesActives } infoOrder={ infoOrder } />
                 </div>
             )
           }
