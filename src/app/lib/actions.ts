@@ -463,6 +463,16 @@ export async function createNewInvoiceByTable(Order : any, TypePay : any ) {
         }
     });
 
+    const findInvoice = await prisma.facturas.findFirst({
+        where: {
+            orden_id: Order.id
+        }
+    });
+
+    if (findInvoice) {
+        return { success: true, message: 'Factura ya existe en la base de datos', data: findInvoice }
+    };
+
     if (userFound.status === 'inactivo') return { success: false, message: 'Usuario Inactivo, nisiquiera deberias poder hacer esto.' }
 
     // Busca el ultimo numero de factura
@@ -495,29 +505,6 @@ export async function createNewInvoiceByTable(Order : any, TypePay : any ) {
                 orden_id: Order.id
             }
         });
-        if (newInvoice) {
-            try {
-                await prisma.ordens.update({
-                    where: {
-                        id: Order.id
-                    },
-                    data: {
-                        estado: 'finalizada'
-                    }
-                });
-                await prisma.mesas.update({
-                    where: {
-                        id: Order.mesa_id
-                    },
-                    data: {
-                        estado: 'libre'
-                    }
-                });
-            } catch (error) {
-                throw new Error('Error al intentar actualizar la orden');
-            }
-        }
-        revalidatePath(`/dashboard/caja`);
         return { success: true, message: 'Factura creada correctamente', data: newInvoice}
     } catch ( error : any ) {
        console.log('error', error);

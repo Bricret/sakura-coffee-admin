@@ -14,8 +14,9 @@ const dir = process.env.NEXT_PUBLIC_URL;
 
 export default function PayForm({ Order, ubi } : { Order : any, ubi : number }) {
     const [isDollar, setIsDollar] = useState(false);
+    const [propina, setPropina] = useState(false);
+    const [invoice, setInvoice] = useState<any>(null);
     const router = useRouter();
-
 
     async function ClientAction( formData : FormData ) {
         const TypePay = formData.get('tipo')
@@ -24,31 +25,36 @@ export default function PayForm({ Order, ubi } : { Order : any, ubi : number }) 
         }
         if (ubi === 1) {
             const res = await createNewInvoice(Order, TypePay);
+            
             if (res.success === true) {
-                router.push('/dashboard/caja');
                 const { data } = res;
+                setInvoice(data);
                 const orderIdAndTableId = `${data.id.toString()}-${Order.id.toString()}`
                 const url = `${dir}print/printInvoice/${orderIdAndTableId}`;
                 const windowFeatures = 'noopener,noreferrer';
                 window.open(url, '_blank', windowFeatures);
-                router.push('/dashboard/caja');
             }
         }
         if (ubi === 2) {
             const res = await createNewInvoiceByTable(Order, TypePay);
             if (res.success === true) {
                 const { data } = res;
+                setInvoice(data);
                 const orderIdAndTableId = `${data.id.toString()}-${Order.id.toString()}`
                 const url = `${dir}print/printInvoice/${orderIdAndTableId}`;
                 const windowFeatures = 'noopener,noreferrer';
                 window.open(url, '_blank', windowFeatures);
-                router.push('/dashboard/caja');
             }
         }
     }
 
-    const handleFinish = () => {
-        console.log('Finish');
+    const handleFinish = async () => {
+        if ( propina === true ) {
+            console.log('Hay propina');
+            console.log('Finish', invoice, propina);
+        } else {
+            console.log('No hay propina');
+        }
     }
 
     return (
@@ -60,7 +66,7 @@ export default function PayForm({ Order, ubi } : { Order : any, ubi : number }) 
                 <FormSectionInvoice isDollar={ isDollar } Order={ Order }/>
                 <div className="flex flex-col">
                     <h6 className="text-secundary">Metodo de pago</h6>
-                    <div className="flex flex-row gap-4 pb-4">
+                    <div className="flex flex-row gap-4 pb-2">
                         <Checkbox 
                             id="tipo"
                             name="tipo"
@@ -75,6 +81,23 @@ export default function PayForm({ Order, ubi } : { Order : any, ubi : number }) 
                             value="tarjeta"
                         >
                             Tarjeta
+                        </Checkbox>
+                        <Checkbox
+                            id="tipo"
+                            name="tipo"
+                            value="transferencia"
+                        >
+                            Transferencia
+                        </Checkbox>
+                    </div>
+                    <div className="mb-2">
+                        <Checkbox
+                            id="propina"
+                            name="propina"
+                            value="propina"
+                            onChange={() => setPropina(!propina)}
+                        >
+                            Propina
                         </Checkbox>
                     </div>
                 </div>

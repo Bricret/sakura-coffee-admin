@@ -14,10 +14,9 @@ export default function TopInvoice({ invoice, fechaEmisionFormatoLocal, horaEmis
             className="object-contain rounded-full w-auto h-auto"
         />
         <h1 className="text-2xl font-bold pb-2 p-4 pt-2">Sakura Coffee Shop</h1>
-        <h3 className="text-lg">C4P8+HR2, Barrio Zaragoza, León</h3>
+        <h3 className="text-lg text-center">Supermercado la colonia 15 varas al norte. Zaragoza, León</h3>
         <h3 className="text-base">RUC: 123456789-0</h3>
         <h3 className="text-sm">FACTURA ORIGINAL</h3>
-        <h3 className="text-sm">PARA LLEVAR</h3>
     </header>
     <nav className="flex flex-col items-start justify-start pb-2 w-full">
         <h3 className="text-base text-left items-start justify-start">DATOS</h3>
