@@ -282,7 +282,7 @@ export async function updateOrderToFinishByTable( idOrder : any, idTable : any )
     try {
         await prisma.ordens.update({
             where: {
-                id: idOrder.toString()
+                id: idOrder
             },
             data: {
                 estado: 'finalizada'

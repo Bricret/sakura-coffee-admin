@@ -61,7 +61,7 @@ export default function PayForm({ Order, ubi } : { Order : any, ubi : number }) 
                 res.success === true ? router.push('/dashboard/caja') : ErrorToast('No se pudo actualizar la orden');
             }
             if ( ubi === 2 ) {
-                const res = await updateOrderToFinishByTable(invoice.id, Order.mesa_id);
+                const res = await updateOrderToFinishByTable(Order.id, Order.mesa_id);
                 res.success === true ? router.push('/dashboard/caja') : ErrorToast('No se pudo actualizar la factura');
             }
         } else {
