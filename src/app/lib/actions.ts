@@ -585,6 +585,31 @@ export async function createNewInvoice( Order : any, TypePay : any ) {
     }
 }
 
+export async function updateInvoice( idInvoice : any, newTotal : number ) {
+
+    const total_U_ = parseFloat((newTotal / parseFloat(process.env.NEXT_PUBLIC_CONVERSION_RATE as string)).toFixed(2));
+
+    try {
+        await prisma.facturas.update({
+            where: {
+                id: idInvoice.toString()
+            },
+            data: {
+                total_C_: newTotal,
+                total_U_: total_U_,
+                propina_C_: 0,
+                propina_U_: 0,
+            }
+        });
+        revalidatePath(`/dashboard/caja`);
+        return { success: true, message: 'Factura actualizada correctamente' }
+    } catch ( error : any ) {
+       console.log('error', error);
+       return { success: false, message: 'Factura no fue actualizada correctamente' }
+    }
+
+}
+
 export async function createNewOrderTo( formData : FormData ) {
 
     const rawFormData = Object.fromEntries(formData.entries());

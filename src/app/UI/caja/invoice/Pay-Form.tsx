@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Button } from "../../auth/button";
 import { Toaster } from "sonner";
 import { ErrorToast } from "@/app/plugins/sonner";
-import { createNewInvoice, createNewInvoiceByTable } from "@/app/lib/actions";
+import { createNewInvoice, createNewInvoiceByTable, updateInvoice } from "@/app/lib/actions";
 import ChangeMoney from "./Change-Money";
 import FormSectionInvoice from "./Form-Section-Invoice";
 import { useRouter } from "next/navigation";
@@ -48,12 +48,19 @@ export default function PayForm({ Order, ubi } : { Order : any, ubi : number }) 
         }
     }
 
+    // TODO: implementar la actualizacion de totales con propinas y sin propinas en las facturas de mesas
     const handleFinish = async () => {
+        if (invoice === null) {
+            return ErrorToast('No se ha generado la factura');
+        }
+
         if ( propina === true ) {
-            console.log('Hay propina');
-            console.log('Finish', invoice, propina);
+            const newTotal = invoice.total_C_ - invoice.propina_C_;
+            const res = await updateInvoice(invoice.id, newTotal);
+            res.success === true ? router.push('/dashboard/caja') : ErrorToast('No se pudo actualizar la factura');
         } else {
             console.log('No hay propina');
+            router.push('/dashboard/caja');
         }
     }
 
@@ -90,7 +97,9 @@ export default function PayForm({ Order, ubi } : { Order : any, ubi : number }) 
                             Transferencia
                         </Checkbox>
                     </div>
-                    <div className="mb-2">
+                {
+                    invoice !== null ? (
+                        <div className="mb-2">
                         <Checkbox
                             id="propina"
                             name="propina"
@@ -100,6 +109,8 @@ export default function PayForm({ Order, ubi } : { Order : any, ubi : number }) 
                             Propina
                         </Checkbox>
                     </div>
+                    ) : null
+                }
                 </div>
                 <div className="flex gap-2">
                     <div className="w-1/2">
