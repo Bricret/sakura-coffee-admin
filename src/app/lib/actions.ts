@@ -259,6 +259,50 @@ export async function updateOrder( idOder : any, subTotalC : number, subTotalU :
        return { success: false, message: 'Orden no fue actualizada correctamente', data: error }
     }
 }
+
+export async function updateOrderToFinish( idOrder : any ) {
+    try {
+        await prisma.ordens.update({
+            where: {
+                id: idOrder.toString()
+            },
+            data: {
+                estado: 'finalizada'
+            }
+        });
+        revalidatePath(`/dashboard/caja`);
+        return { success: true, message: 'Orden actualizada correctamente' }
+    } catch ( error : any ) {
+       console.log('error', error);
+       return { success: false, message: 'Orden no fue actualizada correctamente' }
+    }
+}
+
+export async function updateOrderToFinishByTable( idOrder : any, idTable : any ) {
+    try {
+        await prisma.ordens.update({
+            where: {
+                id: idOrder.toString()
+            },
+            data: {
+                estado: 'finalizada'
+            }
+        });
+        await prisma.mesas.update({
+            where: {
+                id: idTable
+            },
+            data: {
+                estado: 'libre'
+            }
+        });
+        revalidatePath(`/dashboard/caja`);
+        return { success: true, message: 'Orden actualizada correctamente' }
+    } catch ( error : any ) {
+    console.log('error', error);
+    return { success: false, message: 'Orden no fue actualizada correctamente' }
+    }
+}
  
 export async function createNewDetailOrderByTable(formData: FormData, idOrder: string, products: any, idTable: string) {
 
@@ -563,20 +607,6 @@ export async function createNewInvoice( Order : any, TypePay : any ) {
                 orden_id: Order.id
             }
         });
-        if (newInvoice) {
-            try {
-                await prisma.ordens.update({
-                    where: {
-                        id: Order.id
-                    },
-                    data: {
-                        estado: 'finalizada'
-                    }
-                });
-            } catch (error) {
-                throw new Error('Error al intentar actualizar la orden');
-            }
-        }
         revalidatePath(`/dashboard/caja`);
         return { success: true, message: 'Factura creada correctamente', data: newInvoice}
     } catch ( error : any ) {
@@ -585,12 +615,12 @@ export async function createNewInvoice( Order : any, TypePay : any ) {
     }
 }
 
-export async function updateInvoice( idInvoice : any, newTotal : number ) {
+export async function updateInvoice( idInvoice : any, newTotal : number, orderId : any ) {
 
     const total_U_ = parseFloat((newTotal / parseFloat(process.env.NEXT_PUBLIC_CONVERSION_RATE as string)).toFixed(2));
 
     try {
-        await prisma.facturas.update({
+        const newInvoice = await prisma.facturas.update({
             where: {
                 id: idInvoice.toString()
             },
@@ -601,11 +631,74 @@ export async function updateInvoice( idInvoice : any, newTotal : number ) {
                 propina_U_: 0,
             }
         });
+        if (newInvoice) {
+            try {
+                await prisma.ordens.update({
+                    where: {
+                        id: orderId
+                    },
+                    data: {
+                        estado: 'finalizada'
+                    }
+                });
+            } catch (error) {
+                throw new Error('Error al intentar actualizar la orden');
+            }
+        }
+
         revalidatePath(`/dashboard/caja`);
         return { success: true, message: 'Factura actualizada correctamente' }
     } catch ( error : any ) {
        console.log('error', error);
        return { success: false, message: 'Factura no fue actualizada correctamente' }
+    }
+
+}
+
+export async function updateInvoiceByTable( idInvoice : any, newTotal : number, orderId : any, idTable : any ) {
+    
+    const total_U_ = parseFloat((newTotal / parseFloat(process.env.NEXT_PUBLIC_CONVERSION_RATE as string)).toFixed(2));
+
+    try {
+        const newInvoice = await prisma.facturas.update({
+            where: {
+                id: idInvoice.toString()
+            },
+            data: {
+                total_C_: newTotal,
+                total_U_: total_U_,
+                propina_C_: 0,
+                propina_U_: 0,
+            }
+        });
+        if (newInvoice) {
+            try {
+                await prisma.ordens.update({
+                    where: {
+                        id: orderId
+                    },
+                    data: {
+                        estado: 'finalizada'
+                    }
+                });
+                await prisma.mesas.update({
+                    where: {
+                        id: idTable
+                    },
+                    data: {
+                        estado: 'libre'
+                    }
+                });
+            } catch (error) {
+                throw new Error('Error al intentar actualizar la orden');
+            }
+        }
+
+        revalidatePath(`/dashboard/caja`);
+        return { success: true, message: 'Factura actualizada correctamente' }
+    } catch ( error : any ) {
+    console.log('error', error);
+    return { success: false, message: 'Factura no fue actualizada correctamente' }
     }
 
 }

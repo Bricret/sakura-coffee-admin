@@ -5,12 +5,14 @@ import { useState } from "react";
 import { Button } from "../../auth/button";
 import { Toaster } from "sonner";
 import { ErrorToast } from "@/app/plugins/sonner";
-import { createNewInvoice, createNewInvoiceByTable, updateInvoice } from "@/app/lib/actions";
+import { createNewInvoice, createNewInvoiceByTable, updateInvoice, updateInvoiceByTable, updateOrderToFinish, updateOrderToFinishByTable } from "@/app/lib/actions";
 import ChangeMoney from "./Change-Money";
 import FormSectionInvoice from "./Form-Section-Invoice";
 import { useRouter } from "next/navigation";
 
 const dir = process.env.NEXT_PUBLIC_URL;
+
+// ubi = 1 -> caja | ubi = 2 -> mesa
 
 export default function PayForm({ Order, ubi } : { Order : any, ubi : number }) {
     const [isDollar, setIsDollar] = useState(false);
@@ -48,19 +50,30 @@ export default function PayForm({ Order, ubi } : { Order : any, ubi : number }) 
         }
     }
 
-    // TODO: implementar la actualizacion de totales con propinas y sin propinas en las facturas de mesas
     const handleFinish = async () => {
         if (invoice === null) {
             return ErrorToast('No se ha generado la factura');
         }
 
         if ( propina === true ) {
-            const newTotal = invoice.total_C_ - invoice.propina_C_;
-            const res = await updateInvoice(invoice.id, newTotal);
-            res.success === true ? router.push('/dashboard/caja') : ErrorToast('No se pudo actualizar la factura');
+            if (ubi === 1) {
+                const res = await updateOrderToFinish(Order.id);
+                res.success === true ? router.push('/dashboard/caja') : ErrorToast('No se pudo actualizar la orden');
+            }
+            if ( ubi === 2 ) {
+                const res = await updateOrderToFinishByTable(invoice.id, Order.mesa_id);
+                res.success === true ? router.push('/dashboard/caja') : ErrorToast('No se pudo actualizar la factura');
+            }
         } else {
-            console.log('No hay propina');
-            router.push('/dashboard/caja');
+            const newTotal = invoice.total_C_ - invoice.propina_C_;
+            if (ubi === 1) {
+                const res = await updateInvoice(invoice.id, newTotal, Order.id);
+                res.success === true ? router.push('/dashboard/caja') : ErrorToast('No se pudo actualizar la factura');
+            }
+            if ( ubi === 2 ) {
+                const res = await updateInvoiceByTable(invoice.id, newTotal, Order.id, Order.mesa_id);
+                res.success === true ? router.push('/dashboard/caja') : ErrorToast('No se pudo actualizar la factura');
+            }
         }
     }
 
