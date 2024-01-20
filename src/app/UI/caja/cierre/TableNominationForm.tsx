@@ -7,7 +7,7 @@ export default function NominationTableForm({ Nomination, montos, setMontos, tit
             <h2 className="text-xl font-semibold">
                 { title }   
                 <span className={`${dolar === true ? 'text-red-500' : 'text-blue-500'}`}>
-                    { dolar === true ? ' DOLARES' : ' CORDOBAS'}
+                    { dolar === true ? ' DOLARES U$' : ' CORDOBAS C$'}
                 </span>
             </h2>
             <form action="" className="border-2 border-black/40 p-2 rounded-md">

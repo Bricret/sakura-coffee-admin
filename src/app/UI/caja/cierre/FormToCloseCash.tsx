@@ -1,11 +1,22 @@
 import { TableNominationCardCash } from "@/app/lib/data/Local-Data";
 import { handleInputChangeMontos } from "@/app/lib/utils";
+import { Icons } from "../../../plugins/Icons";
+
+const { CardIcon } = Icons;
 
 export default function FormToCloseCash({ allInvoiceTarjeta, setMontos, totalMonto, absolutetotalinvoice, diferencia, propinainvoice, clientAction } : { allInvoiceTarjeta: any, setMontos: any, totalMonto: any, absolutetotalinvoice: any, diferencia: any, propinainvoice: any, clientAction: any }) {
 
     return (
         <section>
-        <h2 className="text-xl font-semibold ">Pago con <span className="text-blue-500">Tarjeta</span></h2>
+        <div className="flex flex-row gap-2 items-center">
+            <h2 
+                className="text-xl font-semibold "
+            >
+                Pago con 
+                <span className="text-blue-500"> Tarjeta</span> 
+            </h2>
+            <CardIcon />
+        </div>
         <form action="" className="border-2 border-black/40 w-full p-2 rounded-md">
             {
                 TableNominationCardCash.map((item) => (

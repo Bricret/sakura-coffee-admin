@@ -13,7 +13,7 @@ export default function NominationForms({ Cashflow, Invoice } : { Cashflow: any,
     const [montos, setMontos] = useState<Record<string, number>>({});
     const [totalMonto, setTotalMonto] = useState<number>(Cashflow.monto_inicial_C_);
 
-    const absolutetotalinvoice = (TotalInvoice(Invoice) + Cashflow.monto_inicial_C_) - PropinaInvoice(Invoice);
+    const absolutetotalinvoice = (TotalInvoice(Invoice) + Cashflow.monto_inicial_C_);
     const allInvoiceTarjeta = Invoice?.filter((item: any) => item.metodo_pago === 'tarjeta');
     const diferencia = totalMonto - absolutetotalinvoice;
 

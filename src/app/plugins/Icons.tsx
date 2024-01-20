@@ -1,4 +1,4 @@
-import { FaUserAlt } from "react-icons/fa";
+import { FaUserAlt, FaCreditCard } from "react-icons/fa";
 import { RiLockPasswordLine, RiDoorClosedLine } from "react-icons/ri";
 import { FaPowerOff, FaCashRegister, FaSearch, FaFilter, FaAngleLeft, FaAngleRight, FaClipboardList, FaRegEye } from "react-icons/fa";
 import { MdDashboard, MdOutlineInventory, MdAutorenew } from "react-icons/md";
@@ -25,6 +25,7 @@ const CloseIcon = RiDoorClosedLine;
 const MoreIcon = FaRegEye;
 const ChangeIcon = MdAutorenew;
 const StatusGood = GrStatusGood;
+const CardIcon = FaCreditCard;
 const TableIcon = () => <Image src="/iconTable.svg" width={25} height={25} alt="" />;
 
 
@@ -48,6 +49,7 @@ export const Icons = {
     MoreIcon,
     ChangeIcon,
     StatusGood,
+    CardIcon,
 };
 
 export const EditIcon = () => (
@@ -55,10 +57,10 @@ export const EditIcon = () => (
           aria-hidden="true"
           fill="none"
           focusable="false"
-          height="1em"
           role="presentation"
           viewBox="0 0 20 20"
           width="1em"
+          height="1em"
         >
           <path
             d="M11.05 3.00002L4.20835 10.2417C3.95002 10.5167 3.70002 11.0584 3.65002 11.4334L3.34169 14.1334C3.23335 15.1084 3.93335 15.775 4.90002 15.6084L7.58335 15.15C7.95835 15.0834 8.48335 14.8084 8.74168 14.525L15.5834 7.28335C16.7667 6.03335 17.3 4.60835 15.4583 2.86668C13.625 1.14168 12.2334 1.75002 11.05 3.00002Z"
