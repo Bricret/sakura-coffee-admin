@@ -36,12 +36,19 @@ export default function UserMenu({ username, rol }: { username: string, rol: str
                 </div>
                 </div>
             </DropdownTrigger>
-            <DropdownMenu aria-label="User Actions" variant="flat">
-            <DropdownItem key="Create-User" href="/registerUser">Crear usuaro</DropdownItem>
-            <DropdownItem key="Create-Rol">Crear Rol</DropdownItem>
-            <DropdownItem key="Create-Permissions">Crear Permisos</DropdownItem>
-            <DropdownItem key="signout" color="danger" onClick={() => signOut({ callbackUrl: '/' })}>Cerrar Sesion</DropdownItem>
-            </DropdownMenu>
+            {
+                rol === 'Administrador' ? 
+                <DropdownMenu aria-label="User Actions" variant="flat">
+                <DropdownItem key="Create-User" href="/registerUser">Crear usuaro</DropdownItem>
+                <DropdownItem key="Edit-User">Editar Usuario</DropdownItem>
+                <DropdownItem key="New Table">Agregar Mesa</DropdownItem>
+                <DropdownItem key="signout" color="danger" onClick={() => signOut({ callbackUrl: '/' })}>Cerrar Sesion</DropdownItem>
+                </DropdownMenu>
+                : 
+                <DropdownMenu>
+                <DropdownItem key="signout" color="danger" onClick={() => signOut({ callbackUrl: '/' })}>Cerrar Sesion</DropdownItem>
+                </DropdownMenu>
+            }
         </Dropdown>
     )
 }

@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { fonts } from "../Fonts";
 import { LinkCaja } from "@/app/lib/data/Local-Data";
 import { usePathname } from "next/navigation";
+import useUserStore from "@/app/context/store";
 
 
 export default function NavCaja() {
@@ -37,6 +38,8 @@ export default function NavCaja() {
     
     }, []);
 
+    const { user } = useUserStore();
+
     return (
         <nav className="relative">
             <ul 
@@ -45,6 +48,7 @@ export default function NavCaja() {
                 {
                     LinkCaja.map((link) => {
                         const LinkIcon = link.icon;
+                        if(link.title !== 'Mesas' && link.title !== 'Cierre' && user.role === 'Mesero') return null
                         return (
                             <li 
                                 key={link.title}

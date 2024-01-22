@@ -10,13 +10,12 @@
 
       const pathname = usePathname();
       const { user } = useUserStore();
-      console.log(user)
       return (
           <>
           {Links.map((link) => {
           const LinkIcon = link.icon;
 
-            if(link.title !== 'Caja' && user.role === 'Mesero') return null
+            if(link.title !== 'Caja' && link.title !== 'Panel'  && user.role === 'Mesero') return null
 
           return (
             <Link     
