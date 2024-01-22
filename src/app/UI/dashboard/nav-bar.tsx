@@ -9,8 +9,7 @@ import Image from "next/image";
 export default async function NavBar({ title, site } : { title: string, site?: boolean }) {
 
     const { user } = await getServerSession(authOptions) as any;
-
-    const { name, image } = user 
+    const { name, image } = user;
 
     return (
     <div className="flex flex-row justify-between items-center mb-10 py-2 mr-7 md:mr-0">

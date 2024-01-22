@@ -1,10 +1,24 @@
 'use client';
 
+import useUserStore from "@/app/context/store";
 import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, User} from "@nextui-org/react";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
+import { useEffect } from "react";
 
 export default function UserMenu({ username, rol }: { username: string, rol: string }) {
+
+    const user = {
+        name: username,
+        role: rol
+    };
+
+    const { setUser } = useUserStore();
+    useEffect(() => {
+        setUser(user);
+    }, []); 
+
+
     return (
         <Dropdown>
             <DropdownTrigger>

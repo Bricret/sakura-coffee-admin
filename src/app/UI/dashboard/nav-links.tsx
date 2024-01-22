@@ -1,33 +1,37 @@
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Links } from "../../lib/data/Local-Data";
+  'use client'
+
+  import Link from "next/link";
+  import { usePathname } from "next/navigation";
+  import { Links } from "../../lib/data/Local-Data";
+  import useUserStore from "@/app/context/store";
 
 
-export default async function NavLinks() {
+  export default function NavLinks() {
 
-    const pathname = usePathname();
+      const pathname = usePathname();
+      const { user } = useUserStore();
+      console.log(user)
+      return (
+          <>
+          {Links.map((link) => {
+          const LinkIcon = link.icon;
 
-    return (
-        <>
-        {Links.map((link) => {
-        const LinkIcon = link.icon;
+            if(link.title !== 'Caja' && user.role === 'Mesero') return null
 
-          // if(link.title === 'Caja' && user.email !== 1) return null
-
-        return (
-          <Link     
-            key={link.title}
-            href={link.href}
-            className={`flex flex-col md:flex-row h-[80px] md:h-[48px] grow items-center justify-center gap-2 rounded-md bg-primary p-3 text-sm font-medium hover:bg-secundary/40 text-zinc-700 hover:text-black md:flex-none md:justify-start md:p-2 md:px-3 transition-all duration-300 ease-in-out 
-            
-              ${ pathname === link.href ? 'bg-secundary/40 focus:text-black  ': '' }
-            `}
-          >
-            <LinkIcon className="w-6 h-5 " />
-            <p className="hidden md:block">{link.title}</p>
-          </Link>
-        );
-      })}
-        </>
-    )
-}
+          return (
+            <Link     
+              key={link.title}
+              href={link.href}
+              className={`flex flex-col md:flex-row h-[80px] md:h-[48px] grow items-center justify-center gap-2 rounded-md bg-primary p-3 text-sm font-medium hover:bg-secundary/40 text-zinc-700 hover:text-black md:flex-none md:justify-start md:p-2 md:px-3 transition-all duration-300 ease-in-out 
+              
+                ${ pathname === link.href ? 'bg-secundary/40 focus:text-black  ': '' }
+              `}
+            >
+              <LinkIcon className="w-6 h-5 " />
+              <p className="hidden md:block">{link.title}</p>
+            </Link>
+          );
+        })}
+          </>
+      )
+  }
