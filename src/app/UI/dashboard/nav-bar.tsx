@@ -2,15 +2,15 @@ import { fonts } from "../Fonts";
 import UserMenu from "./user-menu";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { FetchUnicRols } from "@/app/lib/data";
 import Image from "next/image";
 
 // user.image = idRol // user.email = estado del usuario
 
 export default async function NavBar({ title, site } : { title: string, site?: boolean }) {
 
-    const session = await getServerSession(authOptions);
-    const Rol = await FetchUnicRols(Number(session?.user?.image?.toString()));
+    const { user } = await getServerSession(authOptions) as any;
+
+    const { name, image } = user 
 
     return (
     <div className="flex flex-row justify-between items-center mb-10 py-2 mr-7 md:mr-0">
@@ -23,7 +23,7 @@ export default async function NavBar({ title, site } : { title: string, site?: b
                     {title}
                     {
                         site ? 
-                        <span className="text-secundary font-bold">{ session?.user?.name }</span>
+                        <span className="text-secundary font-bold">{ name }</span>
                         : null  
                     
                     } 
@@ -36,9 +36,9 @@ export default async function NavBar({ title, site } : { title: string, site?: b
                     className="object-contain hidden md:block w-auto h-auto"
                 />
             </div>
-            <p className="text-lg text-black/40 font-semibold">Cambio: {process.env.NEXT_PUBLIC_CONVERSION_RATE}</p>
+            <p className="text-lg text-black/40 font-semibold">Cambio: { process.env.NEXT_PUBLIC_CONVERSION_RATE }</p>
         </div>
-            <UserMenu username={ session?.user?.name || "" } rol={ Rol.nombre || "" }  />
+            <UserMenu username={ name || "" } rol={ image || "" }  />
     </div>
     )
 }

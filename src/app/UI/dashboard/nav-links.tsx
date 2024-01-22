@@ -1,10 +1,9 @@
-'use client';
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Links } from "../../lib/data/Local-Data";
 
 
-export default function NavLinks() {
+export default async function NavLinks() {
 
     const pathname = usePathname();
 
@@ -12,6 +11,9 @@ export default function NavLinks() {
         <>
         {Links.map((link) => {
         const LinkIcon = link.icon;
+
+          // if(link.title === 'Caja' && user.email !== 1) return null
+
         return (
           <Link     
             key={link.title}

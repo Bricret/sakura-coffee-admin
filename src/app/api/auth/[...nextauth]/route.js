@@ -2,6 +2,7 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from '../../../lib/db'
 import { ComparePass } from "@/app/plugins/incript/argon2";
+import { FetchUnicRols } from "@/app/lib/data";
 
 export const authOptions = {
   providers: [
@@ -33,11 +34,14 @@ export const authOptions = {
         const verifyPass = await ComparePass(credentials.password, userFind.password)
         if ( !verifyPass ) throw new Error('Contraseña incorrecta, verifique sus credenciales')
         
+        // Conseguir el rol del usuario
+
+        const rol = await FetchUnicRols(userFind.rol_id);
 
         return {  
             name: userFind.name,
             email: userFind.status,
-            image: userFind.rol_id.toString(),
+            image: rol.nombre,
         }
 
       },
