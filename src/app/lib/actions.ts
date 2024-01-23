@@ -966,3 +966,36 @@ export async function createNewTable() {
         return { success: false, message: 'Mesa no fue creada correctamente' }
     }
 }
+
+export async function updateTable( idTable : string, stateTable : string ) {
+    try {
+        await prisma.mesas.update({
+            where: {
+                id: idTable
+            },
+            data: {
+                estado: stateTable
+            }
+        });
+        revalidatePath(`/dashboard/caja`);
+        return { success: true, message: 'Mesa actualizada correctamente' }
+    } catch ( error : any ) {
+       console.log('error', error);
+       return { success: false, message: 'Mesa no fue actualizada correctamente' }
+    }
+}
+
+export async function deleteTable( idTable : string ) {
+    try {
+        await prisma.mesas.delete({
+            where: {
+                id: idTable
+            }
+        });
+        revalidatePath(`/dashboard/caja`);
+        return { success: true, message: 'Mesa eliminada correctamente' }
+    } catch ( error : any ) {
+       console.log('error', error);
+       return { success: false, message: 'Mesa no fue eliminada correctamente' }
+    }
+}

@@ -21,9 +21,7 @@ export default function UserMenu({ username, rol }: { username: string, rol: str
 
     const CreateNewTable = async () => {
         const res = await createNewTable();
-        if (res.success === true) {
-            alert(res.message);
-        } else {
+        if (res.success !== true) {
             alert(res.message);
         }
     }
@@ -52,6 +50,7 @@ export default function UserMenu({ username, rol }: { username: string, rol: str
                 <DropdownItem key="Create-User" href="/registerUser">Crear usuaro</DropdownItem>
                 <DropdownItem key="Edit-User">Editar Usuario</DropdownItem>
                 <DropdownItem key="New Table" onClick={CreateNewTable}>Agregar Mesa</DropdownItem>
+                <DropdownItem key="New Table" href="/UpdateTable">Actualizar Mesa</DropdownItem>
                 <DropdownItem key="signout" color="danger" onClick={() => signOut({ callbackUrl: '/' })}>Cerrar Sesion</DropdownItem>
                 </DropdownMenu>
                 : 

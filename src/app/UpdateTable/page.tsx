@@ -1,8 +1,12 @@
 import { fonts } from "../UI/Fonts";
 import AgreeTableForm from "../UI/TablesUI/AgreeTable-Form";
+import { FetchTables } from "../lib/data";
 
 
-export default function AgreeTablePage() {
+export default async function AgreeTablePage() {
+
+  const tables = await FetchTables();
+
     return (
     <main 
       className=" h-screen py-28"
@@ -22,9 +26,12 @@ export default function AgreeTablePage() {
               </div>
           </section>
           <section className="w-full lg:w-1/2 py-16 px-12">
-            <h2 className={`${fonts.merriweather.className} text-2xl mb-4 cursor-default`}>Agregue una nueva <span className="text-secundary ">Mesa</span></h2>
+            <h2 className={`${fonts.merriweather.className} text-2xl mb-4 cursor-default`}>
+              Edite o <span className="text-red-500">Elimine</span> una 
+              <span className="text-secundary "> Mesa</span>
+            </h2>
             <p className="mb-4 text-zinc-600 cursor-default">Complete todos los campos</p>
-            <AgreeTableForm />
+            <AgreeTableForm tables={ tables }/>
           </section>
         </article>
       </section>
