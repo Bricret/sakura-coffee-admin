@@ -18,7 +18,7 @@ export default async function TableCashOption({ state, idTable }: { state? : str
             state === 'libre' ? (
                 <Link 
                     href={`/dashboard/caja/newOrder/${idTable}/create`}
-                    className="text-base text-white cursor-pointer active:opacity-50 bg-fourth/60 px-4 py-2 rounded-xl"
+                    className="text-base text-white cursor-pointer active:opacity-50 bg-fourth px-4 py-2 rounded-xl"
                     rel="preload"
                 >
                     Nueva Orden
