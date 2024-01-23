@@ -1,4 +1,4 @@
-import { FetchRols } from "@/app/lib/data";
+import { FetchRols, FetchUserAll, FetchUserById } from "@/app/lib/data";
 import RegisterForm from "./register/form-register";
 import { fonts } from "../Fonts";
 
@@ -6,6 +6,12 @@ export default async function MainComponent({ title, edit } : { title: string, e
 
     const rols = await FetchRols();
 
+    let user = []
+    if (edit === true) {
+        user = await FetchUserAll();
+    }
+
+    
     return (
     <main 
       className=" h-screen py-28"
@@ -27,7 +33,7 @@ export default async function MainComponent({ title, edit } : { title: string, e
           <section className="w-full lg:w-1/2 py-16 px-12">
             <h2 className={`${fonts.merriweather.className} text-2xl mb-4 cursor-default`}>{ title } <span className="text-secundary ">Usuario</span></h2>
             <p className="mb-4 text-zinc-600 cursor-default">Complete todos los campos</p>
-            <RegisterForm rols={rols} edit={edit} />
+            <RegisterForm rols={rols} edit={edit} users={user} />
           </section>
         </article>
       </section>

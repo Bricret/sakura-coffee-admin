@@ -10,7 +10,7 @@ export default async function RegisterPage() {
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <MainComponent title="Registrar Nuevo" />
+      <MainComponent title="Registrar Nuevo" edit={false} />
     </Suspense>  
   )
 }

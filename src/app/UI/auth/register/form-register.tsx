@@ -5,7 +5,7 @@ import { Button } from "../button";
 import { ErrorToast, SuccessToast } from "@/app/plugins/sonner";
 import { Toaster } from "sonner";
 
-export default function RegisterForm( {rols, edit}: any ) {
+export default function RegisterForm( { rols, edit, user }: any ) {
 
     async function clientAction( formData: FormData ) {
         const result = await createUser(formData);

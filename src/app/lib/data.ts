@@ -294,6 +294,15 @@ export async function FetchUserById(id : number) {
     }
 }
 
+export async function FetchUserAll() {
+    try {
+        const user = await prisma.users.findMany();
+        return user;
+    } catch (error : any) {
+        throw new Error(error);
+    }
+}
+
 export async function FetchInvoiceByDate( fecha_apertura : any ) {
 
 
