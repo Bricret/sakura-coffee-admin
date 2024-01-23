@@ -1,6 +1,7 @@
 'use client';
 
 import useUserStore from "@/app/context/store";
+import { createNewTable } from "@/app/lib/actions";
 import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, User} from "@nextui-org/react";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
@@ -17,6 +18,15 @@ export default function UserMenu({ username, rol }: { username: string, rol: str
     useEffect(() => {
         setUser(user);
     }, []); 
+
+    const CreateNewTable = async () => {
+        const res = await createNewTable();
+        if (res.success === true) {
+            alert(res.message);
+        } else {
+            alert(res.message);
+        }
+    }
 
 
     return (
@@ -41,7 +51,7 @@ export default function UserMenu({ username, rol }: { username: string, rol: str
                 <DropdownMenu aria-label="User Actions" variant="flat">
                 <DropdownItem key="Create-User" href="/registerUser">Crear usuaro</DropdownItem>
                 <DropdownItem key="Edit-User">Editar Usuario</DropdownItem>
-                <DropdownItem key="New Table">Agregar Mesa</DropdownItem>
+                <DropdownItem key="New Table" onClick={CreateNewTable}>Agregar Mesa</DropdownItem>
                 <DropdownItem key="signout" color="danger" onClick={() => signOut({ callbackUrl: '/' })}>Cerrar Sesion</DropdownItem>
                 </DropdownMenu>
                 : 

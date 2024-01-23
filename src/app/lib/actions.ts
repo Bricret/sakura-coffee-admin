@@ -936,3 +936,33 @@ export async function updateCashFlow( formData : FormData, diferencia : number, 
        return { success: false, message: 'Flujo de caja no fue actualizado correctamente' }
     }
 }
+
+export async function createNewTable() {
+
+    const findTable = await prisma.mesas.findFirst({
+        orderBy: {
+            nombre: 'desc'
+        }
+    });
+    
+    let numberTable = Number(findTable.nombre.split(' ')[1]);
+
+    if (findTable) {
+        numberTable = numberTable + 1;
+    }
+
+
+    try {
+        const newTable = await prisma.mesas.create({
+            data: {
+                nombre: `Mesa ${numberTable}`,
+                estado: 'libre'
+            }
+        })
+        revalidatePath(`/dashboard/caja`);
+        return { success: true, message: 'Mesa creada correctamente', data: newTable }
+    } catch (error) {
+        console.log('error', error);
+        return { success: false, message: 'Mesa no fue creada correctamente' }
+    }
+}
