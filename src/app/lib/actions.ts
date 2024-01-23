@@ -41,6 +41,51 @@ export async function createUser(formData: FormData) {
     }
 }
 
+export async function updateUser(formData: FormData) {
+        const selectUser = formData.get('selectUser')
+        const selectRol = formData.get('selectRol')
+        let state = formData.get('state')
+        const password = formData.get('password');
+
+    const userFound = await prisma.users.findFirst({
+        where: {
+            id: selectUser?.toString()
+        }
+    });
+
+    if (!userFound) {
+        return { success: false, message: 'Usuario no existe en la base de datos' }
+    };
+
+    try {
+        await prisma.users.update({
+            where: {
+                id: selectUser?.toString()
+            },
+            data: {
+                rol_id: selectRol,
+                status: state ? true : false
+            }
+        });
+        if (password !== '') {
+            const PassIncript = await IncriptPass(password as string);
+            await prisma.users.update({
+                where: {
+                    id: selectUser?.toString()
+                },
+                data: {
+                    password: PassIncript
+                }
+            });
+        }
+        return { success: true, message: 'Usuario actualizado correctamente' }
+    } catch ( error : any ) {
+       console.log('error', error);
+       return { success: false, message: 'Usuario no actualizado correctamente' }
+    }
+
+}
+
 export async function createProduct(formData: FormData) {
     const rawFormData = Object.fromEntries(formData.entries());
     const { nombre, descripcion, precio, preparado_en, categoria, disponibilidad } = CreateProductFormSchema.parse(rawFormData);

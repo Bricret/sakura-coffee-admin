@@ -14,7 +14,7 @@ export default async function MainComponent({ title, edit } : { title: string, e
     
     return (
     <main 
-      className=" h-screen py-28"
+      className=" h-screen py-20"
       style={{backgroundImage: 'linear-gradient(115deg, #a88165, #efd1bb)'}}
     >
       <section className="container mx-auto ">
