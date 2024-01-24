@@ -317,3 +317,62 @@ export async function FetchInvoiceByDate( fecha_apertura : any ) {
         throw new Error(error);
     }
 }
+
+export async function FetchSoldProductsToday() {
+
+    const actualDate = new Date().toISOString();
+    let date = new Date(actualDate as string);
+    date = new Date(date.getTime() - date.getTimezoneOffset() * 60 * 1000);
+    const fecha_emision = date.toISOString().split('T')[0] + 'T00:00:00.000Z';
+
+    try {
+        const invoices = await prisma.facturas.findMany({
+            where: {
+               fecha_emision: fecha_emision
+            },
+            include: {
+               ordens: {
+                 include: {
+                   detalle_ordens: {
+                    include: {
+                    productos: true,
+                    },
+                   }
+                 },
+               },
+            },
+           });
+           
+    
+     // Mapea las facturas para obtener solo los detalles de las órdenes
+        const orderDetails: any = invoices.flatMap((invoice: any) =>
+        invoice.ordens?.detalle_ordens || []
+        );
+       
+        // Aplanamos la matriz para obtener solo los detalles de las órdenes
+        const flattenOrderDetails = orderDetails.flat();
+    
+        // Mapeamos los detalles de las órdenes para obtener solo los productos
+        const soldProducts = flattenOrderDetails.map((detail: any) => {
+            return {
+                cantidad: detail.cantidad,
+                total: detail.monto_C_,
+                producto: detail.productos.nombre,
+            };
+        });
+        const groupedProducts = soldProducts.reduce((accumulator: any, currentProduct: any) => {
+            const existingProduct = accumulator.find((product: any) => product.producto === currentProduct.producto);
+            if (existingProduct) {
+                existingProduct.cantidad += currentProduct.cantidad;
+                existingProduct.total += currentProduct.total;
+            } else {
+                accumulator.push({...currentProduct});
+            }
+            return accumulator;
+        }, []);
+    
+        return groupedProducts;
+    } catch (error : any) {
+        throw new Error(error);
+    }
+}
