@@ -1,11 +1,11 @@
 'use client'
 
-import { FetchSoldProductsToday } from "@/app/lib/data";
 
 export default function GenerateButton({ Products } : {Products : any }) {
 
 
     const handleClick = async () => {
+        console.log(Products);
     };
 
     return <button onClick={handleClick}>Generate Excel</button>;

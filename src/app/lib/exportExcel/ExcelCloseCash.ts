@@ -6,7 +6,7 @@ let localDate = new Date().toLocaleDateString();
 localDate = localDate.replace(/\//g, '-');
 const nameSheet = `Cierre ${localDate}`;
 
-export async function ExcelCloseCash() {
+export async function ExcelCloseCash(products: any[], info?: any) {
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet(nameSheet);
 

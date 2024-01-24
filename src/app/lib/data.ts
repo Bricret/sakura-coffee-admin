@@ -357,6 +357,7 @@ export async function FetchSoldProductsToday() {
             return {
                 cantidad: detail.cantidad,
                 total: detail.monto_C_,
+                price: Number(detail.productos.precio),
                 producto: detail.productos.nombre,
             };
         });
