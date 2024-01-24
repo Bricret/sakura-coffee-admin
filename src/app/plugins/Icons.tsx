@@ -5,6 +5,7 @@ import { MdDashboard, MdOutlineInventory, MdAutorenew } from "react-icons/md";
 import { TbReportSearch } from "react-icons/tb";
 import { FaEllipsisVertical, FaPlus  } from "react-icons/fa6";
 import { GrStatusGood } from "react-icons/gr";
+import { FiPrinter } from "react-icons/fi";
 import Image from "next/image";
 
 const UserIcon = FaUserAlt;
@@ -26,6 +27,7 @@ const MoreIcon = FaRegEye;
 const ChangeIcon = MdAutorenew;
 const StatusGood = GrStatusGood;
 const CardIcon = FaCreditCard;
+const PrinterIcon = FiPrinter;
 const TableIcon = () => <Image src="/iconTable.svg" width={25} height={25} alt="" />;
 
 
@@ -50,6 +52,7 @@ export const Icons = {
     ChangeIcon,
     StatusGood,
     CardIcon,
+    PrinterIcon,
 };
 
 export const EditIcon = () => (

@@ -287,3 +287,34 @@ export const TableNominationCardCash = [
         factor: 1,
     },
 ]
+
+export const TableInvoice = [
+    {
+        key: "id",
+        label: "ID",
+    },
+    {
+        key: "metodo_pago",
+        label: "METODO PAGO",
+    },
+    {
+        key: "Total ",
+        label: "TOTAL C$",
+    },
+    {
+        key: "propina",
+        label: "PROPINA C$",
+    },
+    {
+        key: "fecha",
+        label: "FECHA EMISION",
+    },
+    {
+        key: "usuario",
+        label: "USUARIO",
+    },
+    {
+        key: "action",
+        label: "ACCIONES",
+    },
+]

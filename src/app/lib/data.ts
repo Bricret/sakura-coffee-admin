@@ -317,3 +317,62 @@ export async function FetchInvoiceByDate( fecha_apertura : any ) {
         throw new Error(error);
     }
 }
+
+export async function FetchInvoiceFiltered( query : string, itemsPerPage : number, currentPage : number ) {
+    try {
+        const skip = itemsPerPage * (currentPage - 1);
+        
+        let Invoice;
+        if (query === "") {
+            Invoice = await prisma.facturas.findMany({
+                orderBy: {
+                    id: 'desc',
+                },
+                include: {
+                    users: true,
+                },
+                take: itemsPerPage,
+                skip: skip,
+            });
+        } else {
+            Invoice = await prisma.facturas.findMany({
+                where: {
+                    numero_factura: {
+                        equals: BigInt(query),
+                    },
+                },
+                include: {
+                    users: true,
+                },
+                orderBy: {
+                    id: 'desc',
+                },
+                take: itemsPerPage,
+                skip: skip,
+            });
+        }
+
+        return Invoice;
+    } catch (error : any) {
+        throw new Error(error);
+    }
+}
+
+export async function FetchInvoicePageCount( itemsPerPage : number ) {
+    try {
+        const productsCount = await prisma.facturas.count();
+        const pageCount = Math.ceil(productsCount / itemsPerPage);
+        return pageCount;
+    } catch (error : any) {
+        throw new Error(error);
+    }
+}
+
+export async function FetchAllInvoice() {
+    try {
+        const invoice = await prisma.facturas.findMany();
+        return invoice;
+    } catch (error : any) {
+        throw new Error(error);
+    }
+}
