@@ -9,8 +9,9 @@ import { createNewInvoice, createNewInvoiceByTable, updateInvoice, updateInvoice
 import ChangeMoney from "./Change-Money";
 import FormSectionInvoice from "./Form-Section-Invoice";
 import { useRouter } from "next/navigation";
+import { printInvoiceFunction } from "@/app/lib/PrintFunction";
 
-const dir = process.env.NEXT_PUBLIC_URL;
+
 
 // ubi = 1 -> caja | ubi = 2 -> mesa
 
@@ -31,10 +32,7 @@ export default function PayForm({ Order, ubi } : { Order : any, ubi : number }) 
             if (res.success === true) {
                 const { data } = res;
                 setInvoice(data);
-                const orderIdAndTableId = `${data.id.toString()}-${Order.id.toString()}`
-                const url = `${dir}print/printInvoice/${orderIdAndTableId}`;
-                const windowFeatures = 'noopener,noreferrer';
-                window.open(url, '_blank', windowFeatures);
+                printInvoiceFunction(data.id, Order.id);
             }
         }
         if (ubi === 2) {
@@ -42,10 +40,7 @@ export default function PayForm({ Order, ubi } : { Order : any, ubi : number }) 
             if (res.success === true) {
                 const { data } = res;
                 setInvoice(data);
-                const orderIdAndTableId = `${data.id.toString()}-${Order.id.toString()}`
-                const url = `${dir}print/printInvoice/${orderIdAndTableId}`;
-                const windowFeatures = 'noopener,noreferrer';
-                window.open(url, '_blank', windowFeatures);
+                printInvoiceFunction(data.id, Order.id);
             }
         }
     }
