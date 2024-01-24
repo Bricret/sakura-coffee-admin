@@ -6,7 +6,7 @@ let localDate = new Date().toLocaleDateString();
 localDate = localDate.replace(/\//g, '-');
 const nameSheet = `Cierre ${localDate}`;
 
-export async function ExcelCloseCash(products: any[], info?: any) {
+export async function ExcelCloseCash(products: any[], info : any) {
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet(nameSheet);
 
@@ -65,13 +65,26 @@ export async function ExcelCloseCash(products: any[], info?: any) {
         cell.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
         worksheet.getColumn(`${String.fromCharCode(71)}`).width = 24;
     }
+
+    // Define los datos totales
+    const totalData = [[info.subTotal], [info.propina], [info.total]];
+
+    // Añade los datos totales a la hoja de trabajo
+    for (let i = 0; i < totalData.length; i++) {
+        const cell = worksheet.getCell(`${String.fromCharCode(72)}${i + 3}`);
+        cell.value = `C$ ${totalData[i][0]}`;
+        cell.font = { name: 'Arial'};
+        cell.alignment = { horizontal: 'right' };
+        cell.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
+        worksheet.getColumn(`${String.fromCharCode(71)}`).width = 20;
+    }
+
     
-       
     await workbook.xlsx.writeBuffer().then((buffer) => {
         const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
         const link = document.createElement('a');
         link.href = window.URL.createObjectURL(blob);
-        link.download = 'Test.xlsx';
+        link.download = `${nameSheet}.xlsx`;
         link.click();
     });
 }

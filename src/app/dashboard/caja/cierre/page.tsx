@@ -16,7 +16,7 @@ export default async function CierrePage() {
     if (Cashflow === null && cajaActive !== null) {
         const actualDate = new Date().toISOString();
         let date = new Date(actualDate);
-        date.setDate(date.getDate() - 1); // Resta un día para obtener la fecha de ayer
+        date.setDate(date.getDate() - 1);
         date = new Date(date.getTime() - date.getTimezoneOffset() * 60 * 1000);
         const openOnlyDate = date.toISOString().split('T')[0] + 'T00:00:00.000Z';
         console.log(openOnlyDate);

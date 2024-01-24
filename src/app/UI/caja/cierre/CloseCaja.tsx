@@ -3,12 +3,10 @@
 import { ExcelCloseCash } from "@/app/lib/exportExcel/ExcelCloseCash";
 
 
-export default function GenerateButton({ Products } : {Products : any }) {
+export default function GenerateButton() {
 
 
-    const handleClick = async () => {
-        ExcelCloseCash(Products);
-    };
 
-    return <button onClick={handleClick}>Generate Excel</button>;
+
+    return <button >Generate Excel</button>;
 }
