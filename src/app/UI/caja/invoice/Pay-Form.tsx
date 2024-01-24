@@ -11,11 +11,10 @@ import FormSectionInvoice from "./Form-Section-Invoice";
 import { useRouter } from "next/navigation";
 import { printInvoiceFunction } from "@/app/lib/PrintFunction";
 
-
-
 // ubi = 1 -> caja | ubi = 2 -> mesa
 
 export default function PayForm({ Order, ubi } : { Order : any, ubi : number }) {
+    
     const [isDollar, setIsDollar] = useState(false);
     const [propina, setPropina] = useState(false);
     const [invoice, setInvoice] = useState<any>(null);

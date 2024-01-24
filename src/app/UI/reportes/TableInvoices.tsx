@@ -72,7 +72,7 @@ export default async function TableInvoices({ itemsForPage, query, currentPage }
                                 {item.users.name}
                             </td>
                             <td className={`px-4 py-2 text-black  first:rounded-l-2xl text-center cursor-default`}>
-                                <ActionInvoice />
+                                <ActionInvoice InvoiceId={item.id} OrderId={item.orden_id} />
                             </td>
                         </tr>
                     )})
