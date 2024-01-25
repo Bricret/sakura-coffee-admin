@@ -9,7 +9,7 @@ const { SearchIcon } = Icons;
 const WAIT_INTERVAL = 350;
 
 
-export default function Search({ placeholder }: { placeholder: string } ) {
+export default function Search({ placeholder, type }: { placeholder: string, type? : string } ) {
     const searchParams = useSearchParams();
     const pathname = usePathname();
     const { replace } = useRouter();
@@ -26,6 +26,7 @@ export default function Search({ placeholder }: { placeholder: string } ) {
             placeholder={placeholder}
             startContent={ <SearchIcon /> }
             defaultValue={ searchParams.get('query')?.toString() }
+            type={type || "text"}
           />
     )
 }

@@ -16,7 +16,7 @@ export default async function TableInvoices({ itemsForPage, query, currentPage }
     <>
         <article className="flex flex-col gap-4 mb-4">
             <section className="flex justify-between gap-3 items-center md:items-end">
-                <Search placeholder="Busca por ID de Factura..."/>
+                <Search placeholder="Busca por ID de Factura..." type="number" />
             </section>
             <InfoTable allProducts={ allInvoice } type="Facturas"/>
         </article>
