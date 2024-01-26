@@ -6,10 +6,11 @@ import Pagination from "../inventario/Pagination";
 import ActionInvoice from "./ActionInvoice";
 
 
-export default async function TableInvoices({ itemsForPage, query, currentPage } : { itemsForPage: number, query: string, currentPage: number }) {
+export default async function TableInvoices({ itemsForPage, query, currentPage, startDate, endDate } : { itemsForPage: number, query: string, currentPage: number, startDate: string, endDate: string}) {
 
+    
     const allInvoice = await FetchAllInvoice();
-    const invoices = await FetchInvoiceFiltered(query, itemsForPage, currentPage);
+    const invoices = await FetchInvoiceFiltered(query, itemsForPage, currentPage, startDate, endDate);
     const TotalPage = await FetchInvoicePageCount(itemsForPage);
     
     return (

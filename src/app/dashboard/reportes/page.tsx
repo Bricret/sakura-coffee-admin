@@ -11,12 +11,16 @@ export const metadata: Metadata = {
 export default function ReportsPage({ searchParams } : { searchParams?: {
     query?: string,
     dataForPage?: string,
-    page?: string
+    page?: string,
+    startDate?: string,
+    endDate?: string
 } }) {
 
     const itemsForPage = Number(searchParams?.dataForPage) || 5;
     const query = searchParams?.query || "";
     const currentPage = Number(searchParams?.page) || 1;
+    const startDate = searchParams?.startDate || "";
+    const endDate = searchParams?.endDate || "";
 
     return (
     <>
@@ -24,7 +28,7 @@ export default function ReportsPage({ searchParams } : { searchParams?: {
         <h1 className="text-2xl font-semibold text-gray-600 mb-4">Facturas Totales</h1>
         <main>
             <Suspense fallback={ <InventorySkeleton /> }>
-                <TableInvoices itemsForPage={itemsForPage} query={query} currentPage={currentPage} />
+                <TableInvoices itemsForPage={itemsForPage} query={query} currentPage={currentPage} startDate={startDate} endDate={endDate} />
             </Suspense>
         </main>
     </>
