@@ -14,10 +14,10 @@ export default function Comanda({ details_orders, productos, idTable, idOrder, c
     }, [])
 
     return (
-        <div className={`comanda ${ create } mb-6`}>
+        <section className={`comanda ${ create } mb-3`}>
         <div className="flex flex-col">
             <h1 className="text-center text-lg font-bold">Comanda Generada</h1>
-            <h2 className="text-center text-base">Comanda Barra: #{idOrder} { idTable && `| Mesa: N° ${idTable}` }</h2>
+            <h2 className="text-center text-base">Comanda N°: #{idOrder} { idTable && `| Mesa: N° ${idTable}` }</h2>
         </div>
         <h2 className="text-center text-base font-semibold">Detalles</h2>
         <h2 className="text-center">Preparar en</h2>
@@ -46,6 +46,6 @@ export default function Comanda({ details_orders, productos, idTable, idOrder, c
             </tbody>
             <br  className='comanda fin'/>
         </table>
-    </div>
+    </section>
     )
 }

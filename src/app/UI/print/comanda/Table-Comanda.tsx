@@ -1,3 +1,6 @@
+'use client'
+
+
 import Comanda from "./Comanda";
 
 export default function TableComanda({ details_orders, productos, idTable, idOrder } : { details_orders : any, productos : any, idTable : any, idOrder : any }) {
@@ -15,13 +18,13 @@ export default function TableComanda({ details_orders, productos, idTable, idOrd
     });
 
     return (
-    <div className="flex flex-col">
+    <main className="flex flex-col">
         {hasCocinaProducts && (
             <Comanda details_orders={details_orders} productos={productos} idTable={ idTable } idOrder={idOrder} create="cocina" />
         )}
         {hasBarraProducts && (
             <Comanda details_orders={details_orders} productos={productos} idTable={ idTable } idOrder={idOrder} create="barra" />
         )}
-    </div>
+    </main>
     )
 }
