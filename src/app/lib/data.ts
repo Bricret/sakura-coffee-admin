@@ -330,6 +330,16 @@ export async function FetchInvoiceFiltered( query : string, itemsPerPage : numbe
                 },
                 include: {
                     users: true,
+                    ordens: {
+                        include: {
+                            detalle_ordens: {
+                                include: {
+                                    productos: true,
+                                }
+                            
+                            },
+                        }
+                    }
                 },
                 take: itemsPerPage,
                 skip: skip,
@@ -343,6 +353,16 @@ export async function FetchInvoiceFiltered( query : string, itemsPerPage : numbe
                 },
                 include: {
                     users: true,
+                    ordens: {
+                        include: {
+                            detalle_ordens: {
+                                include: {
+                                    productos: true,
+                                }
+                            
+                            },
+                        }
+                    }
                 },
                 orderBy: {
                     id: 'desc',

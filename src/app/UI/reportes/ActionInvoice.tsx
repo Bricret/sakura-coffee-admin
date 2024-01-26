@@ -3,19 +3,26 @@
 import { printInvoiceFunction } from "@/app/lib/PrintFunction";
 import { EyeIcon, Icons } from "@/app/plugins/Icons";
 import { Tooltip } from "@nextui-org/react";
+import { useState } from "react";
+import ModalViewInvoice from "./ModalViewInvoice";
 
 const { PrinterIcon } = Icons;
 
-export default function ActionInvoice({OrderId, InvoiceId} : {OrderId : number, InvoiceId : number }) {
+export default function ActionInvoice({Invoice} : {Invoice : any }) {
+
+    const [isOpen, setIsOpen] = useState(false);
+    const onOpen  = () => setIsOpen(true);
+    const onClose = () => setIsOpen(false);
+
 
     const PrinterInvoice = () => {
-        printInvoiceFunction(InvoiceId, OrderId);
+        printInvoiceFunction(Invoice.id, Invoice.orden_id);
     }
 
     return (
         <div className="relative flex items-center justify-evenly gap-2">
             <Tooltip closeDelay={2} delay={500} content="Mas Informacion">
-            <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
+            <span onClick={onOpen} className="text-lg text-default-400 cursor-pointer active:opacity-50">
                 <EyeIcon />
             </span>
             </Tooltip>
@@ -24,6 +31,7 @@ export default function ActionInvoice({OrderId, InvoiceId} : {OrderId : number, 
                 <PrinterIcon />
             </span>
             </Tooltip>
+            <ModalViewInvoice isOpen={isOpen} onClose={onClose} Invoice={Invoice} />
         </div>
     )
 }
