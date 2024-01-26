@@ -60,7 +60,7 @@ export default function NavCaja() {
                                     href={link.href} 
                                     className="flex flex-grow basis-0 justify-center"
                                 >
-                                    <LinkIcon className="w-6 h-5 hidden md:block" />
+                                    <LinkIcon className="size-8 hidden md:block" />
                                     <p className="pl-2">{link.title}</p>
                                 </Link>
                             </li>

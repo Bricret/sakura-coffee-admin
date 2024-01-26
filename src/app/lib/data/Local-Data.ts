@@ -1,7 +1,7 @@
-import { Icons } from "@/app/plugins/Icons";
+import { CakeIcon, CloseIcon, Icons, TableIcon } from "@/app/plugins/Icons";
 
 
-const { CashRegisterIcon, DashBoardIcon, ReportIcon, InventoryIcon, OrderIcon, CloseIcon, TableIcon } = Icons;
+const { CashRegisterIcon, DashBoardIcon, ReportIcon, InventoryIcon } = Icons;
 
 export const Links = [
     {
@@ -34,7 +34,7 @@ export const LinkCaja = [
     },
     {
         title: 'Pasteleria',
-        icon: OrderIcon,
+        icon: CakeIcon,
         href: '/dashboard/caja/pedidos',
     },
     {
