@@ -1,7 +1,7 @@
 'use client'
 
 import { printInvoiceFunction } from "@/app/lib/PrintFunction";
-import { DeleteIcon, EyeIcon, Icons } from "@/app/plugins/Icons";
+import { EyeIcon, Icons } from "@/app/plugins/Icons";
 import { Tooltip } from "@nextui-org/react";
 
 const { PrinterIcon } = Icons;
