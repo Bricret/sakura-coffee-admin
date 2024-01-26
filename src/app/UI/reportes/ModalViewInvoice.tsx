@@ -4,9 +4,6 @@ import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from
 
 
 export default function ModalViewInvoice({ isOpen, onClose, Invoice } : { isOpen : boolean, onClose : any, Invoice : any }) {
-
-
-    console.log(Invoice);
     let fechaEntregaFormatoLocal = '';
     if(Invoice?.fecha_emision) {
         const fecha_emision = new Date(Invoice.fecha_emision).toISOString();

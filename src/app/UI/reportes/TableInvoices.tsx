@@ -18,7 +18,7 @@ export default async function TableInvoices({ itemsForPage, query, currentPage }
             <section className="flex justify-between gap-3 items-center md:items-end">
                 <Search placeholder="Busca por ID de Factura..." type="number" />
             </section>
-            <InfoTable allProducts={ allInvoice } type="Facturas"/>
+            <InfoTable allProducts={ allInvoice } type="Facturas" location="reportes"/>
         </article>
         <article className="p-4 z-0 flex flex-col relative justify-between gap-4 bg-content1 overflow-auto rounded-large shadow-small w-full">
             <table 
