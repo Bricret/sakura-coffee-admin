@@ -11,7 +11,7 @@ export default async function TableInvoices({ itemsForPage, query, currentPage, 
     
     const allInvoice = await FetchAllInvoice();
     const invoices = await FetchInvoiceFiltered(query, itemsForPage, currentPage, startDate, endDate);
-    const TotalPage = await FetchInvoicePageCount(itemsForPage);
+    const TotalPage = await FetchInvoicePageCount(itemsForPage, startDate, endDate, query);
     
     return (
     <>

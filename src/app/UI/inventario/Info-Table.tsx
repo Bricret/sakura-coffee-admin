@@ -16,7 +16,7 @@ export default function InfoTable({ allProducts, type, location } : { allProduct
 
     return (
         <nav className="flex justify-between items-center">
-            <span className="text-default-400 text-small cursor-default">Total de { type }: { allProducts.length }</span>
+            <span className="text-default-400 text-small cursor-default">Total de { type }: { allProducts }</span>
             <article className="flex gap-x-2">
                 {
                     location === 'reportes' && (

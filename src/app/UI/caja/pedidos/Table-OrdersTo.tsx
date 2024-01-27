@@ -8,7 +8,7 @@ import ActionOrderTo from "./Action-OrderTo";
 export default async function TableOrderTo({ itemsForPage, query, currentPage } : { itemsForPage: number, query: string, currentPage: number }) {
 
     const OrdersTo = await FetchFilteredOrdersTo(query, itemsForPage, currentPage);
-    const TotalPage = await FetchOrdersToPageCount(itemsForPage);
+    const TotalPage = await FetchOrdersToPageCount(itemsForPage, query);
     
     return (
     <>

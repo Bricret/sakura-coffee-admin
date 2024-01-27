@@ -60,7 +60,7 @@ export async function FetchFilteredInventory(
 
 export async function FetchAllInventory() {
     try {
-        const products = await prisma.productos.findMany();
+        const products = await prisma.productos.count();
         return products;
     } catch (error: any) {
         throw new Error(error);
@@ -163,7 +163,7 @@ export async function FetchDetailOrderByTable(idOrder: any) {
 
 export async function FetchOrdersTo() {
     try {
-        const orders = await prisma.pedidos.findMany();
+        const orders = await prisma.pedidos.count();
         return orders;
     } catch (error: any) {
         throw new Error(error);
@@ -192,10 +192,21 @@ export async function FetchFilteredOrdersTo(query: string, itemsPerPage: number,
     }
 }
 
-export async function FetchOrdersToPageCount(itemsPerPage: number) {
+export async function FetchOrdersToPageCount(itemsPerPage: number, query?: string) {
     try {
-        const productsCount = await prisma.pedidos.count();
-        const pageCount = Math.ceil(productsCount / itemsPerPage);
+        let ordersCount;
+        if (query === '') {
+            ordersCount = await prisma.pedidos.count();
+        } else {
+            ordersCount = await prisma.pedidos.count({
+                where: {
+                    nombre_cliente: {
+                        contains: query,
+                    },
+                },
+            });
+        }
+        const pageCount = Math.ceil(ordersCount / itemsPerPage);
         return pageCount;
     } catch (error: any) {
         throw new Error(error);
@@ -381,8 +392,6 @@ export async function FetchInvoiceFiltered(query: string, itemsPerPage: number, 
             Enddate.setUTCHours(0, 0, 0, 0);
             const editEndDate = Enddate.toISOString();
 
-            console.log(editStartDate, editEndDate);
-
             Invoice = await prisma.facturas.findMany({
                 where: {
                     fecha_emision: {
@@ -416,19 +425,48 @@ export async function FetchInvoiceFiltered(query: string, itemsPerPage: number, 
     }
 }
 
-export async function FetchInvoicePageCount(itemsPerPage: number) {
+export async function FetchInvoicePageCount(itemsPerPage: number, startDate?: any, endDate?: any, query?: string) {
     try {
-        const productsCount = await prisma.facturas.count();
-        const pageCount = Math.ceil(productsCount / itemsPerPage);
+        let invoiceCount;
+        if (query === '' && !startDate && !endDate) {
+            invoiceCount = await prisma.facturas.count();
+        } else if (startDate && endDate) {
+            let Startdate = new Date(startDate as string);
+            Startdate.setUTCHours(0, 0, 0, 0);
+            const editStartDate = Startdate.toISOString();
+
+            let Enddate = new Date(endDate as string);
+            Enddate.setUTCHours(0, 0, 0, 0);
+            const editEndDate = Enddate.toISOString();
+
+            invoiceCount = await prisma.facturas.count({
+                where: {
+                    fecha_emision: {
+                        gte: editStartDate,
+                        lte: editEndDate
+                    },
+                },
+            });
+        } else {
+            invoiceCount = await prisma.facturas.count({
+                where: {
+                    numero_factura: {
+                        equals: BigInt(query || 2),
+                    },
+                },
+            });
+        }
+        const pageCount = Math.ceil(invoiceCount / itemsPerPage);
         return pageCount;
     } catch (error: any) {
         throw new Error(error);
     }
+    
 }
 
 export async function FetchAllInvoice() {
     try {
-        const invoice = await prisma.facturas.findMany();
+        const invoice = await prisma.facturas.count();
         return invoice;
     } catch (error: any) {
         throw new Error(error);
