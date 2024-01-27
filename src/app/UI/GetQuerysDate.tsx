@@ -21,7 +21,7 @@ export default function GetQuerysDate() {
 
     return (
         <div className="flex mx-2 gap-x-4">
-            <label className="flex items-center text-black font-semibold bg-secundary/60 py-0.5 px-2 rounded-2xl  text-base" htmlFor="startDate">
+            <label className="flex items-center text-black font-semibold bg-secundary/60 py-0.5 px-2 rounded-2xl  text-base w-1/5 md:w-full" htmlFor="startDate">
                 Fecha Inicio:
                 <input
                     className="bg-transparent outline-none text-black/60 font-normal text-base"
@@ -32,7 +32,7 @@ export default function GetQuerysDate() {
                     defaultValue={ searchParams.get('startDate') || '' }
                 />
             </label>
-            <label className="flex items-center text-black font-semibold bg-secundary/60 py-0.5 px-2 rounded-2xl  text-base" htmlFor="endDate">
+            <label className="flex items-center text-black font-semibold bg-secundary/60 py-0.5 px-2 rounded-2xl  text-base w-1/5 md:w-full" htmlFor="endDate">
                 Fecha Final:
                 <input
                     className="bg-transparent outline-none text-black/60 font-normal text-base"

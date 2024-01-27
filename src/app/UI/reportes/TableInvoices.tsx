@@ -4,6 +4,7 @@ import InfoTable from "../inventario/Info-Table";
 import { FetchAllInvoice, FetchInvoiceFiltered, FetchInvoicePageCount } from "@/app/lib/data";
 import Pagination from "../inventario/Pagination";
 import ActionInvoice from "./ActionInvoice";
+import ExcelBoton from "./ExcelBoton";
 
 
 export default async function TableInvoices({ itemsForPage, query, currentPage, startDate, endDate } : { itemsForPage: number, query: string, currentPage: number, startDate: string, endDate: string}) {
@@ -18,6 +19,7 @@ export default async function TableInvoices({ itemsForPage, query, currentPage, 
         <article className="flex flex-col gap-4 mb-4">
             <section className="flex justify-between gap-3 items-center md:items-end">
                 <Search placeholder="Busca por ID de Factura..." type="number" />
+                <ExcelBoton />
             </section>
             <InfoTable allProducts={ allInvoice } type="Facturas" location="reportes"/>
         </article>

@@ -1,12 +1,11 @@
 import { FaUserAlt, FaCreditCard } from "react-icons/fa";
 import { RiLockPasswordLine } from "react-icons/ri";
-import { FaPowerOff, FaCashRegister, FaSearch, FaFilter, FaAngleLeft, FaAngleRight, FaClipboardList, FaRegEye } from "react-icons/fa";
+import { FaPowerOff, FaCashRegister, FaSearch, FaFilter, FaAngleLeft, FaAngleRight, FaRegEye } from "react-icons/fa";
 import { MdDashboard, MdOutlineInventory, MdAutorenew } from "react-icons/md";
 import { TbReportSearch } from "react-icons/tb";
 import { FaEllipsisVertical, FaPlus } from "react-icons/fa6";
 import { GrStatusGood } from "react-icons/gr";
 import { FiPrinter } from "react-icons/fi";
-import Image from "next/image";
 
 const UserIcon = FaUserAlt;
 const PasswordIcon = RiLockPasswordLine;
@@ -21,7 +20,6 @@ const VerticalDotsIcon = FaEllipsisVertical;
 const ArrowLeftIcon = FaAngleLeft;
 const ArrowRightIcon = FaAngleRight;
 const PlusIcon = FaPlus;
-const OrderIcon = FaClipboardList;
 const MoreIcon = FaRegEye;
 const ChangeIcon = MdAutorenew;
 const StatusGood = GrStatusGood;
@@ -43,7 +41,6 @@ export const Icons = {
   ArrowLeftIcon,
   ArrowRightIcon,
   PlusIcon,
-  OrderIcon,
   MoreIcon,
   ChangeIcon,
   StatusGood,
@@ -190,4 +187,8 @@ export const CloseIcon = (props: any) => (
 
 export const TableIcon = (props: any) => (
   <svg xmlns="http://www.w3.org/2000/svg" {...props} width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 6h18" /><path d="M4 6v13" /><path d="M20 19v-13" /><path d="M4 10h16" /><path d="M15 6v8a2 2 0 0 0 2 2h3" /></svg>
+);
+
+export const ExcelIcon = (props: any) => (
+  <svg xmlns="http://www.w3.org/2000/svg" {...props} width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /><path d="M8 11h8v7h-8z" /><path d="M8 15h8" /><path d="M11 11v7" /></svg>
 );
