@@ -319,25 +319,75 @@ export async function FetchInvoiceByDate(fecha_apertura: any) {
 }
 
 export async function FetchInvoiceFiltered(query: string, itemsPerPage: number, currentPage: number, startDate?: any, endDate?: any) {
+
     try {
         const skip = itemsPerPage * (currentPage - 1);
-        let Startdate = new Date(startDate as string);
-        Startdate = new Date(Startdate.getTime() - Startdate.getTimezoneOffset() * 60 * 1000);
-        const editStartDate = Startdate.toISOString().split('T')[0] + 'T00:00:00.000Z';
-
-
-        let Enddate = new Date(endDate as string);
-        Enddate = new Date(Enddate.getTime() - Enddate.getTimezoneOffset() * 60 * 1000);
-        const editEndDate = Enddate.toISOString().split('T')[0] + 'T00:00:00.000Z';
-
-        console.log(editStartDate, editEndDate);
         let Invoice;
+       
+        if (query === "") {
+            Invoice = await prisma.facturas.findMany({
+                orderBy: {
+                    id: 'desc',
+                },
+                include: {
+                    users: true,
+                    ordens: {
+                        include: {
+                            detalle_ordens: {
+                                include: {
+                                    productos: true,
+                                }
+
+                            },
+                        }
+                    }
+                },
+                take: itemsPerPage,
+                skip: skip,
+            });
+        } else {
+            Invoice = await prisma.facturas.findMany({
+                where: {
+                    numero_factura: {
+                        equals: BigInt(query),
+                    },
+                },
+                include: {
+                    users: true,
+                    ordens: {
+                        include: {
+                            detalle_ordens: {
+                                include: {
+                                    productos: true,
+                                }
+
+                            },
+                        }
+                    }
+                },
+                orderBy: {
+                    id: 'desc',
+                },
+                take: itemsPerPage,
+                skip: skip,
+            });
+        }
         if (startDate && endDate) {
+            let Startdate = new Date(startDate as string);
+            Startdate.setUTCHours(0, 0, 0, 0);
+            const editStartDate = Startdate.toISOString();
+
+            let Enddate = new Date(endDate as string);
+            Enddate.setUTCHours(0, 0, 0, 0);
+            const editEndDate = Enddate.toISOString();
+
+            console.log(editStartDate, editEndDate);
+
             Invoice = await prisma.facturas.findMany({
                 where: {
                     fecha_emision: {
-                        gte: editEndDate,
-                        lte: editStartDate
+                        gte: editStartDate,
+                        lte: editEndDate
                     },
                 },
                 orderBy: {
@@ -360,55 +410,6 @@ export async function FetchInvoiceFiltered(query: string, itemsPerPage: number, 
                 skip: skip,
             });
         }
-        // if (query === "") {
-        //     Invoice = await prisma.facturas.findMany({
-        //         orderBy: {
-        //             id: 'desc',
-        //         },
-        //         include: {
-        //             users: true,
-        //             ordens: {
-        //                 include: {
-        //                     detalle_ordens: {
-        //                         include: {
-        //                             productos: true,
-        //                         }
-
-        //                     },
-        //                 }
-        //             }
-        //         },
-        //         take: itemsPerPage,
-        //         skip: skip,
-        //     });
-        // } else {
-        //     Invoice = await prisma.facturas.findMany({
-        //         where: {
-        //             numero_factura: {
-        //                 equals: BigInt(query),
-        //             },
-        //         },
-        //         include: {
-        //             users: true,
-        //             ordens: {
-        //                 include: {
-        //                     detalle_ordens: {
-        //                         include: {
-        //                             productos: true,
-        //                         }
-
-        //                     },
-        //                 }
-        //             }
-        //         },
-        //         orderBy: {
-        //             id: 'desc',
-        //         },
-        //         take: itemsPerPage,
-        //         skip: skip,
-        //     });
-        // }
-
         return Invoice;
     } catch (error: any) {
         throw new Error(error);
