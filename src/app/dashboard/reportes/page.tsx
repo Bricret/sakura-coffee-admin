@@ -16,11 +16,13 @@ export default function ReportsPage({ searchParams } : { searchParams?: {
     endDate?: string
 } }) {
 
-    const itemsForPage = Number(searchParams?.dataForPage) || 5;
-    const query = searchParams?.query || "";
-    const currentPage = Number(searchParams?.page) || 1;
-    const startDate = searchParams?.startDate || "";
-    const endDate = searchParams?.endDate || "";
+    const dataParams = {
+        itemsForPage : Number(searchParams?.dataForPage) || 5,
+        query : searchParams?.query || "",
+        currentPage : Number(searchParams?.page) || 1,
+        startDate : searchParams?.startDate || "",
+        endDate : searchParams?.endDate || ""
+    }
 
     return (
     <>
@@ -28,7 +30,7 @@ export default function ReportsPage({ searchParams } : { searchParams?: {
         <h1 className="text-2xl font-semibold text-gray-600 mb-4">Facturas Totales</h1>
         <main>
             <Suspense fallback={ <InventorySkeleton /> }>
-                <TableInvoices itemsForPage={itemsForPage} query={query} currentPage={currentPage} startDate={startDate} endDate={endDate} />
+                <TableInvoices dataParams={dataParams} />
             </Suspense>
         </main>
     </>

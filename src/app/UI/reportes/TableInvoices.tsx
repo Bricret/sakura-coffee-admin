@@ -7,9 +7,10 @@ import ActionInvoice from "./ActionInvoice";
 import ExcelBoton from "./ExcelBoton";
 
 
-export default async function TableInvoices({ itemsForPage, query, currentPage, startDate, endDate } : { itemsForPage: number, query: string, currentPage: number, startDate: string, endDate: string}) {
+export default async function TableInvoices({ dataParams } : { dataParams : any }) {
 
-    
+    const { query, itemsForPage, currentPage, startDate, endDate } = dataParams
+
     const invoices = await FetchInvoiceFiltered(query, itemsForPage, currentPage, startDate, endDate);
     const TotalPage = await FetchInvoicePageCount(itemsForPage, startDate, endDate, query);
     
