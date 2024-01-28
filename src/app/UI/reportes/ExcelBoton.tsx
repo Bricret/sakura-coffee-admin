@@ -1,6 +1,7 @@
 'use client'
 
 import { FetchFilteredAllInvoice } from "@/app/lib/actions";
+import { ExcelToInvoice } from "@/app/lib/exportExcel/ExcelToInvoices";
 import { ExcelIcon } from "@/app/plugins/Icons";
 
 
@@ -8,7 +9,7 @@ export default function ExcelBoton({ query, startDate, endDate } : { query : str
 
     const  GenerateExcel = async () => {
         const invoices = await FetchFilteredAllInvoice( query, startDate, endDate )
-        
+        ExcelToInvoice( invoices )
     }
 
     return (
