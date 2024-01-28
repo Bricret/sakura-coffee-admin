@@ -1,4 +1,6 @@
 import { revalidatePath } from "next/cache";
+
+
 import prisma from "./db";
 
 
@@ -425,6 +427,7 @@ export async function FetchInvoiceFiltered(query: string, itemsPerPage: number, 
     }
 }
 
+
 export async function FetchInvoicePageCount(itemsPerPage: number, startDate?: any, endDate?: any, query?: string) {
     try {
         let invoiceCount;
@@ -457,7 +460,10 @@ export async function FetchInvoicePageCount(itemsPerPage: number, startDate?: an
             });
         }
         const pageCount = Math.ceil(invoiceCount / itemsPerPage);
-        return pageCount;
+        return {
+            invoiceCount,
+            pageCount
+        };
     } catch (error: any) {
         throw new Error(error);
     }

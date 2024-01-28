@@ -1,7 +1,7 @@
 import { TableInvoice } from "@/app/lib/data/Local-Data";
 import Search from "../inventario/Search";
 import InfoTable from "../inventario/Info-Table";
-import { FetchAllInvoice, FetchInvoiceFiltered, FetchInvoicePageCount } from "@/app/lib/data";
+import { FetchInvoiceFiltered, FetchInvoicePageCount } from "@/app/lib/data";
 import Pagination from "../inventario/Pagination";
 import ActionInvoice from "./ActionInvoice";
 import ExcelBoton from "./ExcelBoton";
@@ -10,7 +10,6 @@ import ExcelBoton from "./ExcelBoton";
 export default async function TableInvoices({ itemsForPage, query, currentPage, startDate, endDate } : { itemsForPage: number, query: string, currentPage: number, startDate: string, endDate: string}) {
 
     
-    const allInvoice = await FetchAllInvoice();
     const invoices = await FetchInvoiceFiltered(query, itemsForPage, currentPage, startDate, endDate);
     const TotalPage = await FetchInvoicePageCount(itemsForPage, startDate, endDate, query);
     
@@ -19,9 +18,9 @@ export default async function TableInvoices({ itemsForPage, query, currentPage, 
         <article className="flex flex-col gap-4 mb-4">
             <section className="flex justify-between gap-3 items-center md:items-end">
                 <Search placeholder="Busca por ID de Factura..." type="number" />
-                <ExcelBoton />
+                <ExcelBoton query={query} startDate={startDate} endDate={endDate} />
             </section>
-            <InfoTable allProducts={ allInvoice } type="Facturas" location="reportes"/>
+            <InfoTable allProducts={ TotalPage.invoiceCount } type="Facturas" location="reportes"/>
         </article>
         <article className="p-4 z-0 flex flex-col relative justify-between gap-4 bg-content1 overflow-auto rounded-large shadow-small w-full">
             <table 
@@ -81,8 +80,10 @@ export default async function TableInvoices({ itemsForPage, query, currentPage, 
                     )})
                 }
                 </tbody>
+                
             </table>
-            <Pagination totalPages={TotalPage} />
+            
+            <Pagination totalPages={TotalPage.pageCount} />
         </article>
     </>
     )

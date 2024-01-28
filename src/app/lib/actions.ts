@@ -1105,3 +1105,91 @@ export async function FetchSoldProductsToday() {
         throw new Error(error);
     }
 }
+
+export async function FetchFilteredAllInvoice(query: string, startDate: any, endDate: any) {
+    try {
+        let Invoice;
+       
+        if (query === "") {
+            Invoice = await prisma.facturas.findMany({
+                orderBy: {
+                    id: 'desc',
+                },
+                include: {
+                    users: true,
+                    ordens: {
+                        include: {
+                            detalle_ordens: {
+                                include: {
+                                    productos: true,
+                                }
+
+                            },
+                        }
+                    }
+                },
+            });
+        } else {
+            Invoice = await prisma.facturas.findMany({
+                where: {
+                    numero_factura: {
+                        equals: BigInt(query),
+                    },
+                },
+                include: {
+                    users: true,
+                    ordens: {
+                        include: {
+                            detalle_ordens: {
+                                include: {
+                                    productos: true,
+                                }
+
+                            },
+                        }
+                    }
+                },
+                orderBy: {
+                    id: 'desc',
+                }
+            });
+        }
+        if (startDate && endDate) {
+            let Startdate = new Date(startDate as string);
+            Startdate.setUTCHours(0, 0, 0, 0);
+            const editStartDate = Startdate.toISOString();
+
+            let Enddate = new Date(endDate as string);
+            Enddate.setUTCHours(0, 0, 0, 0);
+            const editEndDate = Enddate.toISOString();
+
+            Invoice = await prisma.facturas.findMany({
+                where: {
+                    fecha_emision: {
+                        gte: editStartDate,
+                        lte: editEndDate
+                    },
+                },
+                orderBy: {
+                    id: 'desc',
+                },
+                include: {
+                    users: true,
+                    ordens: {
+                        include: {
+                            detalle_ordens: {
+                                include: {
+                                    productos: true,
+                                }
+
+                            },
+                        }
+                    }
+                }
+            });
+        }
+        return Invoice;
+    } catch (error: any) {
+        throw new Error(error);
+    }
+}
