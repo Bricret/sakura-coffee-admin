@@ -135,7 +135,7 @@ model productos {
   categoria_id   BigInt                   @db.UnsignedBigInt
   nombre         String                   @db.VarChar(255)
   descripcion    String?                  @db.Text
-  precio         Decimal                  @default(0.00) @db.Decimal(10, 2)
+  precio         Float                    @default(0.00) @db.Float
   disponibilidad productos_disponibilidad @default(disponible)
   preparado_en   productos_preparado_en
   detalle_ordens detalle_ordens[]
@@ -183,11 +183,6 @@ enum mesas_estado {
   reservada
 }
 
-enum facturas_metodo_pago {
-  efectivo
-  tarjeta
-}
-
 enum productos_disponibilidad {
   agotado
   disponible
@@ -216,4 +211,10 @@ enum ordens_estado {
 enum cajas_estado {
   abierto
   cerrado
+}
+
+enum facturas_metodo_pago {
+  efectivo
+  tarjeta
+  transferencia
 }
