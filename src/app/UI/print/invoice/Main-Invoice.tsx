@@ -1,5 +1,7 @@
 
-export default function MainInvoice({ details_orders, products } : { details_orders : any, products : any}) {
+export default function MainInvoice({ details_orders } : { details_orders : any }) {
+
+    console.log(details_orders)
 
     return (
     <>
@@ -17,20 +19,12 @@ export default function MainInvoice({ details_orders, products } : { details_ord
     </article>
     {
     details_orders.map((detail_order : any) => (
-        <section key={detail_order.id} className="flex flex-row items-start justify-between w-full px-4">
+        <section key={detail_order.id} className="flex flex-row  w-full pl-4">
             <h3 className="text-sm w-12">{detail_order.cantidad}</h3>
-            {
-                products.map((product : any) => {
-                    if(product.id === detail_order.producto_id) {
-                        return (
-                            <div className="flex flex-row" key={product.id}>
-                                <h3 className="text-sm w-1/2 break-words">{product.nombre}</h3>
-                                <h3 className="text-sm pl-3 w-20">{product.precio.toString()}</h3>
-                            </div>
-                        )
-                    }
-                })
-            }
+            <div className="flex flex-row" key={detail_order.productos.id}>
+                <h3 className="text-sm w-28 break-words">{detail_order.productos.nombre}</h3>
+                <h3 className="text-sm pl-2 w-20">{detail_order.productos.precio.toString()}</h3>
+            </div>
             <h3 className="text-sm">{detail_order.monto_C_}</h3>
         </section>
     ))

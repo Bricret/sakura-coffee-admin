@@ -69,6 +69,16 @@ export async function FetchAllInventory() {
     }
 }
 
+export async function FetchInventory() {
+    try {
+        const products = await prisma.productos.findMany();
+        return products;
+    } catch (error: any) {
+        throw new Error(error);
+    }
+}
+
+
 export async function FetchInventoryPageCount(
     itemsPerPage: number,
 ) {
@@ -283,16 +293,29 @@ export async function FetchDetailOrderByOrderId(id: number) {
 
 export async function FetchInvoiceById(id: number) {
     try {
-        const invoice = await prisma.facturas.findFirst({
+        const Invoice = await prisma.facturas.findUnique({
             where: {
-                id: id
+                id: id.toString(),
+            },
+            include: {
+                users: true,
+                ordens: {
+                    include: {
+                        detalle_ordens: {
+                            include: {
+                                productos: true,
+                            }
+                        },
+                    }
+                }
             }
         });
-        return invoice;
+        return Invoice;
     } catch (error: any) {
         throw new Error(error);
     }
 }
+
 
 export async function FetchUserById(id: number) {
     try {

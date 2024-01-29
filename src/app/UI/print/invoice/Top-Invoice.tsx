@@ -1,6 +1,18 @@
 import Image from "next/image";
 
-export default function TopInvoice({ invoice, fechaEmisionFormatoLocal, horaEmisionFormatoLocal, user } : { invoice : any, fechaEmisionFormatoLocal : any, horaEmisionFormatoLocal : any, user : any}) {
+export default function TopInvoice({ invoice, user } : { invoice : any , user : any}) {
+
+    let fechaEmisionFormatoLocal = '';
+    if(invoice?.fecha_emision) {
+        const fechaEmision = new Date(invoice.fecha_emision).toISOString();
+        fechaEmisionFormatoLocal = fechaEmision.substring(0, fechaEmision.length - 8);
+    }
+
+    let horaEmisionFormatoLocal = '';
+    if(invoice?.hora_emision) {
+        const horaEmision = new Date(invoice.hora_emision).toISOString();
+        horaEmisionFormatoLocal = horaEmision.substring(0, horaEmision.length - 8);
+    }
 
     return (
     <>

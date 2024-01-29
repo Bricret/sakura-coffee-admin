@@ -10,13 +10,8 @@ export const metadata: Metadata = {
 export default async function PrintInvoicePage({params : { idOrderPrint }} : { params : { idOrderPrint : string }}) {
 
     const idInvoice = idOrderPrint.split('-')[0];
-    const idOrder = idOrderPrint.split('-')[1];
     const invoice = await FetchInvoiceById(Number(idInvoice));
-    const details_orders = await FetchDetailOrderByOrderId(Number(idOrder));
-    const user = await FetchUserById(Number(invoice.user_id));
-    const products = await FetchAllInventory();
-
     return (
-        <PrintInvoiceTable invoice={invoice} details_orders={details_orders} user={user} products={products} />
+        <PrintInvoiceTable invoice={invoice} />
     )
 }
