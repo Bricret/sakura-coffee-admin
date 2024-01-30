@@ -69,7 +69,7 @@ export default async function TableFlowCash({ dataParams } : { dataParams : any 
                                 {item.users.name}
                             </td>
                             <td className={`px-4 py-2 text-black  first:rounded-l-2xl text-center cursor-default`}>
-                                <ActionFlowCash />
+                                <ActionFlowCash FlowCash={item} />
                             </td>
                         </tr>
                     )})
