@@ -450,7 +450,6 @@ export async function FetchInvoiceFiltered(query: string, itemsPerPage: number, 
     }
 }
 
-
 export async function FetchInvoicePageCount(itemsPerPage: number, startDate?: any, endDate?: any, query?: string) {
     try {
         let invoiceCount;
@@ -500,4 +499,88 @@ export async function FetchAllInvoice() {
     } catch (error: any) {
         throw new Error(error);
     }
+}
+
+export async function FetchFlowCashFiltered( itemsPerPage: number, currentPage: number, startDate?: any, endDate?: any) {
+    try {
+        const skip = itemsPerPage * (currentPage - 1);
+        let Invoice;
+        if (startDate && endDate) {
+            let Startdate = new Date(startDate as string);
+            Startdate.setUTCHours(0, 0, 0, 0);
+            const editStartDate = Startdate.toISOString();
+
+            let Enddate = new Date(endDate as string);
+            Enddate.setUTCHours(0, 0, 0, 0);
+            const editEndDate = Enddate.toISOString();
+            Invoice = await prisma.flujo_cajas.findMany({
+                where: {
+                    fecha_apertura: {
+                        gte: editStartDate,
+                        lte: editEndDate
+                    },
+                },
+                orderBy: {
+                    id: 'desc',
+                },
+                include: {
+                    users: true,
+                    cajas: true,
+                },
+                take: itemsPerPage,
+                skip: skip,
+                
+            });
+        } else {
+            Invoice = await prisma.flujo_cajas.findMany({
+                orderBy: {
+                    id: 'desc',
+                },
+                include: {
+                    users: true,
+                    cajas: true,
+                },
+                take: itemsPerPage,
+                skip: skip,
+                
+            });
+        }
+        return Invoice
+    } catch (error : any) {
+        throw new Error(error);
+    }
+}
+
+export async function FetchFlowCashPageCount(itemsPerPage: number, startDate?: string, endDate?: string) {
+    try {
+        let invoiceCount;
+        if (!startDate && !endDate) {
+            invoiceCount = await prisma.flujo_cajas.count();
+        } else if (startDate && endDate) {
+            let Startdate = new Date(startDate as string);
+            Startdate.setUTCHours(0, 0, 0, 0);
+            const editStartDate = Startdate.toISOString();
+
+            let Enddate = new Date(endDate as string);
+            Enddate.setUTCHours(0, 0, 0, 0);
+            const editEndDate = Enddate.toISOString();
+
+            invoiceCount = await prisma.flujo_cajas.count({
+                where: {
+                    fecha_apertura: {
+                        gte: editStartDate,
+                        lte: editEndDate
+                    },
+                },
+            });
+        } 
+        const pageCount = Math.ceil(invoiceCount / itemsPerPage);
+        return {
+            invoiceCount,
+            pageCount
+        };
+    } catch (error: any) {
+        throw new Error(error);
+    }
+    
 }

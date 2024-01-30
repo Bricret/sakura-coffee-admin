@@ -4,7 +4,7 @@ import HandleParams from "@/app/lib/HandleParams";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import GetQuerysDate from "../GetQuerysDate";
 
-export default function InfoTable({ allProducts, type, location } : { allProducts: any, type: string, location?: string}) {
+export default function InfoTable({ allProducts, type, location, invoice = true } : { allProducts: any, type: string, location?: string, invoice? : boolean}) {
     const searchParams = useSearchParams();
     const pathname = usePathname();
     const { replace } = useRouter();
@@ -20,7 +20,7 @@ export default function InfoTable({ allProducts, type, location } : { allProduct
             <article className="hidden md:flex gap-x-2 ">
                 {
                     location === 'reportes' && (
-                        <GetQuerysDate />
+                        <GetQuerysDate invoice={invoice} />
                     )
                 }
             </article>

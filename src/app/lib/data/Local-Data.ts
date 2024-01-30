@@ -326,19 +326,19 @@ export const TableFlow = [
     },
     {
         key: "monto_inicial",
-        label: "Monto Incial C$",
+        label: "MONTO INICIAL C$",
     },
     {
         key: "monto_final",
-        label: "Monto Final C$",
+        label: "MONTO FINAL C$",
     },
     {
         key: "Faltante_caja",
-        label: "Faltante de caja",
+        label: "FALTANTE DE CAJA C$",
     },
     {
         key: "sobrante_caja",
-        label: "Sobrante de caja",
+        label: "SOBRANTE DE CAJA C$",
     },
     {
         key: "usuario",

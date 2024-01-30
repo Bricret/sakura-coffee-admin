@@ -9,17 +9,17 @@ import { Icons } from '@/app/plugins/Icons';
 
 const { ArrowLeftIcon, ArrowRightIcon } = Icons;
 
-export default function Pagination({ totalPages }: { totalPages: number }) {
+export default function Pagination({ totalPages, Path = 'page' }: { totalPages: number, Path? : string }) {
     const searchParams = useSearchParams();
     const  pathname = usePathname();
-    const currentPage = Number(searchParams.get('page')) || 1;
+    const currentPage = Number(searchParams.get(Path)) || 1;
 
 
   const allPages = generatePagination(currentPage, totalPages);
 
   const createPageURL = (page: number | string) => {
     const params = new URLSearchParams(searchParams);
-    params.set('page', page.toString());
+    params.set(Path, page.toString());
     return `${pathname}?${params.toString()}`;
   }
 

@@ -3,19 +3,32 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import HandleParams from "../lib/HandleParams";
 
-export default function GetQuerysDate() {
+export default function GetQuerysDate({invoice} : { invoice? : boolean }) {
 
     const searchParams = useSearchParams();
     const pathname = usePathname();
     const { replace } = useRouter();
 
+
+
+
     const handleParamsStartDate = (term: any, ) => {
-        const paramsName = 'startDate';
+        let paramsName = '';
+        if (invoice) {
+            paramsName = 'startDate'
+        } else {
+            paramsName = 'startDateFlow'
+        }
         HandleParams({term, searchParams, paramsName, pathname, replace});
     }
 
     const handleParamsEnDate = (term: any, ) => {
-        const paramsName = 'endDate';
+        let paramsName = '';
+        if (invoice) {
+            paramsName = 'endDate'
+        } else {
+            paramsName = 'endDateFlow'
+        }
         HandleParams({term, searchParams, paramsName, pathname, replace});
     }
 
