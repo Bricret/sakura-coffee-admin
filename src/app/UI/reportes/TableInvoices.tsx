@@ -12,7 +12,7 @@ export default async function TableInvoices({ dataParams } : { dataParams : any 
     const { query, itemsForPage, currentPage, startDate, endDate } = dataParams
 
     const invoices = await FetchInvoiceFiltered(query, itemsForPage, currentPage, startDate, endDate);
-    // const TotalPage = await FetchInvoicePageCount(itemsForPage, startDate, endDate, query);
+    const TotalPage = await FetchInvoicePageCount(itemsForPage, startDate, endDate, query);
     
     return (
     <>
@@ -21,7 +21,7 @@ export default async function TableInvoices({ dataParams } : { dataParams : any 
                 <Search placeholder="Busca por ID de Factura..." type="number" />
                 <ExcelBoton query={query} startDate={startDate} endDate={endDate} />
             </section>
-            {/* <InfoTable allProducts={ TotalPage.invoiceCount } type="Facturas" location="reportes"/> */}
+            <InfoTable allProducts={ TotalPage.invoiceCount } type="Facturas" location="reportes"/>
         </article>
         <article className="p-4 z-0 flex flex-col relative justify-between gap-4 bg-content1 overflow-auto rounded-large shadow-small w-full">
             <table 
@@ -84,7 +84,7 @@ export default async function TableInvoices({ dataParams } : { dataParams : any 
                 
             </table>
             
-            {/* <Pagination totalPages={TotalPage.pageCount} /> */}
+            <Pagination totalPages={TotalPage.pageCount} />
         </article>
     </>
     )

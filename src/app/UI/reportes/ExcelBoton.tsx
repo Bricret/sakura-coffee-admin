@@ -9,7 +9,7 @@ export default function ExcelBoton({ query, startDate, endDate } : { query : str
 
     const  GenerateExcel = async () => {
         const invoices = await FetchFilteredAllInvoice( query, startDate, endDate )
-        ExcelToInvoice( invoices )
+        ExcelToInvoice( invoices, startDate, endDate );
     }
 
     return (
