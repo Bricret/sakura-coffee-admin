@@ -8,13 +8,13 @@ export async function ExcelToInvoice(Invoice: any, startDate? : string, endDate?
 
     let information = ''
     if (startDate && endDate) {
-        information = `Periodo del ${startDate} al ${endDate}`
+        information = `Facturas del ${startDate} al ${endDate}`
     } else {
         information = 'Facturas realizadas'
     }
 
     const workbook = new ExcelJS.Workbook();
-    const worksheet = workbook.addWorksheet(information);
+    const worksheet = workbook.addWorksheet('Facturas');
 
     worksheet.mergeCells('A1:I1');
     const title = worksheet.getCell('A1');

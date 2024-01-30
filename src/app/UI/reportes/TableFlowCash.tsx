@@ -18,7 +18,7 @@ export default async function TableFlowCash({ dataParams } : { dataParams : any 
         <>
         <article className="flex flex-col gap-4 mb-4">
             <section className="flex justify-end gap-3 items-center md:items-end">
-                <ExcelBoton query='' startDate={startDate} endDate={endDate} />
+                <ExcelBoton query='' startDate={startDate} endDate={endDate} Invoice={false}/>
             </section>
             <InfoTable allProducts={ TotalPage.invoiceCount } type="Flujos de caja" location="reportes" invoice={false}/>   
         </article>

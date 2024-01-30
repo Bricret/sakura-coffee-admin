@@ -1193,3 +1193,46 @@ export async function FetchFilteredAllInvoice(query: string, startDate: any, end
         throw new Error(error);
     }
 }
+
+export async function FetchFilteredAllCashFlow( startDate : string, endDate : string ) {
+    try {
+        let Invoice;
+        if (startDate && endDate) {
+            let Startdate = new Date(startDate as string);
+            Startdate.setUTCHours(0, 0, 0, 0);
+            const editStartDate = Startdate.toISOString();
+
+            let Enddate = new Date(endDate as string);
+            Enddate.setUTCHours(0, 0, 0, 0);
+            const editEndDate = Enddate.toISOString();
+            Invoice = await prisma.flujo_cajas.findMany({
+                where: {
+                    fecha_apertura: {
+                        gte: editStartDate,
+                        lte: editEndDate
+                    },
+                },
+                orderBy: {
+                    id: 'desc',
+                },
+                include: {
+                    users: true,
+                    cajas: true,
+                }
+            });
+        } else {
+            Invoice = await prisma.flujo_cajas.findMany({
+                orderBy: {
+                    id: 'desc',
+                },
+                include: {
+                    users: true,
+                    cajas: true,
+                }
+            });
+        }
+        return Invoice
+    } catch (error : any) {
+        throw new Error(error);
+    }
+}

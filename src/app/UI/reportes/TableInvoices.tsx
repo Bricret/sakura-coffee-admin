@@ -19,7 +19,7 @@ export default async function TableInvoices({ dataParams } : { dataParams : any 
         <article className="flex flex-col gap-4 mb-4">
             <section className="flex justify-between gap-3 items-center md:items-end">
                 <Search placeholder="Busca por ID de Factura..." type="number" />
-                <ExcelBoton query={query} startDate={startDate} endDate={endDate} />
+                <ExcelBoton query={query} startDate={startDate} endDate={endDate} Invoice={true}/>
             </section>
             <InfoTable allProducts={ TotalPage.invoiceCount } type="Facturas" location="reportes"/>
         </article>

@@ -1,15 +1,21 @@
 'use client'
 
-import { FetchFilteredAllInvoice } from "@/app/lib/actions";
+import { FetchFilteredAllCashFlow, FetchFilteredAllInvoice } from "@/app/lib/actions";
 import { ExcelToInvoice } from "@/app/lib/exportExcel/ExcelToInvoices";
 import { ExcelIcon } from "@/app/plugins/Icons";
 
 
-export default function ExcelBoton({ query, startDate, endDate } : { query : string, startDate : string, endDate : string }) {
+export default function ExcelBoton({ query, startDate, endDate, Invoice = false } : { query : string, startDate : string, endDate : string, Invoice? : boolean }) {
 
     const  GenerateExcel = async () => {
-        const invoices = await FetchFilteredAllInvoice( query, startDate, endDate )
-        ExcelToInvoice( invoices, startDate, endDate );
+        if(Invoice) {
+            const invoices = await FetchFilteredAllInvoice( query, startDate, endDate )
+            ExcelToInvoice( invoices, startDate, endDate );
+        } else {
+            const CashFlow = await FetchFilteredAllCashFlow(startDate, endDate);
+            console.log(CashFlow)
+        }
+
     }
 
     return (

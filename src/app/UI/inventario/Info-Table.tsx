@@ -24,12 +24,12 @@ export default function InfoTable({ allProducts, type, location, invoice = true 
                     )
                 }
             </article>
-                <label className="flex items-center text-default-400 text-small" htmlFor="cars">
+                <label className="flex items-center text-default-400 text-small" htmlFor={type}>
                     Datos por pagina:
                     <select
                         className="bg-transparent outline-none text-default-400 text-small"
-                        id="cars"
-                        name="cars"
+                        id={type}
+                        name={type}
                         onChange={ (e) => handleParams(e.target.value) }
                         defaultValue={ searchParams.get('dataForPage')?.toString() || 5 }
                     >
