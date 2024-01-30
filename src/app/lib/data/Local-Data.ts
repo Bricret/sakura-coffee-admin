@@ -318,3 +318,34 @@ export const TableInvoice = [
         label: "ACCIONES",
     },
 ]
+
+export const TableFlow = [
+    {
+        key: "id",
+        label: "ID",
+    },
+    {
+        key: "monto_inicial",
+        label: "Monto Incial C$",
+    },
+    {
+        key: "monto_final",
+        label: "Monto Final C$",
+    },
+    {
+        key: "Faltante_caja",
+        label: "Faltante de caja",
+    },
+    {
+        key: "sobrante_caja",
+        label: "Sobrante de caja",
+    },
+    {
+        key: "usuario",
+        label: "USUARIO",
+    },
+    {
+        key: "action",
+        label: "ACCIONES",
+    },
+]
