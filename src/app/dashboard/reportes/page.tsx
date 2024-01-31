@@ -4,9 +4,7 @@ import NavBar from "@/app/UI/dashboard/nav-bar";
 import { Metadata } from "next"
 import { Suspense } from "react";
 
-export const metadata: Metadata = {
-    title: 'Reportes | Sakura Coffee Shop',
-  };
+
 
 const DynamicTableInvoices = dynamic(() => import('@/app/UI/reportes/TableInvoices'), {
   loading: () => <LatestInventorySkeleton />,
@@ -45,7 +43,6 @@ export default function ReportsPage({ searchParams } : { searchParams?: {
 
     return (
     <>
-        <NavBar title={"Reportes de Movimiento"}/>
         <main>
             <section className="mb-12">
                 <h1 className="text-2xl font-semibold text-gray-600 mb-4">Facturas Totales</h1>

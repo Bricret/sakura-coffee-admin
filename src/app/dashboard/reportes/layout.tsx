@@ -1,13 +1,16 @@
 import { PrincipalNavbarSkeleton } from "@/app/UI/Skeleton";
-import NavCaja from "@/app/UI/caja/Nav-Caja";
 import NavBar from "@/app/UI/dashboard/nav-bar";
-import { Metadata } from "next"
+import Nav_Reportes from "@/app/UI/reportes/Nav-Reportes";
+import { Metadata } from "next";
 import { Suspense } from "react";
 
+
 export const metadata: Metadata = {
-    title: 'Caja | Sakura Coffee Shop',
+    title: 'Reportes | Sakura Coffee Shop',
   };
-export default function CajaLayout({
+
+
+export default function ReportesLayout({
     children,
   }: {
     children: React.ReactNode;
@@ -16,9 +19,9 @@ export default function CajaLayout({
         <main>
             <header>
                 <Suspense fallback={ <PrincipalNavbarSkeleton /> }>
-                  <NavBar title="Transacciones " />
+                <NavBar title={"Reportes de Movimiento"}/>
                 </Suspense>
-                <NavCaja />
+                <Nav_Reportes />
             </header>
             <section>
                 {children}

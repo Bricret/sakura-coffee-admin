@@ -349,3 +349,14 @@ export const TableFlow = [
         label: "ACCIONES",
     },
 ]
+
+export const LinksReportes = [
+    {
+        title: 'Facturas',
+        href: '/dashboard/reportes',
+    },
+    {
+        title: 'Flujo de Caja',
+        href: '/dashboard/reportes/flujo_caja',
+    },
+]
