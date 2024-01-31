@@ -1,7 +1,7 @@
 'use client'
 
 import { FetchFilteredAllCashFlow, FetchFilteredAllInvoice } from "@/app/lib/actions";
-import { ExcelToInvoice } from "@/app/lib/exportExcel/ExcelToInvoices";
+import { CreateExcel } from "@/app/lib/exportExcel/ExcelToInvoices";
 import { ExcelIcon } from "@/app/plugins/Icons";
 
 
@@ -9,11 +9,13 @@ export default function ExcelBoton({ query, startDate, endDate, Invoice = false 
 
     const  GenerateExcel = async () => {
         if(Invoice) {
+            const from = 'Facturas'
             const invoices = await FetchFilteredAllInvoice( query, startDate, endDate )
-            ExcelToInvoice( invoices, startDate, endDate );
+            CreateExcel( invoices, from, startDate, endDate );
         } else {
-            const CashFlow = await FetchFilteredAllCashFlow(startDate, endDate);
-            console.log(CashFlow)
+            const CashFlow = await FetchFilteredAllCashFlow( startDate, endDate );
+            const from = 'Flujos de caja'
+            CreateExcel( CashFlow, from, startDate, endDate )
         }
 
     }
