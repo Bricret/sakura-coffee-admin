@@ -89,6 +89,7 @@ export async function CreateExcel( data: any, from : string, startDate? : string
 
     rowIndex++;
 
+    let fechaFormatoLocal = '';
     if (from === 'Facturas') {
         for (let j = 0; j < data.length; j++) {
             let invoiceRow = worksheet.getRow(j + rowIndex);
@@ -100,7 +101,9 @@ export async function CreateExcel( data: any, from : string, startDate? : string
             invoiceRow.getCell(6).value = data[j].propina_C_;
             invoiceRow.getCell(7).value = data[j].propina_U_;
             invoiceRow.getCell(8).value = data[j].fecha_emision;
-            invoiceRow.getCell(9).value = (new Date(data[j].hora_emision).toLocaleString()).split(',')[1];
+            const hora_emision = new Date(data[j].hora_emision).toISOString();
+            fechaFormatoLocal = hora_emision.substring(0, hora_emision.length - 8);
+            invoiceRow.getCell(9).value = fechaFormatoLocal.split('T')[1];
             
     
             invoiceRow.eachCell({ includeEmpty: true }, function(cell, colNumber) {
@@ -113,18 +116,22 @@ export async function CreateExcel( data: any, from : string, startDate? : string
             let invoiceRow = worksheet.getRow(j + rowIndex);
             invoiceRow.getCell(1).value = data[j].id.toString();
             invoiceRow.getCell(2).value = data[j].fecha_apertura;
-            invoiceRow.getCell(3).value = data[j].hora_apertura;
+            const hora_apertura = new Date(data[j].hora_apertura).toISOString();
+            fechaFormatoLocal = hora_apertura.substring(0, hora_apertura.length - 8);
+            invoiceRow.getCell(3).value = fechaFormatoLocal.split('T')[1];
             invoiceRow.getCell(4).value = data[j].fecha_cierre;
-            invoiceRow.getCell(5).value = data[j].hora_cierre;
+            const hora_cierre = new Date(data[j].hora_cierre).toISOString();
+            fechaFormatoLocal = hora_cierre.substring(0, hora_cierre.length - 8);
+            invoiceRow.getCell(5).value = fechaFormatoLocal.split('T')[1];
             invoiceRow.getCell(6).value = data[j].monto_inicial_C_;
             invoiceRow.getCell(7).value = data[j].monto_inicial_U_;
             invoiceRow.getCell(8).value = data[j].monto_final_C_;
             invoiceRow.getCell(9).value = data[j].monto_final_U_;
             invoiceRow.getCell(10).value = data[j].faltante_caja;
             invoiceRow.getCell(11).value = data[j].sobrante_caja;
-            invoiceRow.getCell(12).value = data[j].users.name;
-            invoiceRow.getCell(13).value = data[j].observaciones;
-            
+            invoiceRow.getCell(12).value = data[j].observaciones;
+            invoiceRow.getCell(12).alignment = { wrapText: true };
+            invoiceRow.getCell(13).value = data[j].users.name;
     
             invoiceRow.eachCell({ includeEmpty: true }, function(cell, colNumber) {
                 cell.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
