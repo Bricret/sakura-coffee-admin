@@ -1,43 +1,15 @@
 'use client'
 import Link from "next/link";
-import { useEffect } from "react";
 import { fonts } from "../Fonts";
 import { LinkCaja } from "@/app/lib/data/Local-Data";
 import { usePathname } from "next/navigation";
 import useUserStore from "@/app/context/store";
+import { motion } from 'framer-motion';
 
 
 export default function NavCaja() {
 
     const pathname = usePathname();
-    // manejo de backdrop para el menu de caja
-    useEffect(() => {
-        const listItem = document.querySelectorAll('li');
-        const menuBackdrop : any = document.getElementById('menu-backdrop');
-        const nav : any = document.querySelector('nav');
-        const menuBackdropRect = menuBackdrop.getBoundingClientRect();
-    
-        listItem.forEach((item) => {
-            item.addEventListener('mouseenter', () => {
-                const { left, top, width, height } = item.getBoundingClientRect();
-                menuBackdrop.style.setProperty('--left', `${left - menuBackdropRect.left}px`);
-                menuBackdrop.style.setProperty('--top', `${top - menuBackdropRect.top}px`);
-                menuBackdrop.style.setProperty('--width', `${width}px`);
-                menuBackdrop.style.setProperty('--height', `${height}px`);
-                menuBackdrop.style.opacity = '1';
-                menuBackdrop.style.visibility = 'visible';
-            })
-        });
-    
-        listItem.forEach((item) => {
-            item.addEventListener('mouseleave', () => {
-                menuBackdrop.style.opacity = '0';
-                menuBackdrop.style.visibility = 'hidden';
-            })
-        });
-    
-    }, []);
-
     const { user } = useUserStore();
 
     return (
@@ -50,8 +22,10 @@ export default function NavCaja() {
                         const LinkIcon = link.icon;
                         if(link.title !== 'Mesas' && link.title !== 'Cierre' && user.role === 'Mesero') return null
                         return (
-                            <li 
+                            <motion.li 
                                 key={link.title}
+                                whileHover={{ scale: 0.9}}
+                                transition={{ type: "spring", stiffness: 300 }}
                                 className={`flex flex-grow basis-0 justify-center py-2
                                 ${ pathname === link.href ? 'text-black font-bold bg-black/20 backgrop-blur-lg rounded': 'text-zinc-700 hover:text-black' }
                                 `}
@@ -63,7 +37,7 @@ export default function NavCaja() {
                                     <LinkIcon className="size-8 hidden md:block" />
                                     <p className="pl-2">{link.title}</p>
                                 </Link>
-                            </li>
+                            </motion.li>
                         )
                     })
                 }
