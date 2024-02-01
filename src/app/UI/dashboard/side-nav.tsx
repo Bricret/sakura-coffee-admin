@@ -7,7 +7,6 @@ import SakuraLogo from "./sakura-logo";
 import { Button } from "@nextui-org/react";
 import { fonts } from "../Fonts";
 import { signOut } from "next-auth/react";
-
 const { PowerIcon } = Icons;
 const { merriweather } = fonts;
 

@@ -12,7 +12,7 @@ export default async function NavBar({ title, site } : { title: string, site?: b
     const { name, image } = user;
 
     return (
-    <div className="flex flex-row justify-between items-center mb-10 py-2 mr-7 md:mr-0">
+    <div className="flex flex-row justify-between items-center mb-10 py-2 mr-7">
         <div className="flex flex-col">
             <div className="flex items-center">
                 <div className="w-8 h-8 flex flex-wrap bg-secundary rounded-full"></div>
