@@ -1,4 +1,3 @@
-import NavBar from "../UI/dashboard/nav-bar";
 import SideNav from "../UI/dashboard/side-nav";
 import { Metadata } from "next"
 
@@ -16,7 +15,6 @@ export default function DashboardLayout({
                 <SideNav />
             </div>
             <div className="flex-grow p-6 md:overflow-y-auto md:p-6 bg-primary/50">
-              <NavBar title={"Bienvenid@ de nuevo "} site={true}/>
               { children }
             </div>
         </div>
