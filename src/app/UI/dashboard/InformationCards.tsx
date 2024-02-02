@@ -8,7 +8,7 @@ export default function InformationCards({title, data, style1, style2} : {title 
     const rounded = useTransform(count, Math.round);
 
     useEffect(() => {
-        const animation = animate(count, data, { duration: 1 });
+        const animation = animate(count, data, { duration: 1.2 });
     
         return animation.stop;
       }, []);
@@ -26,7 +26,7 @@ export default function InformationCards({title, data, style1, style2} : {title 
             <svg className="w-5 h-5 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="6" d="M5 15l7-7 7 7" />
             </svg>
-            <motion.h1 className="text-3xl font-bold text-gray-500">{rounded}</motion.h1>
+            <motion.h1 className="text-3xl font-bold text-black/80">{rounded}</motion.h1>
             </div>
         </header>
         <figure className={` ${style2} rounded-full h-10 w-10 flex items-center justify-center`}></figure>
