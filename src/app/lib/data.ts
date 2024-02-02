@@ -584,3 +584,229 @@ export async function FetchFlowCashPageCount(itemsPerPage: number, startDate?: s
     }
     
 }
+
+export async function FetchProductsSoldByCategory() {
+    try {
+        // Primera consulta: agrupar por producto_id y sumar la cantidad
+    const detalleOrdensAgrupados = await prisma.detalle_ordens.groupBy({
+        by: ['producto_id'],
+        _sum: {
+          cantidad: true,
+        },
+      });
+    
+      // Segunda consulta: obtener los categoria_id de los productos
+      const productos = await prisma.productos.findMany({
+        where: {
+          id: {
+            in: detalleOrdensAgrupados.map((item : any) => item.producto_id),
+          },
+        },
+        select: {
+          id: true,
+          categoria_id: true,
+        },
+      });
+    
+      // Tercera consulta: obtener los nombres de las categorías
+      const categorias = await prisma.categorias.findMany({
+        where: {
+          id: {
+            in: productos.map((p : any) => p.categoria_id),
+          },
+        },
+        select: {
+          id: true,
+          nombre: true,
+        },
+      });
+    
+      // Mapa para acumular cantidades por categoría
+      const acumuladoPorCategoria: { [key: string]: number } = {};
+    
+      // Combinar los resultados y sumar las cantidades por categoría
+      detalleOrdensAgrupados.forEach((item : any) => {
+        const categoriaId = productos.find((p : any ) => p.id === item.producto_id)?.categoria_id;
+        const categoriaNombre = categorias.find((c : any) => c.id === categoriaId)?.nombre;
+        if (categoriaNombre) {
+          if (!acumuladoPorCategoria[categoriaNombre]) {
+            acumuladoPorCategoria[categoriaNombre] = 0;
+          }
+          acumuladoPorCategoria[categoriaNombre] += item._sum.cantidad;
+        }
+      });
+    
+      // Convertir el mapa acumulado en un array de objetos para la salida final
+      const productosVendidosPorCategoria = Object.entries(acumuladoPorCategoria).map(([categoria, cantidad]) => ({
+        categoria,
+        cantidad,
+      }));
+      return productosVendidosPorCategoria;
+    } catch (error : any) {
+        throw new Error(error)
+    }
+}
+
+export async function FetchMostSoldProduct() {
+    try {
+        // Primera consulta para obtener el ID del producto más vendido
+        const mostSoldProduct = await prisma.detalle_ordens.groupBy({
+            by: ['producto_id'],
+            _sum: {
+              cantidad: true,
+            },
+            orderBy: {
+              _sum: {
+                cantidad: 'desc',
+              },
+            },
+            take: 1,
+        });
+
+        const productoId = mostSoldProduct[0].producto_id;
+        const productoInfo = await prisma.productos.findUnique({
+            where: {
+                id: productoId,
+            },
+            select: {
+                nombre: true, 
+            },
+        });
+
+        return {
+            ...mostSoldProduct[0],
+            nombreProducto: productoInfo ? productoInfo.nombre : null,
+        };
+    } catch (error : any ) {
+        throw new Error(error);
+    }
+}
+
+
+export async function FetchTotalSoldProducts() {
+    const totalSold = await prisma.detalle_ordens.aggregate({
+      _sum: {
+        cantidad: true,
+      },
+    });
+  
+    return totalSold._sum.cantidad;
+}
+
+export async function FetchCountInvoiceForDay() {
+
+  const today = new Date();
+  let TodayOnlyDate = ( today.toISOString() ).split('T')[0]
+  TodayOnlyDate = TodayOnlyDate +  'T00:00:00.000Z'
+
+  try {
+      const invoices = await prisma.facturas.count({
+        where: {
+          fecha_emision: TodayOnlyDate
+        },
+      });
+      return invoices
+  } catch (error : any) {
+    throw new Error(error)
+  }
+}
+
+export async function FetchInvoicesCurrentMonth() {
+    const currentDate = new Date();
+    let firstDayOfMonth = ((new Date(currentDate.getFullYear(), currentDate.getMonth(), 1)).toISOString()).split('T')[0];
+    firstDayOfMonth = firstDayOfMonth  +  'T00:00:00.000Z'
+    let lastDayOfMonth = ((new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0)).toISOString()).split('T')[0];
+    lastDayOfMonth = lastDayOfMonth + 'T00:00:00.000Z'
+  
+    const invoices = await prisma.facturas.count({
+      where: {
+        fecha_emision: {
+          gte: firstDayOfMonth,
+          lte: lastDayOfMonth,
+        },
+      },
+    });
+  
+    return invoices;
+}
+
+export async function FetchTotalMountMoney() {
+    try {
+        const total_C_ = await prisma.facturas.aggregate({
+            _sum: {
+              total_C_: true
+            },
+          });
+          return total_C_
+    } catch (error : any) {
+        throw new Error(error);
+    }
+}
+
+export async function FetchTotalAmount() {
+    const currentDate = new Date();
+    let firstDayOfMonth = ((new Date(currentDate.getFullYear(), currentDate.getMonth(), 1)).toISOString()).split('T')[0];
+    firstDayOfMonth = firstDayOfMonth  +  'T00:00:00.000Z';
+    let lastDayOfMonth = ((new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0)).toISOString()).split('T')[0];
+    lastDayOfMonth = lastDayOfMonth + 'T00:00:00.000Z';
+  
+    try {
+        const total_C_ = await prisma.facturas.aggregate({
+          _sum: {
+            total_C_: true,
+          },
+          where: {
+            fecha_emision: {
+              gte: new Date(firstDayOfMonth),
+              lte: new Date(lastDayOfMonth),
+            },
+          },
+        });
+        return total_C_
+    } catch ( error : any ) {
+        throw new Error(error)
+    }
+}
+
+export async function FetchUserWithMostInvoices() {
+    try {
+        const userWithMostInvoices = await prisma.facturas.groupBy({
+            by: ['user_id'],
+            _count: {
+              user_id: true,
+            },
+            orderBy: {
+              _count: {
+                user_id: 'desc',
+              },
+            },
+            take: 1,
+          });
+        
+          if (userWithMostInvoices.length > 0) {
+            const userId = userWithMostInvoices[0].user_id;
+            const user = await prisma.users.findUnique({
+              where: {
+                id: userId,
+              },
+            });
+            return user;
+        }
+    } catch (error : any) {
+        throw new Error(error)
+    }
+}
+
+export async function FetchOrdersToPending() {
+    try {
+        const pendingOrders = await prisma.pedidos.count({
+            where: {
+                estado_pago: 'pendiente', // Replace 'status' with the actual field name for the order status in your schema
+            },
+        });
+        
+        return pendingOrders;
+    } catch (error : any) {
+        throw new Error(error)
+    }
+}
