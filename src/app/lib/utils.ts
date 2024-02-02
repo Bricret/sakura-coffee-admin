@@ -1,4 +1,5 @@
 import { updateOrderToStatusAndUpdateOrdens } from "./actions";
+import { FetchMostSoldProduct, FetchTotalSoldProducts } from "./data";
 
 
 export const generatePagination = (currentPage: number, totalPages: number) => {
@@ -75,3 +76,18 @@ export const PropinaInvoice = ( Invoice : any ) => {
   }, 0);
   return propinainvoice;
 }
+
+
+export async function calculatePercentage() {
+  const mostSoldProduct = await FetchMostSoldProduct();
+  const totalSoldProducts = await FetchTotalSoldProducts();
+
+  const percentage = (mostSoldProduct._sum.cantidad / totalSoldProducts) * 100;
+
+  return({
+    porcentaje: percentage.toFixed(2),
+    nombre: mostSoldProduct.nombreProducto
+  });
+}
+
+calculatePercentage().catch(console.error);
