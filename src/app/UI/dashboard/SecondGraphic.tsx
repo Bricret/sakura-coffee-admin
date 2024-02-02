@@ -42,8 +42,8 @@ const MyDoughnutChart = ({product} : any) => {
       return (
     <motion.article 
     className="w-auto h-96 bg-white rounded-lg p-3"
-    initial={{ x: "100vw" }}
-    animate={{ x: 0 }}
+    initial={{ y: "-100vh" }}
+    animate={{ y: 0 }}
     transition={{ duration: 0.5 }}
     >
       <h1 className="font-semibold text-2xl pb-4 text-zinc-500">Producto mas Vendido</h1>

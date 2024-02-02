@@ -1236,3 +1236,38 @@ export async function FetchFilteredAllCashFlow( startDate : string, endDate : st
         throw new Error(error);
     }
 }
+
+export async function FetchTipOfDate(startDate : string, endDate : string) {    
+    try {
+        let totalPropinas = null
+        if (startDate && endDate) {
+            let Startdate = new Date(startDate as string);
+            Startdate.setUTCHours(0, 0, 0, 0);
+            const editStartDate = Startdate.toISOString();
+        
+            let Enddate = new Date(endDate as string);
+            Enddate.setUTCHours(0, 0, 0, 0);
+            const editEndDate = Enddate.toISOString();
+            totalPropinas = await prisma.facturas.aggregate({
+                _sum: {
+                  propina_C_: true,
+                },
+                where: {
+                  fecha_emision: {
+                    gte: editStartDate,
+                    lte: editEndDate,
+                  },
+                },
+              });
+        } else {
+            totalPropinas = await prisma.facturas.aggregate({
+                _sum: {
+                  propina_C_: true,
+                }
+              });
+        }
+        return totalPropinas
+    } catch ( error : any ) {
+        throw new Error(error)
+    }
+}

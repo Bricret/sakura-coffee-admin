@@ -803,7 +803,7 @@ export async function FetchOrdersToPending() {
     try {
         const pendingOrders = await prisma.pedidos.count({
             where: {
-                estado_pago: 'pendiente', // Replace 'status' with the actual field name for the order status in your schema
+                estado_pedido: 'pendiente',
             },
         });
         

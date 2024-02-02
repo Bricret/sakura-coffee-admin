@@ -79,3 +79,30 @@ export function InventoryOptions() {
     </div>
   );
 }
+
+
+export function CardHeaderDashboard() {
+  return (
+    <article className={`w-1/4 bg-gray-300 rounded-lg shadow-md p-4 flex justify-between items-center border-b-large`}>
+    <header>
+        <div className="flex items-center">
+          <svg className="w-5 h-5 text-gray-300 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="6" d="M5 15l7-7 7 7" />
+          </svg>
+        </div>
+    </header>
+    <figure className={`bg-gray-300 rounded-full h-10 w-10 flex items-center justify-center`}></figure>
+  </article>
+  )
+}
+
+export function InfoCardsDashboard() {
+  return (
+  <header className={`${ shimmer } flex gap-x-6 mb-6`}>
+    <CardHeaderDashboard />
+    <CardHeaderDashboard />
+    <CardHeaderDashboard />
+    <CardHeaderDashboard />
+  </header>
+  )
+}
