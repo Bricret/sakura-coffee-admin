@@ -695,14 +695,16 @@ export async function FetchTotalSoldProducts() {
 
 export async function FetchCountInvoiceForDay() {
 
-  const today = new Date();
-  let TodayOnlyDate = ( today.toISOString() ).split('T')[0]
-  TodayOnlyDate = TodayOnlyDate +  'T00:00:00.000Z'
+    const actualDate = new Date().toISOString();
+    let emisionDate = new Date(actualDate as string);
+    emisionDate = new Date(emisionDate.getTime() - emisionDate.getTimezoneOffset() * 60 * 1000);
+    let newDate = (emisionDate.toISOString()).split('T')[0];
+    newDate = newDate + 'T00:00:00.000Z'
 
   try {
       const invoices = await prisma.facturas.count({
         where: {
-          fecha_emision: TodayOnlyDate
+          fecha_emision: newDate
         },
       });
       return invoices

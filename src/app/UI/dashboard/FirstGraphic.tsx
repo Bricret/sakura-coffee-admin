@@ -3,6 +3,8 @@
 
 import { useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
+import { motion } from "framer-motion";
+
 
 export default function FirstGraphic({ data } : any) {
   const chartContainer = useRef(null);
@@ -51,6 +53,13 @@ export default function FirstGraphic({ data } : any) {
   }, []);
 
   return (
+    <motion.article 
+      className='w-8/12 h-96 bg-white rounded-lg p-3'
+      initial={{ x: "-100vw" }}
+      animate={{ x: 0 }}
+      transition={{ duration: 0.5 }}
+    >
         <canvas  ref={chartContainer} />
+    </motion.article>
   );
 }

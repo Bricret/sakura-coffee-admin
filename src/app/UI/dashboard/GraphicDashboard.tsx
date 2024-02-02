@@ -12,13 +12,8 @@ export default async function GraphicsDashboard() {
 
     return (
         <article className="flex justify-between items-center w-full">
-            <section className='w-8/12 h-96 bg-white rounded-lg p-3'>
-                <FirstGraphic data={ProductsSoldByCategory} />
-            </section>
-            <section className="w-auto h-96 bg-white rounded-lg p-3">
-                <h1 className="font-semibold text-2xl pb-4 text-zinc-500">Producto mas Vendido</h1>
-                <SecondGraphic product={ProductMostSold}/>
-            </section>
+            <FirstGraphic data={ProductsSoldByCategory} />
+            <SecondGraphic product={ProductMostSold}/>
         </article>
     )
 }

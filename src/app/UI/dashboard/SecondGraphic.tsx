@@ -1,6 +1,7 @@
 'use client'
 
 import { Doughnut } from 'react-chartjs-2';
+import { motion } from "framer-motion";
 
 
 const options = {
@@ -38,8 +39,16 @@ const MyDoughnutChart = ({product} : any) => {
         ],
       };
 
-  return (
-    <Doughnut data={data} options={options} />
+      return (
+    <motion.article 
+    className="w-auto h-96 bg-white rounded-lg p-3"
+    initial={{ x: "100vw" }}
+    animate={{ x: 0 }}
+    transition={{ duration: 0.5 }}
+    >
+      <h1 className="font-semibold text-2xl pb-4 text-zinc-500">Producto mas Vendido</h1>
+      <Doughnut data={data} options={options} />
+    </motion.article>
   );
 };
 

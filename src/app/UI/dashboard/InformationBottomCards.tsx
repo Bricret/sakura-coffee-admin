@@ -20,7 +20,7 @@ export default function InformationBottomCards({ title, data, money, icon } : { 
     return (
         <motion.article 
             className={`w-1/4 h-16 bg-white rounded-lg shadow-md p-4 flex justify-between items-center`}
-            initial={{ x: "-100vw" }}
+            initial={{ x: "100vw" }}
             animate={{ x: 0 }}
             transition={{ duration: 0.5 }}
         >

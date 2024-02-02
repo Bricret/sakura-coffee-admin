@@ -4,14 +4,9 @@ import { Modal, ModalBody, ModalContent, ModalHeader } from "@nextui-org/react";
 
 export default function MoreInfoDialog({ isOpen, onClose, ordenTo } : { isOpen : boolean, onClose : any, ordenTo: any } ) {
 
-    let fechaEntregaFormatoLocal = '';
-    let fechaPedidoFormatoLocal = '';
-    if(ordenTo?.fecha_entrega) {
-        const fechaEntrega = new Date(ordenTo.fecha_entrega).toISOString();
-        const fechaPedido = new Date(ordenTo.fecha_pedido).toISOString();
-        fechaEntregaFormatoLocal = fechaEntrega.substring(0, fechaEntrega.length - 8);
-        fechaPedidoFormatoLocal = fechaPedido.substring(0, fechaPedido.length - 8);
-    }
+    const fechaPedido = new Date(ordenTo.fecha_pedido).toISOString();
+    let Fecha_Pedido = new Date(fechaPedido as string);
+    Fecha_Pedido = new Date(Fecha_Pedido.getTime() - Fecha_Pedido.getTimezoneOffset() * 60 * 1000);
 
     return (
     <Modal isOpen={isOpen} onOpenChange={onClose} size="2xl" backdrop="blur">
@@ -41,8 +36,8 @@ export default function MoreInfoDialog({ isOpen, onClose, ordenTo } : { isOpen :
                                 <p>{ ordenTo.direccion_cliente }</p>
                                 <p>{ ordenTo.estado_pago }</p>
                                 <p>{ ordenTo.estado_pedido }</p>
-                                <p>{ fechaPedidoFormatoLocal.split('T')[0] }</p>
-                                <p>{ fechaEntregaFormatoLocal.split('T')[0] }</p>
+                                <p>{ (Fecha_Pedido.toISOString()).split('T')[0] }</p>
+                                <p>{ (ordenTo.fecha_entrega.toISOString()).split('T')[0] }</p>
                                 <p>{ ordenTo.telefono_cliente }</p>
                                 <p>{ ordenTo.telefono_adicional_cliente || 'No registrado.' }</p>
                                 <p>{ ordenTo.anticipo }</p>

@@ -89,5 +89,3 @@ export async function calculatePercentage() {
     nombre: mostSoldProduct.nombreProducto
   });
 }
-
-calculatePercentage().catch(console.error);
