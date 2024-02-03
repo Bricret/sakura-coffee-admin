@@ -31,6 +31,7 @@ model detalle_ordens {
   cantidad    Int
   monto_C_    Float     @map("monto_C$")
   monto_U_    Float     @map("monto_U$")
+  impreso     Boolean   @default(false)
   ordens      ordens    @relation(fields: [orden_id], references: [id], onDelete: Cascade, map: "detalle_ordens_orden_id_foreign")
   productos   productos @relation(fields: [producto_id], references: [id], onDelete: Cascade, map: "detalle_ordens_producto_id_foreign")
 
@@ -135,7 +136,7 @@ model productos {
   categoria_id   BigInt                   @db.UnsignedBigInt
   nombre         String                   @db.VarChar(255)
   descripcion    String?                  @db.Text
-  precio         Float                    @default(0.00) @db.Float
+  precio         Float                    @default(0) @db.Float
   disponibilidad productos_disponibilidad @default(disponible)
   preparado_en   productos_preparado_en
   detalle_ordens detalle_ordens[]
