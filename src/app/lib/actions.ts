@@ -468,7 +468,8 @@ export async function updateDetailOrder( id: string, formData: FormData, product
             data: {
                 cantidad: Number(cantidad),
                 monto_C_: monto_C_,
-                monto_U_: monto_U_
+                monto_U_: monto_U_,
+                impreso: false
             }
         });
         revalidatePath(`/dashboard/caja/newOrder/${idTable}`);
@@ -479,6 +480,20 @@ export async function updateDetailOrder( id: string, formData: FormData, product
     }
     
 }
+
+export async function getUnprintedOrderDetailsById(id : string) {
+    try {
+        const unprintedOrderDetails = await prisma.detalle_ordens.count({
+            where: {
+              orden_id : id,
+              impreso: false,
+            },
+          });
+          return unprintedOrderDetails;
+    } catch (error : any) {
+        throw new Error(error);
+    }
+  }
 
 export async function updateOderTable( formData : FormData, infoOder : any ) {
     const table = formData.get('table');
@@ -1269,5 +1284,29 @@ export async function FetchTipOfDate(startDate : string, endDate : string) {
         return totalPropinas
     } catch ( error : any ) {
         throw new Error(error)
+    }
+}
+
+
+export async function FetchDetailOrderByOrderId(id: string) {
+    try {
+        const order = await prisma.detalle_ordens.findMany({
+            where: {
+                orden_id: id,
+                impreso: false
+            }
+        });
+        await prisma.detalle_ordens.updateMany({
+            where: {
+              orden_id: id,
+              impreso: false
+            },
+            data: {
+              impreso: true
+            }
+        });
+        return order;
+    } catch (error: any) {
+        throw new Error(error);
     }
 }

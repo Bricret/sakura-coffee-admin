@@ -278,19 +278,6 @@ export async function FetchCashFlowByDate(dayDate?: any) {
     }
 }
 
-export async function FetchDetailOrderByOrderId(id: number) {
-    try {
-        const order = await prisma.detalle_ordens.findMany({
-            where: {
-                orden_id: id.toString()
-            }
-        });
-        return order;
-    } catch (error: any) {
-        throw new Error(error);
-    }
-}
-
 export async function FetchInvoiceById(id: number) {
     try {
         const Invoice = await prisma.facturas.findUnique({

@@ -14,7 +14,6 @@ export default function RegisterForm( { rols, edit, users }: any ) {
             result = await createUser(formData);
         }
         if (edit) {
-            const rawFormData = Object.fromEntries(formData.entries());
             result = await updateUser(formData);
         }
         if (result?.success === true) {

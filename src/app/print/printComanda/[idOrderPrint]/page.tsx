@@ -1,5 +1,6 @@
 import TableComanda from "@/app/UI/print/comanda/Table-Comanda";
-import { FetchDetailOrderByOrderId, FetchInventory } from "@/app/lib/data";
+import { FetchDetailOrderByOrderId } from "@/app/lib/actions";
+import { FetchInventory } from "@/app/lib/data";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -12,7 +13,7 @@ export default async function PrintComandaBarPage({ params } : { params : any })
     const idOrder = idOrderPrint.split('-')[0];
     const idTable = idOrderPrint.split('-')[1];
 
-    const details_orders = await FetchDetailOrderByOrderId(Number(idOrder));
+    const details_orders = await FetchDetailOrderByOrderId(idOrder);
     const productos = await FetchInventory();
 
     return (
