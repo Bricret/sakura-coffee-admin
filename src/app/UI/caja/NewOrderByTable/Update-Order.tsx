@@ -1,7 +1,9 @@
 'use client';
-import { updateOrder, updateOrderByTable } from "@/app/lib/actions";
+import { getUnprintedOrderDetailsById, updateOrder, updateOrderByTable } from "@/app/lib/actions";
 import { fonts } from "../../Fonts";
 import { useRouter } from "next/navigation";
+import { Toaster } from "sonner";
+import { ErrorToast } from "@/app/plugins/sonner";
 
 
 export default function UpdateOrder({ idOrder, total_C, total_U, idTable, ubi } : { idOrder : any, total_C : number, total_U : number, idTable? : any, ubi?: any }) {
@@ -10,20 +12,25 @@ export default function UpdateOrder({ idOrder, total_C, total_U, idTable, ubi } 
     async function HandleSubmit(e : any) {
         e.preventDefault();
         if (ubi === 2) {
-            const res = await updateOrderByTable( idOrder, total_C, total_U, idTable );
-            const { data } = res;
-            const orderIdAndTableId = `${data.id.toString()}-${idTable.toString()}`
-            const url = `${process.env.NEXT_PUBLIC_URL}print/printComanda/${orderIdAndTableId}`;
-            const windowFeatures = 'noopener,noreferrer';
-            window.open(url, '_blank', windowFeatures);
-            router.push('/dashboard/caja');
-        } 
-        if (ubi === 1) {
-            const res = await updateOrder( idOrder, total_C, total_U );
-            const { data } = res;
-            const url = `${process.env.NEXT_PUBLIC_URL}print/printComanda/${data.id}`;
-            const windowFeatures = 'noopener,noreferrer';
-            window.open(url, '_blank', windowFeatures);
+            const unPrintComanda = await getUnprintedOrderDetailsById( idOrder );
+            if (unPrintComanda === 0) {
+                ErrorToast('Todas las Comandas fueron impresas');
+            } else {
+                const res = await updateOrderByTable( idOrder, total_C, total_U, idTable );
+                const { data } = res;
+                const orderIdAndTableId = `${data.id.toString()}-${idTable.toString()}`
+                const url = `${process.env.NEXT_PUBLIC_URL}print/printComanda/${orderIdAndTableId}`;
+                const windowFeatures = 'noopener,noreferrer';
+                window.open(url, '_blank', windowFeatures);
+                router.push('/dashboard/caja');
+            } 
+            if (ubi === 1) {
+                const res = await updateOrder( idOrder, total_C, total_U );
+                const { data } = res;
+                const url = `${process.env.NEXT_PUBLIC_URL}print/printComanda/${data.id}`;
+                const windowFeatures = 'noopener,noreferrer';
+                window.open(url, '_blank', windowFeatures);
+            }
         }
     }
 
@@ -36,6 +43,13 @@ export default function UpdateOrder({ idOrder, total_C, total_U, idTable, ubi } 
         >
             Finalizar
         </button>
+        <Toaster 
+            dir="auto"
+            visibleToasts={2}
+            duration={1500}
+            closeButton
+            richColors
+        />
     </div>
     )
 }
