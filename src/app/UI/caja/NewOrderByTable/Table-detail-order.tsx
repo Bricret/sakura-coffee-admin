@@ -6,7 +6,7 @@ import UpdateOrder from "./Update-Order";
 
 export default async function TableDetailOrder({ idOrder, product, idTable, edit, ubi }: { idOrder?: string, product : any, idTable? : any, edit?: boolean, ubi?: number } ) {
 
-    const detailOrder = await FetchDetailOrderByTable(idOrder);
+    const detailOrder = await FetchDetailOrderByTable( idOrder );
     const Total_C = detailOrder.reduce((acc : any, item : any) => acc + item.monto_C_, 0);
     const Total_U = detailOrder.reduce((acc : any, item : any) => acc + item.monto_U_, 0);
     const cantidad = detailOrder.reduce((acc : any, item : any) => acc + item.cantidad, 0);

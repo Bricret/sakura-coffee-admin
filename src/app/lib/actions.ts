@@ -323,6 +323,17 @@ export async function updateOrderToFinish( idOrder : any ) {
     }
 }
 
+export async function getOrdersPendingByTable( idMesa? : string ) {
+
+    const OrdersPending = await prisma.ordens.count({
+        where : {
+            mesa_id: idMesa,
+            estado: 'pendiente'
+        }
+    })
+    return OrdersPending
+} 
+
 export async function updateOrderToFinishByTable( idOrder : any, idTable : any ) {
     try {
         await prisma.ordens.update({
@@ -497,7 +508,7 @@ export async function getUnprintedOrderDetailsById(id : string) {
 
 export async function updateOderTable( formData : FormData, infoOder : any ) {
     const table = formData.get('table');
-    const {id, mesa_id} = infoOder;
+    const {id, mesa_id} = infoOder[0];
     try {
         const BusyTable = await prisma.mesas.findFirst({
             where: {

@@ -4,8 +4,8 @@ import { Checkbox } from "@nextui-org/react";
 import { useState } from "react";
 import { Button } from "../../auth/button";
 import { Toaster } from "sonner";
-import { ErrorToast } from "@/app/plugins/sonner";
-import { createNewInvoice, createNewInvoiceByTable, updateInvoice, updateInvoiceByTable, updateOrderToFinish, updateOrderToFinishByTable } from "@/app/lib/actions";
+import { ErrorToast, SuccessToast } from "@/app/plugins/sonner";
+import { createNewInvoice, createNewInvoiceByTable, getOrdersPendingByTable, updateInvoice, updateInvoiceByTable, updateOrderToFinish, updateOrderToFinishByTable } from "@/app/lib/actions";
 import ChangeMoney from "./Change-Money";
 import FormSectionInvoice from "./Form-Section-Invoice";
 import { useRouter } from "next/navigation";
@@ -56,7 +56,13 @@ export default function PayForm({ Order, ubi } : { Order : any, ubi : number }) 
             }
             if ( ubi === 2 ) {
                 const res = await updateOrderToFinishByTable(Order.id, Order.mesa_id);
-                res.success === true ? router.push('/dashboard/caja') : ErrorToast('No se pudo actualizar la factura');
+                res.success === false && ErrorToast('No se pudo actualizar la factura');
+                const OrdersPending = await getOrdersPendingByTable(Order.mesa_id)
+                if ( OrdersPending < 1 ) {
+                    router.push('/dashboard/caja') 
+                } else {
+                    SuccessToast('Factura Finalizada Correctamente')
+                }            
             }
         } else {
             const newTotal = invoice.total_C_ - invoice.propina_C_;
@@ -66,14 +72,26 @@ export default function PayForm({ Order, ubi } : { Order : any, ubi : number }) 
             }
             if ( ubi === 2 ) {
                 const res = await updateInvoiceByTable(invoice.id, newTotal, Order.id, Order.mesa_id);
-                res.success === true ? router.push('/dashboard/caja') : ErrorToast('No se pudo actualizar la factura');
+                res.success === false && ErrorToast('No se pudo actualizar la factura');
+                const OrdersPending = await getOrdersPendingByTable(Order.mesa_id)
+                if ( OrdersPending < 1 ) {
+                    router.push('/dashboard/caja') 
+                } else {
+                    SuccessToast('Factura Finalizada Correctamente')
+                }         
             }
         }
     }
 
     return (
         <>
-        <h1 className="text-2xl mb-2 mt-4 md:mt-0">Cambio</h1>
+        <div className="flex justify-between items-end px-2">
+            <h1 className="text-2xl mb-2 mt-4 md:mt-0 font-semibold">Cambio</h1>
+            <button className="rounded-lg text-center h-10 px-4 py-2 mb-2 bg-third text-white font-bold hover:bg-secundary">
+                Dividir Cuenta
+            </button>
+        </div>
+
         <div className="items-center justify-center h-full w-full bg-white rounded-lg shadow-large px-4 text-lg text-zinc-600 py-4">
             <ChangeMoney isDollar={ isDollar } setIsDollar={ setIsDollar }/>
             <form action={ClientAction}>

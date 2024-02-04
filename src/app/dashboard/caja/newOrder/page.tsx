@@ -12,19 +12,19 @@ export default async function NewOrderPage() {
     const products = await FetchAllProductAvailability();
     const Order = await createNewOrder();
     const { data } = Order;
-
+    const order = [data];
     return (
     <>
         <header className="mb-8">
-        <h1 
-            className={`${fonts.merriweather.className} text-4xl font-bold mb-4`}>
-                Crear <span className="text-secundary">Orden</span>
-        </h1>
+            <h1 
+                className={`${fonts.merriweather.className} text-4xl font-bold mb-4`}>
+                    Crear <span className="text-secundary">Orden</span>
+            </h1>
             <InputProduct products={ products } idOrder={ data.id } ubi={ 1 }/>
         </header>
         <main>
             <Suspense fallback={<InventorySkeleton />}>
-                <Invoice Orders={ data } ubi={ 1 } product={ products }/>
+                <Invoice Orders={ order } ubi={ 1 } product={ products }/>
             </Suspense>
         </main>
     </>

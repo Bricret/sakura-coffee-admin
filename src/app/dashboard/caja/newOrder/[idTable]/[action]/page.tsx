@@ -11,7 +11,8 @@ export default async function NewOrderTablePage({ params } : any) {
     (action === 'create') ? Order = await createNewOrderByTable(idTable) : null;
     (action === 'view') ? Order = await FetchOrdersByIdTable(idTable) : null;
     const { data } = Order;
-    (action === 'view') ? idOrder = Order.id : idOrder = data.id;
+    (action === 'view') ? idOrder = Order[0].id : idOrder = data.id;
+
     return (
         <>
             <main className="mt-4">

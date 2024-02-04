@@ -11,11 +11,11 @@ export default function UpdateOrder({ idOrder, total_C, total_U, idTable, ubi } 
 
     async function HandleSubmit(e : any) {
         e.preventDefault();
-        if (ubi === 2) {
-            const unPrintComanda = await getUnprintedOrderDetailsById( idOrder );
-            if (unPrintComanda === 0) {
-                ErrorToast('Todas las Comandas fueron impresas');
-            } else {
+        const unPrintComanda = await getUnprintedOrderDetailsById( idOrder );
+        if (unPrintComanda === 0) {
+            ErrorToast('Todas las Comandas fueron impresas');
+        } else {
+            if (ubi === 2) {
                 const res = await updateOrderByTable( idOrder, total_C, total_U, idTable );
                 const { data } = res;
                 const orderIdAndTableId = `${data.id.toString()}-${idTable.toString()}`

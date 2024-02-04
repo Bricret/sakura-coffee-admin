@@ -148,7 +148,7 @@ export async function FetchTablesActives() {
 
 export async function FetchOrdersByIdTable(idTable: any) {
     try {
-        const orders = await prisma.ordens.findFirst({
+        const orders = await prisma.ordens.findMany({
             where: {
                 mesa_id: idTable,
                 estado: 'pendiente'
@@ -159,6 +159,7 @@ export async function FetchOrdersByIdTable(idTable: any) {
         throw new Error(error);
     }
 }
+
 
 export async function FetchDetailOrderByTable(idOrder: any) {
     try {
