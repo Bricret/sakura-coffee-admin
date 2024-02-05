@@ -1,8 +1,6 @@
 
 export default function MainInvoice({ details_orders } : { details_orders : any }) {
 
-    console.log(details_orders)
-
     return (
     <>
     <article className="flex flex-col items-center justify-center">

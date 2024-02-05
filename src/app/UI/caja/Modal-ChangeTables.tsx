@@ -5,8 +5,6 @@ import { Toaster } from "sonner";
 
 export default function ModalChangeTable({ isOpen, onClose, tables, infoOrder } : { isOpen : boolean, onClose : any, tables : any, infoOrder : any }) {
 
-    console.log(infoOrder)
-
     const onChange = async (formData : FormData ) => {
         const res = await updateOderTable(formData, infoOrder);
         if( res?.success === false ) ErrorToast(res.message);

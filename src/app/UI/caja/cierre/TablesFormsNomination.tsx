@@ -38,7 +38,7 @@ export default function TablesFormsNomination({ Cashflow, Invoice } : { Cashflow
          }
     }
     return (
-        <main className="flex flex-row gap-4 mt-6 md:mt-10">
+        <main className="flex flex-col md:flex-row gap-4 mt-6 md:mt-10">
             <NominationTable montos={montos} setMontos={setMontos} />
             <FormToCloseCash 
                 allInvoiceTarjeta={allInvoiceTarjeta} 
