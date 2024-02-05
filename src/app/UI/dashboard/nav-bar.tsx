@@ -11,6 +11,8 @@ export default async function NavBar({ title, site } : { title: string, site?: b
     const { user } = await getServerSession(authOptions) as any;
     const { name, image } = user;
 
+
+
     return (
     <div className="flex flex-row justify-between items-center mb-10 py-2 mr-7">
         <div className="flex flex-col">

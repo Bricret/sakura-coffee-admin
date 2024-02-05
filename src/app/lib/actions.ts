@@ -7,6 +7,10 @@ import prisma from "./db";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./authOptions";
 
+export async function revalidatePage() {
+    await revalidatePath('/dashboard/caja');
+  }
+
 export async function createUser(formData: FormData) {
     const { userName, password, rol } = CreateUserFormSchema.parse({
         userName: formData.get('username'),

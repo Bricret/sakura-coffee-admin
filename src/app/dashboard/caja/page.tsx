@@ -1,5 +1,6 @@
 import { LatestInventorySkeleton } from "@/app/UI/Skeleton";
 import TableCash from "@/app/UI/caja/Table-Cash";
+import RefreshBoton from "@/app/UI/dashboard/RefreshBoton";
 import { FetchCajaActive } from "@/app/lib/data";
 import { Metadata } from "next"
 import Link from "next/link";
@@ -17,7 +18,8 @@ export default async function CashPage() {
         <>
             {
             caja === null ? null : (
-                <header className="flex justify-end mt-2 mb-6 gap-3 items-center md:items-end">
+                <header className="flex justify-between mt-2 mb-6 gap-3 items-center md:items-end">
+                    <RefreshBoton />
                     <Link 
                         href={'/dashboard/caja/newOrder'}
                         className="bg-fourth text-center py-4 md:py-2 px-6 md:px-4 text-white rounded-xl "
