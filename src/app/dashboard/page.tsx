@@ -1,18 +1,18 @@
 import dynamic from "next/dynamic";
-import { FooterInfoCardsDashboardSkeleton, GraphicDashboardSkeleton, HeaderInfoCardsDashboardSkeleton } from "../UI/Skeleton";
+import { LatestInventorySkeleton, PrincipalNavbarSkeleton } from "../UI/Skeleton";
 import NavBar from "../UI/dashboard/nav-bar";
 import { Suspense } from "react";
 
 const DynamicHeaderDashboard = dynamic(() => import('../UI/dashboard/HeaderDashboard'), {
-    loading: () => <HeaderInfoCardsDashboardSkeleton />,
+    loading: () => <PrincipalNavbarSkeleton />,
   });
 
 const DynamicGraphicsDashboard = dynamic(() => import('../UI/dashboard/GraphicDashboard'), {
-    loading: () => <GraphicDashboardSkeleton />
+    loading: () => <LatestInventorySkeleton />
 });
 
 const DynamicFooterDashboard = dynamic(() => import('../UI/dashboard/FooterDashboard'), {
-    loading: () => <FooterInfoCardsDashboardSkeleton />
+    loading: () => <PrincipalNavbarSkeleton />
 });
   
 
@@ -20,15 +20,15 @@ export default function DashboardPage() {
     return (
         <>
         <NavBar title="Bienvenid@ de nuevo " site />
-        <Suspense fallback={<HeaderInfoCardsDashboardSkeleton />}>
+        <Suspense fallback={<PrincipalNavbarSkeleton />}>
             <DynamicHeaderDashboard />
         </Suspense>
         <main>
-            <Suspense fallback={<GraphicDashboardSkeleton />}>
+            <Suspense fallback={<LatestInventorySkeleton />}>
                 <DynamicGraphicsDashboard />
             </Suspense>
         </main>
-            <Suspense fallback={<FooterInfoCardsDashboardSkeleton />}>
+            <Suspense fallback={<PrincipalNavbarSkeleton />}>
                 <DynamicFooterDashboard />
             </Suspense>
         </>
