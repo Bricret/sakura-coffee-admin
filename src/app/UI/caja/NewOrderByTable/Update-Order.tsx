@@ -19,7 +19,7 @@ export default function UpdateOrder({ idOrder, total_C, total_U, idTable, ubi } 
                 const res = await updateOrderByTable( idOrder, total_C, total_U, idTable );
                 const { data } = res;
                 const orderIdAndTableId = `${data.id.toString()}-${idTable.toString()}`
-                const url = `${process.env.NEXT_PUBLIC_URL}print/printComanda/${orderIdAndTableId}`;
+                const url = `${process.env.NEXT_PUBLIC_URL}/print/printComanda/${orderIdAndTableId}`;
                 const windowFeatures = 'noopener,noreferrer';
                 window.open(url, '_blank', windowFeatures);
                 router.push('/dashboard/caja');
@@ -27,7 +27,7 @@ export default function UpdateOrder({ idOrder, total_C, total_U, idTable, ubi } 
             if (ubi === 1) {
                 const res = await updateOrder( idOrder, total_C, total_U );
                 const { data } = res;
-                const url = `${process.env.NEXT_PUBLIC_URL}print/printComanda/${data.id}`;
+                const url = `${process.env.NEXT_PUBLIC_URL}/print/printComanda/${data.id}`;
                 const windowFeatures = 'noopener,noreferrer';
                 window.open(url, '_blank', windowFeatures);
             }
