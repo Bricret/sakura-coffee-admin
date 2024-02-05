@@ -4,7 +4,7 @@ import prisma from '../../../lib/db'
 import { ComparePass } from "@/app/plugins/incript/argon2";
 import { FetchUnicRols } from "@/app/lib/data";
 
-const authOptions = {
+export const authOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
