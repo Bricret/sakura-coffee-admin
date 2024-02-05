@@ -17,7 +17,7 @@ export default async function Home() {
       <main className="lg:grid lg:grid-cols-[500px,1fr] h-full bg-primary">
         <article className="hidden items-center justify-center h-full lg:block">
           <Image
-            src="/Carrusel/2.jpg"
+            src="/Image/2.jpg"
             alt="Coffee Shop Image 1"
             className="h-screen object-cover w-auto"
             width="500"
