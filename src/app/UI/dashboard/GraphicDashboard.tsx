@@ -11,7 +11,7 @@ export default async function GraphicsDashboard() {
     const ProductMostSold = await calculatePercentage()
 
     return (
-        <article className="flex justify-between items-center w-full">
+        <article className="flex flex-col md:flex-row  justify-between items-center w-full">
             <FirstGraphic data={ProductsSoldByCategory} />
             <SecondGraphic product={ProductMostSold}/>
         </article>

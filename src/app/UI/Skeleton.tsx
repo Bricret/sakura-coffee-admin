@@ -81,28 +81,55 @@ export function InventoryOptions() {
 }
 
 
-export function CardHeaderDashboard() {
+export function CardHeaderDashboard({ title } : { title? : string }) {
   return (
-    <article className={`w-1/4 bg-gray-300 rounded-lg shadow-md p-4 flex justify-between items-center border-b-large`}>
-    <header>
-        <div className="flex items-center">
-          <svg className="w-5 h-5 text-gray-300 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="6" d="M5 15l7-7 7 7" />
-          </svg>
-        </div>
-    </header>
-    <figure className={`bg-gray-300 rounded-full h-10 w-10 flex items-center justify-center`}></figure>
-  </article>
+    <div className="bg-white p-4 rounded-lg shadow flex items-center justify-between">
+    <div>
+      <div className="text-sm font-semibold text-gray-500">{title}</div>
+      <div className="text-3xl font-bold">0</div>
+    </div>
+    <div className="rounded-full bg-blue-100 h-10 w-10"></div>
+  </div>
   )
 }
 
-export function InfoCardsDashboard() {
+export function HeaderInfoCardsDashboardSkeleton() {
   return (
-  <header className={`${ shimmer } flex gap-x-6 mb-6`}>
-    <CardHeaderDashboard />
-    <CardHeaderDashboard />
-    <CardHeaderDashboard />
-    <CardHeaderDashboard />
-  </header>
+    <div className="min-h-screen bg-gray-100 p-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <CardHeaderDashboard title="Facturas del Dia" />
+        <CardHeaderDashboard title="Facturas del Dia" />
+        <CardHeaderDashboard title="Facturas del Dia" />
+        <CardHeaderDashboard title="Facturas del Dia" />
+    </div>
+  </div>
   )
+}
+
+export function GraphicDashboardSkeleton() {
+
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-8">
+    <div className="bg-white p-4 rounded-lg shadow">
+      <div className="text-sm font-semibold text-gray-500 mb-2">Ventas por Categorías</div>
+    </div>
+
+    <div className="bg-white p-4 rounded-lg shadow">
+      <div className="text-sm font-semibold text-gray-500 mb-2">Producto más Vendido</div>
+    </div>
+  </div>
+  )
+}
+
+export function FooterInfoCardsDashboardSkeleton() {
+
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <CardHeaderDashboard title="Facturas del Dia" />
+      <CardHeaderDashboard title="Facturas del Dia" />
+      <CardHeaderDashboard title="Facturas del Dia" />
+      <CardHeaderDashboard title="Facturas del Dia" />
+    </div>
+  )
+
 }

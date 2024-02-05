@@ -54,7 +54,7 @@ export default function FirstGraphic({ data } : any) {
 
   return (
     <motion.article 
-      className='w-8/12 h-96 bg-white rounded-lg p-3'
+      className='w-full h-auto mb-6 md:m-0 md:w-8/12 md:h-96 bg-white rounded-lg p-3'
       initial={{ x: "-100vw" }}
       animate={{ x: 0 }}
       transition={{ duration: 0.5 }}

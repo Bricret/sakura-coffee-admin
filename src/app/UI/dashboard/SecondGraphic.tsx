@@ -41,7 +41,7 @@ const MyDoughnutChart = ({product} : any) => {
 
       return (
     <motion.article 
-    className="w-auto h-96 bg-white rounded-lg p-3"
+    className="w-full h-auto md:w-auto md:h-96 bg-white rounded-lg p-3"
     initial={{ y: "-100vh" }}
     animate={{ y: 0 }}
     transition={{ duration: 0.5 }}
