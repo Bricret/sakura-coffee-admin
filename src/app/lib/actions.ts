@@ -4,8 +4,8 @@ import { revalidatePath } from "next/cache";
 import { IncriptPass } from "../plugins/incript/argon2";
 import { CreateProductFormSchema, CreateUserFormSchema, UpdateProductFormSchema } from "../plugins/zod";
 import prisma from "./db";
+import { authOptions } from "../api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export async function createUser(formData: FormData) {
     const { userName, password, rol } = CreateUserFormSchema.parse({
