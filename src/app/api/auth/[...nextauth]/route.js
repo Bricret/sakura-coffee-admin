@@ -4,7 +4,7 @@ import prisma from '../../../lib/db'
 import { ComparePass } from "@/app/plugins/incript/argon2";
 import { FetchUnicRols } from "@/app/lib/data";
 
-export const authOptions = {
+const options = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -45,7 +45,6 @@ export const authOptions = {
         }
 
       },
-      
     }),
   ],
   pages: {
@@ -53,8 +52,4 @@ export const authOptions = {
   },
 };
 
-const handler = NextAuth(authOptions);
-
-export { handler as GET, handler as POST };
-
-
+export default NextAuth(options);
