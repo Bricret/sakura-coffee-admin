@@ -1,8 +1,8 @@
 import Image from "next/image";
 import FormLogin from "./UI/auth/login/form-login";
 import { getServerSession } from "next-auth";
-import { authOptions } from "./api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
+import { authOptions } from "./lib/authOptions";
 
 export default async function Home() {
 

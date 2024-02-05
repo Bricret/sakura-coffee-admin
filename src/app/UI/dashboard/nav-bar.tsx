@@ -1,7 +1,7 @@
+import { authOptions } from "@/app/lib/authOptions";
 import { fonts } from "../Fonts";
 import UserMenu from "./user-menu";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import Image from "next/image";
 
 // user.image = idRol // user.email = estado del usuario
