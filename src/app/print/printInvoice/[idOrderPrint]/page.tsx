@@ -1,5 +1,5 @@
 import PrintInvoiceTable from "@/app/UI/print/invoice/Table-Invoice";
-import { FetchAllInventory, FetchDetailOrderByOrderId, FetchInvoiceById, FetchUserById } from "@/app/lib/data";
+import { FetchInvoiceById } from "@/app/lib/data";
 import { Metadata } from "next";
 
 
