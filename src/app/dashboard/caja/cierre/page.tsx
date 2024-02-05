@@ -1,5 +1,4 @@
 import ActiveCajaForm from "@/app/UI/caja/cierre/ActiveCaja-Form";
-import HandleBadCLose from "@/app/UI/caja/cierre/HandleBadCLose";
 import InfoCash from "@/app/UI/caja/cierre/Info-Cash";
 import NominationForms from "@/app/UI/caja/cierre/Nomination-Forms";
 import { FetchCaja, FetchCajaActive, FetchCashFlowByDate, FetchInvoiceByDate } from "@/app/lib/data";
