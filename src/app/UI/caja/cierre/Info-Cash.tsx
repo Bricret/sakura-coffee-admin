@@ -1,5 +1,25 @@
+import { FetchCashFlowByDate } from "@/app/lib/data";
 
-export default function InfoCash({ cajaActiva, Cashflow, fechaEntregaFormatoLocal } : { cajaActiva: any, Cashflow: any, fechaEntregaFormatoLocal: any}) {
+export default async function InfoCash({ cajaActiva } : { cajaActiva: any }) {
+
+    let Cashflow = await FetchCashFlowByDate();
+
+    if (Cashflow === null && cajaActiva !== null) {
+        const actualDate = new Date().toISOString();
+        let date = new Date(actualDate);
+        date.setDate(date.getDate() - 1);
+        date = new Date(date.getTime() - date.getTimezoneOffset() * 60 * 1000);
+        const openOnlyDate = date.toISOString().split('T')[0] + 'T00:00:00.000Z';
+        Cashflow = await FetchCashFlowByDate(openOnlyDate);
+    }
+
+    let fechaEntregaFormatoLocal = '';
+    if(Cashflow?.fecha_apertura) {
+        const fechaEntrega = new Date(Cashflow.fecha_apertura).toISOString();
+        fechaEntregaFormatoLocal = fechaEntrega.substring(0, fechaEntrega.length - 8);
+    }
+
+
     return (
         <div className="flex flex-row items-end justify-between gap-4 cursor-default">
             <h1 className="text-3xl text-green-500 font-semibold w-1/3">Caja Activa</h1>

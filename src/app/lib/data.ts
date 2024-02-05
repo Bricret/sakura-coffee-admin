@@ -328,8 +328,6 @@ export async function FetchUserAll() {
 }
 
 export async function FetchInvoiceByDate(fecha_apertura: any) {
-
-
     try {
         const invoice = await prisma.facturas.findMany({
             where: {
