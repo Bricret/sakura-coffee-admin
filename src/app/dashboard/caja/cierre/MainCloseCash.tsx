@@ -3,9 +3,6 @@ import InfoCash from "@/app/UI/caja/cierre/Info-Cash";
 import NominationForm from "@/app/UI/caja/cierre/Nomination-Forms";
 import { FetchCaja, FetchCajaActive } from "@/app/lib/data";
 
-
-
-
 export default async function MainCloseCash() {
 
     
