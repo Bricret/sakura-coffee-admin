@@ -9,13 +9,16 @@ export default async function TopContent() {
     const allProducts = await FetchAllInventory();
 
 return (
-    <div className="flex flex-col gap-4 mb-4">
-        <div className="flex justify-between gap-3 items-center md:items-end">
+    <header className="flex flex-col gap-4 mb-4">
+        <nav className="flex justify-between gap-3 items-center md:items-end">
             <Search placeholder="busca por nombre..."/>
-            <RightButton route={"/dashboard/inventario/newProduct"} title={"Nuevo"} />
-        </div>
+            <div className="flex gap-x-3">
+                <RightButton route={"/dashboard/inventario/newCategory"} title={"Categoria"} />
+                <RightButton route={"/dashboard/inventario/newProduct"} title={"Nuevo"} />
+            </div>
+        </nav>
         <InfoTable allProducts={ allProducts } type={"productos"}/>
-    </div>
+    </header>
 )
 
 }

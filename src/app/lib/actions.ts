@@ -9,7 +9,7 @@ import { authOptions } from "./authOptions";
 
 export async function revalidatePage( path : string ) {
     await revalidatePath(path);
-  }
+}
 
 export async function createUser(formData: FormData) {
     const { userName, password, rol } = CreateUserFormSchema.parse({
@@ -1404,4 +1404,21 @@ export async function divideOrdenByTable(idOrder: number, detallesIds: any[], id
 
         return { success: true, message: 'Orden dividida correctamente' }
     })
+}
+
+export async function createCategory( formData : FormData ) {
+    const rawFormData = Object.fromEntries(formData.entries());
+    const { nombre, descripcion } = rawFormData
+    try {
+        await prisma.categorias.create({
+            data: {
+                nombre,
+                descripcion
+            }
+        })
+        revalidatePath('/dashboard/inventario/newProduct')
+        return { success: true, message: 'Categoria creada correctamente' }
+    } catch (error : any) {
+        throw new Error(error)
+    }
 }
