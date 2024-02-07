@@ -3,11 +3,11 @@
 import { useState } from 'react';
 import { TableDivideInvoice } from "@/app/lib/data/Local-Data"
 import { divideOrdenByTable, revalidatePage } from '@/app/lib/actions';
-import { useRouter } from 'next/navigation';
+import { Toaster } from 'sonner';
+import { ErrorToast, SuccessToast } from '@/app/plugins/sonner';
 
 export default function OrderDetailsTable ({ detailsOrder, order } : { detailsOrder : any, order : any }) {
 
-    const router = useRouter();
     const [selectedDetails, setSelectedDetails] = useState(new Set());
 
     const toggleSelection = (itemId: any) => {
@@ -25,10 +25,13 @@ export default function OrderDetailsTable ({ detailsOrder, order } : { detailsOr
     const HandleDivideOrder = async (e : any) => {
         e.preventDefault()
         let selectedDetailsArray = Array.from(selectedDetails);
+        if ( selectedDetailsArray.length === detailsOrder.length ) {
+            return ErrorToast('No puedes dejar una orden vacia');
+        }
         const DivideOrder = await divideOrdenByTable(order.id, selectedDetailsArray, order.mesa_id)
         if (DivideOrder.success === true) {
             revalidatePage(`/dashboard/caja/newOrder/${order.mesa_id}`)
-            router.push(`/dashboard/caja/newOrder/${order.mesa_id}`);
+            SuccessToast('Orden dividida correctamente');
         }
     }
 
@@ -85,6 +88,13 @@ export default function OrderDetailsTable ({ detailsOrder, order } : { detailsOr
                 </button>
             </div>
         </form>
+        <Toaster 
+            dir="auto"
+            visibleToasts={2}
+            duration={1500}
+            closeButton
+            richColors
+        />
     </section>
     )
 }
