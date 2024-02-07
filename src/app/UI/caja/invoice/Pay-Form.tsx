@@ -10,6 +10,7 @@ import ChangeMoney from "./Change-Money";
 import FormSectionInvoice from "./Form-Section-Invoice";
 import { useRouter } from "next/navigation";
 import { printInvoiceFunction } from "@/app/lib/PrintFunction";
+import { HandleDivideInvoice } from "./HandleDivideInvoice";
 
 // ubi = 1 -> caja | ubi = 2 -> mesa
 
@@ -87,9 +88,11 @@ export default function PayForm({ Order, ubi } : { Order : any, ubi : number }) 
         <>
         <div className="flex justify-between items-end px-2">
             <h1 className="text-2xl mb-2 mt-4 md:mt-0 font-semibold">Cambio</h1>
-            <button className="rounded-lg text-center h-10 px-4 py-2 mb-2 bg-third text-white font-bold hover:bg-secundary">
-                Dividir Cuenta
-            </button>
+        {
+            ubi === 2 && (
+                <HandleDivideInvoice Order={Order}/>
+            )
+        }
         </div>
 
         <div className="items-center justify-center h-full w-full bg-white rounded-lg shadow-large px-4 text-lg text-zinc-600 py-4">

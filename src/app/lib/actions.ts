@@ -7,8 +7,8 @@ import prisma from "./db";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./authOptions";
 
-export async function revalidatePage() {
-    await revalidatePath('/dashboard/caja');
+export async function revalidatePage( path : string ) {
+    await revalidatePath(path);
   }
 
 export async function createUser(formData: FormData) {
@@ -1324,4 +1324,84 @@ export async function FetchDetailOrderByOrderId(id: string) {
     } catch (error: any) {
         throw new Error(error);
     }
+}
+
+export async function getDetailOrderByTable(idOrder: any) {
+    try {
+        const order = await prisma.detalle_ordens.findMany({
+            where: {
+                orden_id: idOrder
+            },
+            include: {
+                productos: true
+            }
+        });
+        return order;
+    } catch (error: any) {
+        throw new Error(error);
+    }
+}
+
+export async function divideOrdenByTable(idOrder: number, detallesIds: any[], idTable: number) {
+    return await prisma.$transaction(async (transact : any) => {
+
+        const oldOrder = await transact.ordens.findFirst({
+            where: {
+                id: idOrder
+            }
+        });
+
+        const detalles = await transact.detalle_ordens.findMany({
+            where: {
+              id: {
+                in: detallesIds,
+              },
+              orden_id: idOrder,
+            },
+        });
+
+        await transact.detalle_ordens.deleteMany({
+            where: {
+                id: {
+                in: detallesIds,
+                },
+            },
+        });
+        const Total_C = detalles.reduce((acc : any, item : any) => acc + item.monto_C_, 0);
+        const Total_U = detalles.reduce((acc : any, item : any) => acc + item.monto_U_, 0);
+        const nuevaOrden = await transact.ordens.create({
+            data: {
+                estado: 'pendiente',
+                sub_total_C_: Total_C,
+                sub_total_U_: Total_U,
+                mesa_id: idTable.toString()
+            },
+        });
+
+        await transact.ordens.update({
+            where: {
+                id: idOrder
+            },
+            data: {
+                sub_total_C_: (oldOrder.sub_total_C_ - Total_C),
+                sub_total_U_: (oldOrder.sub_total_U_ - Total_U)
+            }
+        })
+
+        const nuevosDetalles = detalles.map((detalle : any) => {
+            return {
+              orden_id: nuevaOrden.id,
+              producto_id: detalle.producto_id,
+              cantidad: detalle.cantidad,
+              monto_C_: detalle.monto_C_,
+              monto_U_: detalle.monto_U_,
+              impreso: true
+            };
+        });
+        await transact.detalle_ordens.createMany({
+            data: nuevosDetalles,
+        });
+
+        return { success: true, message: 'Orden dividida correctamente' }
+    })
 }

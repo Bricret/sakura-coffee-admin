@@ -7,9 +7,9 @@ import { useRouter } from 'next/navigation';
 export default function RefreshBoton() {
 
     const router = useRouter();
-
+    
     async function revalidateAndReloadPage() {
-        revalidatePage()
+        revalidatePage('/dashboard/caja')
         router.push('/dashboard/caja');
       };
 

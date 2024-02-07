@@ -113,6 +113,21 @@ export const TableColumsDetailsOrders = [
 
 ]
 
+export const TableDivideInvoice = [
+    {
+        key: "Select",
+        label: "SELECIONAR",
+    },
+    {
+        key: "nombre",
+        label: "NOMBRE",
+    },
+    {
+        key: "Cantidad",
+        label: "CANTIDAD",
+    },
+]
+
 export const TableColumsDetailsOrdersView = [
     {
         key: "nombre",
