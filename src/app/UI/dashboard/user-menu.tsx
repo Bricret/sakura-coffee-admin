@@ -49,12 +49,14 @@ export default function UserMenu({ username, rol }: { username: string, rol: str
                 <DropdownMenu aria-label="User Actions" variant="flat">
                 <DropdownItem key="Create-User" href="/registerUser">Crear usuaro</DropdownItem>
                 <DropdownItem key="Edit-User" href="/updateUser">Editar Usuario</DropdownItem>
-                <DropdownItem key="New Table" onClick={CreateNewTable}>Agregar Mesa</DropdownItem>
-                <DropdownItem key="New Table" href="/UpdateTable">Actualizar Mesa</DropdownItem>
+                <DropdownItem key="New_Table" onClick={CreateNewTable}>Agregar Mesa</DropdownItem>
+                <DropdownItem key="Update_Table" href="/UpdateTable">Actualizar Mesa</DropdownItem>
+                <DropdownItem key="Help" color="success" href="/ayuda">Ayuda</DropdownItem>
                 <DropdownItem key="signout" color="danger" onClick={() => signOut({ callbackUrl: '/' })}>Cerrar Sesion</DropdownItem>
                 </DropdownMenu>
                 : 
                 <DropdownMenu>
+                <DropdownItem key="Help" color="success" href="/ayuda">Ayuda</DropdownItem>
                 <DropdownItem key="signout" color="danger" onClick={() => signOut({ callbackUrl: '/' })}>Cerrar Sesion</DropdownItem>
                 </DropdownMenu>
             }

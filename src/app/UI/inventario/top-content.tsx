@@ -14,7 +14,7 @@ return (
             <Search placeholder="busca por nombre..."/>
             <div className="flex gap-x-3">
                 <RightButton route={"/dashboard/inventario/newCategory"} title={"Categoria"} />
-                <RightButton route={"/dashboard/inventario/newProduct"} title={"Nuevo"} />
+                <RightButton route={"/dashboard/inventario/newProduct"} title={"Producto"} />
             </div>
         </nav>
         <InfoTable allProducts={ allProducts } type={"productos"}/>
