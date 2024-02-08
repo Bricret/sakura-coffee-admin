@@ -27,7 +27,7 @@ export default function TopInvoice({ invoice, user } : { invoice : any , user : 
         />
         <h1 className="text-2xl font-bold pb-2 p-4 pt-2">Sakura Coffee Shop</h1>
         <h3 className="text-lg text-center">Supermercado la colonia 15 varas al norte. Zaragoza, León</h3>
-        <h3 className="text-base">RUC: 123456789-0</h3>
+        <h3 className="text-base">RUC: 2811911940006V</h3>
         <h3 className="text-sm">FACTURA ORIGINAL</h3>
     </header>
     <nav className="flex flex-col items-start justify-start pb-2 w-full">

@@ -20,7 +20,7 @@ export default function NavCaja() {
                 {
                     LinkCaja.map((link) => {
                         const LinkIcon = link.icon;
-                        if(link.title !== 'Mesas' && link.title !== 'Cierre' && user.role === 'Mesero') return null
+                        if(link.title !== 'Mesas' && user.role === 'Mesero') return null
                         return (
                             <motion.li 
                                 key={link.title}

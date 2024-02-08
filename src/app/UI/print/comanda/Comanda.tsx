@@ -11,14 +11,25 @@ export default function Comanda({ details_orders, productos, idTable, idOrder, c
 
     useEffect(() => {
         handlePrint();
-    }, [])
+    }, []);
+
+
+    //TODO: Ingresar HOra a comanda
+
+    const actualDate = new Date().toISOString();
+    let emisionDate = new Date(actualDate as string);
+    emisionDate = new Date(emisionDate.getTime() - emisionDate.getTimezoneOffset() * 60 * 1000);
+    const hora = emisionDate.getUTCHours();
+    const minutos = emisionDate.getUTCMinutes();
+
 
     return (
-        <section className={`comanda ${ create } mb-3`}>
-        <div className="flex flex-col">
+        <article className={`comanda ${ create } mb-3`}>
+        <section className="flex flex-col">
             <h1 className="text-center text-lg font-bold">Comanda Generada</h1>
             <h2 className="text-center text-base">Comanda N°: #{idOrder} { idTable && `| Mesa: N° ${idTable}` }</h2>
-        </div>
+            <h3 className='text-center text-base'>Hora de Emision: {`${hora}:${minutos}`}</h3>
+        </section>
         <h2 className="text-center text-base font-semibold">Detalles</h2>
         <h2 className="text-center">Preparar en</h2>
         <h2 className="text-center text-base font-semibold">{create}</h2>
@@ -46,6 +57,6 @@ export default function Comanda({ details_orders, productos, idTable, idOrder, c
             </tbody>
             <br  className='comanda fin'/>
         </table>
-    </section>
+    </article>
     )
 }
