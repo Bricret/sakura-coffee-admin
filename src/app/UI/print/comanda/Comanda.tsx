@@ -13,9 +13,6 @@ export default function Comanda({ details_orders, productos, idTable, idOrder, c
         handlePrint();
     }, []);
 
-
-    //TODO: Ingresar HOra a comanda
-
     const actualDate = new Date().toISOString();
     let emisionDate = new Date(actualDate as string);
     emisionDate = new Date(emisionDate.getTime() - emisionDate.getTimezoneOffset() * 60 * 1000);
@@ -42,7 +39,7 @@ export default function Comanda({ details_orders, productos, idTable, idOrder, c
             </thead>
             <tbody>
                 {details_orders.map((detail_order: any) => {
-                const { id, orden_id, producto_id, cantidad } = detail_order;
+                const { id, producto_id, cantidad } = detail_order;
                 const product = productos.find((producto: any) => producto.id === producto_id);
                 if (product.preparado_en === create) {
                     return (

@@ -1,20 +1,14 @@
 'use client';
-import { getUnprintedOrderDetailsById, updateOrder, updateOrderByTable } from "@/app/lib/actions";
+
+import { updateOrder, updateOrderByTable } from "@/app/lib/actions";
 import { fonts } from "../../Fonts";
 import { useRouter } from "next/navigation";
-import { Toaster } from "sonner";
-import { ErrorToast } from "@/app/plugins/sonner";
-
 
 export default function UpdateOrder({ idOrder, total_C, total_U, idTable, ubi } : { idOrder : any, total_C : number, total_U : number, idTable? : any, ubi?: any }) {
     const router = useRouter();
 
     async function HandleSubmit(e : any) {
         e.preventDefault();
-        const unPrintComanda = await getUnprintedOrderDetailsById( idOrder );
-        if (unPrintComanda === 0) {
-            ErrorToast('Todas las Comandas fueron impresas');
-        } else {
             if (ubi === 2) {
                 const res = await updateOrderByTable( idOrder, total_C, total_U, idTable );
                 const { data } = res;
@@ -31,7 +25,6 @@ export default function UpdateOrder({ idOrder, total_C, total_U, idTable, ubi } 
                 const windowFeatures = 'noopener,noreferrer';
                 window.open(url, '_blank', windowFeatures);
             }
-        }
     }
 
     return (
@@ -43,13 +36,6 @@ export default function UpdateOrder({ idOrder, total_C, total_U, idTable, ubi } 
         >
             Finalizar
         </button>
-        <Toaster 
-            dir="auto"
-            visibleToasts={2}
-            duration={1500}
-            closeButton
-            richColors
-        />
     </div>
     )
 }

@@ -496,15 +496,14 @@ export async function updateDetailOrder( id: string, formData: FormData, product
     
 }
 
-export async function getUnprintedOrderDetailsById(id : string) {
+export async function allOrderDetailsById(id : string) {
     try {
-        const unprintedOrderDetails = await prisma.detalle_ordens.count({
+        const AllDetailOrder = await prisma.detalle_ordens.findMany({
             where: {
               orden_id : id,
-              impreso: false,
             },
           });
-          return unprintedOrderDetails;
+          return AllDetailOrder;
     } catch (error : any) {
         throw new Error(error);
     }
