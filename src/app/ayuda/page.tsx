@@ -25,7 +25,7 @@ export default function AyudaPage() {
                     width={800} 
                     height={600}
                     priority
-                    className="object-cover flex-grow-0 flex-shrink-0"
+                    className="object-cover flex-grow-0 flex-shrink-0 border-1 rounded-md border-black/60"
                 />
             </div>
             <p className="pb-2">
@@ -59,7 +59,7 @@ export default function AyudaPage() {
                             width={200} 
                             height={200}
                             priority
-                            className="object-cover flex-grow-0 flex-shrink-0 w-auto h-auto"
+                            className="object-cover flex-grow-0 flex-shrink-0 w-auto h-auto border-1 rounded-md border-black/60"
                         />
                     </section>
                 </article>
@@ -72,7 +72,7 @@ export default function AyudaPage() {
                         width={700} 
                         height={700}
                         priority
-                        className="object-cover flex-grow-0 flex-shrink-0 w-auto h-auto"
+                        className="object-cover flex-grow-0 flex-shrink-0 w-auto h-auto border-1 rounded-md border-black/60"
                     />
                 </div>
                 <p className="pb-2">
@@ -83,123 +83,243 @@ export default function AyudaPage() {
                 </p>
             </SectionHelpInformation>
             <SectionHelpInformation title="Acciones por Usuario" id="user-options" >
-                <p>
-                Estas opciones generales han sido cuidadosamente elaboradas con el objetivo de facilitar la gestión y supervisión eficiente del negocio. Se busca optimizar los procesos para que sean más rápidos y accesibles, mejorando así la productividad y la toma de decisiones. Sin embargo, es importante destacar que el acceso a estas herramientas está restringido y se concede únicamente a los individuos que cuentan con la autorización necesaria. Esto garantiza la seguridad de la información y asegura que solo el personal calificado pueda realizar cambios o consultas críticas para la operación del negocio.
-                </p>
+                <div className="flex gap-x-4 items-center">
+                    <p className="leading-loose">
+                    Estas opciones generales han sido cuidadosamente elaboradas con el objetivo de facilitar la gestión y supervisión eficiente del negocio. Se busca optimizar los procesos para que sean más rápidos y accesibles, mejorando así la productividad y la toma de decisiones. Sin embargo, es importante destacar que el acceso a estas herramientas está restringido y se concede únicamente a los individuos que cuentan con la autorización necesaria. Esto garantiza la seguridad de la información y asegura que solo el personal calificado pueda realizar cambios o consultas críticas para la operación del negocio.
+                    </p>
+                    <Image
+                        alt="userMenu img"
+                        src="/user-menu.png" 
+                        width={300} 
+                        height={300}
+                        priority
+                        className="object-cover flex-grow-0 flex-shrink-0 w-auto h-auto border-1 rounded-md border-black/60"
+                    />
+                </div>
             </SectionHelpInformation>
             <SectionHelpInformation title="Crear Usuario" id="create-user" >
-                <p>
-                {`
-                    Al seleccionar 'Crear Usuario', ingresará a una página donde podrá ingresar el nombre, la contraseña y elegir un rol para el usuario. Si todo sale bien, le aparecerá una notificación en la esquina superior izquierda confirmando la creación del usuario.
-                `} 
-                </p>
+                <div className="flex flex-col items-center">
+                    <Image
+                        alt="create-user img"
+                        src="/create-user.png" 
+                        width={600} 
+                        height={600}
+                        priority
+                        className="object-cover flex-grow-0 flex-shrink-0 w-auto h-auto py-4"
+                    />
+                    <p>
+                    {`
+                        Al seleccionar 'Crear Usuario', ingresará a una página donde podrá ingresar el nombre, la contraseña y elegir un rol para el usuario. Si todo sale bien, le aparecerá una notificación en la esquina superior izquierda confirmando la creación del usuario.
+                    `} 
+                    </p>
+                </div>
             </SectionHelpInformation>
             <SectionHelpInformation title="Editar Usuario" id="edit-user" >
-                <p>
-                {`
-                    Al seleccionar 'Editar Usuario', ingresará a una página donde tendrá la lista completa de los usuarios registrados. Aquí podrá cambiar el rol del usuario, la contraseña y decidir si estará activo o inactivo.
-                `} 
-                </p>
+                <div className="flex flex-col items-center">
+                    <Image
+                        alt="edit-user img"
+                        src="/edit-user.png" 
+                        width={600} 
+                        height={600}
+                        priority
+                        className="object-cover flex-grow-0 flex-shrink-0 w-auto h-auto py-4"
+                    />
+                    <p>
+                    {`
+                        Al seleccionar 'Editar Usuario', ingresará a una página donde tendrá la lista completa de los usuarios registrados. Aquí podrá cambiar el rol del usuario, la contraseña y decidir si estará activo o inactivo.
+                        `} 
+                    </p>
+                </div>
             </SectionHelpInformation>
             <SectionHelpInformation title="Agregar Mesa" id="agree-table" >
-                <p>
-                {`
-                    Al hacer clic en el botón "Agregar Mesa", automáticamente se agregará una nueva mesa al sistema, calculando y asignando un número secuencial basado en la última mesa existente, y la ubicará al final de la lista.
-                `} 
-                </p>
+                <div className="flex gap-x-4 items-center">
+                    <p className="leading-loose">
+                    {`
+                        Al hacer clic en el botón "Agregar Mesa", automáticamente se agregará una nueva mesa al sistema, calculando y asignando un número secuencial basado en la última mesa existente, y la ubicará al final de la lista.
+                        `} 
+                    </p>
+                    <Image
+                        alt="edit-table img"
+                        src="/edit-table.png" 
+                        width={600} 
+                        height={600}
+                        priority
+                        className="object-cover flex-grow-0 flex-shrink-0 w-auto h-auto py-4 border-1 rounded-md border-black/70"
+                    />
+                </div>
             </SectionHelpInformation>
             <SectionHelpInformation title="Ayuda y Cerrar Sesion" id="last-options" >
-                <p>
-                {`
-                    "El botón 'Ayuda' te dirige a la página de ayuda para el manejo del sistema. El botón 'Cerrar Sesión' cierra la sesión del usuario que está actualmente logueado. Este tiene la misma función que el botón 'Salir' del Panel de Navegación (izquierda).
-                `} 
-                </p>
+                <div className="flex gap-x-4 items-center">
+                    <p>
+                    {`
+                        El botón 'Ayuda' te dirige a la página de ayuda para el manejo del sistema. El botón 'Cerrar Sesión' cierra la sesión del usuario que está actualmente logueado. Este tiene la misma función que el botón 'Salir' del Panel de Navegación (izquierda).
+                    `} 
+                    </p>
+                    <Image
+                        alt="end-options img"
+                        src="/end-options.png" 
+                        width={600} 
+                        height={600}
+                        priority
+                        className="object-cover flex-grow-0 flex-shrink-0 w-auto h-auto py-4 border-1 rounded-md border-black/70"
+                    />
+                </div>
             </SectionHelpInformation>
             <SectionHelpInformation title="Caja" id="cash" >
-                <p>
+                <p className="pb-2 text-lg">
                 La pantalla está dividida en varias secciones claramente definidas, cada una con un propósito específico para el usuario. 
                 </p>
-                <h2>Barra de Navegacion Superior</h2>
-                <ul>
-                    <li>Mesas: Este botón, representado con un icono de mesa, sirve para mostrar la vista actual donde se pueden gestionar las mesas del establecimiento.</li>
-                    <li>Pastelería: Este botón, con un icono asociado a la pastelería, lleva a la sección donde se gestionan los pedidos.</li>
-                    <li>Cierre: Con un icono de cerradura, este botón es para finalizar el día de trabajo en el sistema.</li>
-                </ul>
-                <h2>Sección Central: Gestión de Mesas</h2>
-                <ul>
-                    <li>ICONO DE RUEDA: Sirve para actualizar el estado de las mesas.</li>
-                    <li>FACTURAR: Permite crear una nueva orden sin necesidad de una mesa.</li>
-                    <li>UBICACIÓN: Bajo este encabezado, se listan las mesas disponibles en el establecimiento, enumeradas.</li>
-                    <li>ESTADO: Indica el estado actual de cada mesa.</li>
-                    <li>ACCIONES: Junto a cada mesa, hay un botón Nueva Orden que, al ser presionado, permitira al usuario ingresar una nueva orden para la mesa correspondiente.</li>
-                </ul>
+                <section>
+                    <h2 className="text-xl font-semibold pb-2">Barra de Navegacion Superior</h2>
+                    <div className="flex flex-col items-center justify-center">
+                        <Image
+                            alt="nav-caja img"
+                            src="/nav-caja.png" 
+                            width={800} 
+                            height={800}
+                            priority
+                            className="object-cover flex-grow-0 flex-shrink-0 w-auto h-auto py-4"
+                        />
+                        <ul className="py-2 [&>li]:py-6">
+                            <li><span className="font-bold text-lg">Mesas:</span> Este botón, representado con un icono de mesa, sirve para mostrar la vista actual donde se pueden gestionar las mesas del establecimiento.</li>
+                            <li><span className="font-bold text-lg">Pastelería:</span> Este botón, con un icono asociado a la pastelería, lleva a la sección donde se gestionan los pedidos.</li>
+                            <li><span className="font-bold text-lg">Cierre:</span> Con un icono de cerradura, este botón es para finalizar el día de trabajo en el sistema.</li>
+                        </ul>
+                    </div>
+                    <h2 className="text-xl pb-2"><span className="font-bold">Sección Central:</span> Gestión de Mesas</h2>
+                    <div className="flex flex-col gap-y-3 items-center justify-center">
+                        <Image
+                            alt="main-caja img"
+                            src="/main-caja.png" 
+                            width={800} 
+                            height={800}
+                            priority
+                            className="object-cover flex-grow-0 flex-shrink-0 w-auto h-auto py-4 border-1 rounded-md border-black/70"
+                        />
+                        <ul className="py-2 [&>li]:py-6">
+                            <li><span className="font-bold text-lg">ICONO DE RUEDA:</span> Sirve para actualizar el estado de las mesas.</li>
+                            <li><span className="font-bold text-lg">FACTURAR:</span> Permite crear una nueva orden sin necesidad de una mesa.</li>
+                            <li><span className="font-bold text-lg">UBICACIÓN:</span> Bajo este encabezado, se listan las mesas disponibles en el establecimiento, enumeradas.</li>
+                            <li><span className="font-bold text-lg">ESTADO:</span> Indica el estado actual de cada mesa.</li>
+                            <li><span className="font-bold text-lg">ACCIONES:</span> Junto a cada mesa, hay un botón Nueva Orden que, al ser presionado, permitira al usuario ingresar una nueva orden para la mesa correspondiente.</li>
+                        </ul>
+                    </div>
+                </section>
             </SectionHelpInformation>
             <SectionHelpInformation title="Paso a paso para crear una Orden en una Mesa" id="create-order" >
-                <h3>Paso 1</h3>
-                <p>Seleccionar una mesa y dar clic en el boton Nueva Orden.</p>
-                <h3>Paso 2</h3>
-                <p>Seleccionar un Producto de la lista de productos que apareceran en la barra que cita: Buscar un producto... Puedes seleccionar uno o buscarlo con ayuda del auto completado</p>
-                <h3>Paso 3</h3>
-                <p>Elegir la cantidad de dicho producto seleccionado y dar clic al boton Agregar. Automaticamente sera agregado a la lista de Detalles de Ordenes de la Orden de la Mesa seleccionada</p>
-                <h3>Paso 4</h3>
-                <p>Una vez agregados todos los productos que el cliente solicito dar al boton Finalizar, automaticamente le generara la comanda y abrira una nueva pestaña donde solo tendra que imprimir dicha comanda</p>
-                <h3>Importante</h3>
-                <p>Cuando agregue un producto al Detalle de Orden podra editarlo o borrarlo en caso de ser necesario.</p>
-            </SectionHelpInformation>
-            <SectionHelpInformation title="Paso a paso para crear una Orden en una Mesa" id="create-order" >
-                <h3>Paso 1</h3>
-                <p>Seleccionar una mesa y dar clic en el boton Nueva Orden.</p>
-                <h3>Paso 2</h3>
-                <p>Seleccionar un Producto de la lista de productos que apareceran en la barra que cita: Buscar un producto... Puedes seleccionar uno o buscarlo con ayuda del auto completado</p>
-                <h3>Paso 3</h3>
-                <p>Elegir la cantidad de dicho producto seleccionado y dar clic al boton Agregar. Automaticamente sera agregado a la lista de Detalles de Ordenes de la Orden de la Mesa seleccionada</p>
-                <h3>Paso 4</h3>
-                <p>Una vez agregados todos los productos que el cliente solicito dar al boton Finalizar, automaticamente le generara la comanda y abrira una nueva pestaña donde solo tendra que imprimir dicha comanda</p>
-                <h3>Importante</h3>
-                <p>Cuando agregue un producto al Detalle de Orden podra editarlo o borrarlo en caso de ser necesario.</p>
-            </SectionHelpInformation>
-            <SectionHelpInformation title="Paso a paso para crear una Orden en una Mesa" id="create-order" >
-                <h3>Paso 1</h3>
-                <p>Seleccionar una mesa y dar clic en el boton Nueva Orden.</p>
-                <h3>Paso 2</h3>
-                <p>Seleccionar un Producto de la lista de productos que apareceran en la barra que cita: Buscar un producto... Puedes seleccionar uno o buscarlo con ayuda del auto completado</p>
-                <h3>Paso 3</h3>
-                <p>Elegir la cantidad de dicho producto seleccionado y dar clic al boton Agregar. Automaticamente sera agregado a la lista de Detalles de Ordenes de la Orden de la Mesa seleccionada</p>
-                <h3>Paso 4</h3>
-                <p>Una vez agregados todos los productos que el cliente solicito dar al boton Finalizar, automaticamente le generara la comanda y abrira una nueva pestaña donde solo tendra que imprimir dicha comanda</p>
-                <h3>Importante</h3>
-                <p>Cuando agregue un producto al Detalle de Orden podra editarlo o borrarlo en caso de ser necesario.</p>
+                <section>
+                    <div className="pb-4">
+                        <Image
+                            alt="step-1 img"
+                            src="/step-1.png" 
+                            width={800} 
+                            height={800}
+                            priority
+                            className="object-cover flex-grow-0 flex-shrink-0 w-auto h-auto py-4 border-1 rounded-md border-black/70 mb-2"
+                        />
+                        <h3 className="font-bold text-lg">Paso 1</h3>
+                        <p>Seleccionar una mesa y dar clic en el boton Nueva Orden.</p>
+                    </div>
+                    <div>
+                        <Image
+                            alt="step-2 img"
+                            src="/step-2.png" 
+                            width={800} 
+                            height={800}
+                            priority
+                            className="object-cover flex-grow-0 flex-shrink-0 w-auto h-auto py-4 border-1 rounded-md border-black/70 mb-2"
+                        />
+                        <h3 className="font-bold text-lg">Paso 2</h3>
+                        <p>Seleccionar un Producto de la lista de productos que apareceran en la barra que cita: Buscar un producto... Puedes seleccionar uno o buscarlo con ayuda del auto completado</p>
+                    </div>
+                    <div>
+                        <Image
+                            alt="step-3 img"
+                            src="/step-3.png" 
+                            width={800} 
+                            height={800}
+                            priority
+                            className="object-cover flex-grow-0 flex-shrink-0 w-auto h-auto py-4 border-1 rounded-md border-black/70 mb-2"
+                        />
+                        <h3 className="font-bold text-lg">Paso 3</h3>
+                        <p>Elegir la cantidad de dicho producto seleccionado y dar clic al boton Agregar. Automaticamente sera agregado a la lista de Detalles de Ordenes de la Orden de la Mesa seleccionada</p>
+                    </div>
+                    <div>
+                        <Image
+                            alt="step-4 img"
+                            src="/step-4.png" 
+                            width={800} 
+                            height={800}
+                            priority
+                            className="object-cover flex-grow-0 flex-shrink-0 w-auto h-auto py-4 border-1 rounded-md border-black/70 mb-2"
+                        />
+                        <h3 className="font-bold text-lg">Paso 4</h3>
+                        <p>Una vez agregados todos los productos que el cliente solicito dar al boton Finalizar, automaticamente le generara la comanda y abrira una nueva pestaña donde solo tendra que imprimir dicha comanda</p>
+                    </div>
+                    <div>
+                        <h3 className="font-bold text-lg">Importante</h3>
+                        <p>Cuando agregue un producto al Detalle de Orden podra editarlo o borrarlo en caso de ser necesario.</p>
+                    </div>
+                </section>
             </SectionHelpInformation>
             <SectionHelpInformation title="Cambiar Orden de Mesa" id="change-table">
-                <p>Una vez que una mesa tiene una orden registrada cambiara su estado y apareceran 3 iconos reemplazando el boton Nueva Orden. Dar clic al tercer icono contando de izquierda a derecha con forma de flechas apuntando circularmente.</p>
+                <div className="flex flex-col justify-center items-center">
+                <Image
+                    alt="change-table img"
+                    src="/change-table.png" 
+                    width={800} 
+                    height={800}
+                    priority
+                    className="object-cover flex-grow-0 flex-shrink-0 w-auto h-auto py-4 border-1 rounded-md border-black/70 mb-2"
+                />
+                <p className="pb-4">Una vez que una mesa tiene una orden registrada cambiara su estado y apareceran 3 iconos reemplazando el boton Nueva Orden. Dar clic al tercer icono contando de izquierda a derecha con forma de flechas apuntando circularmente.</p>
                 <p>Aparecera una ventana que te dara a elegir entre una lista de todas las mesas que estan actualmente libre. Escogue una da clic en el boton Cambiar, automaticamente te cambiara a la mesa seleccionada.</p>
+                </div>
             </SectionHelpInformation>
             <SectionHelpInformation title="Facturar Orden de Mesa" id="create-invoice">
-                <p>Cuando este listo para facturar tiene que darle clic al icono de en medio de la lista de 3 iconos de cada mesa. Lo dirigira a una pantalla donde vera sus detalles de ordenes sin poder modificarlos.</p>
-                <p>A la derecha tendra una caja que lleva un boton que dice Dividir Cuenta al costado derecho del titulo. La caja contiene dos botones grandes que diferencian el tipo de cambio con el que se va a trabajar los campos monto y cambio.</p>
-                <p>Al ingresar un numero en el campo monto Cambio automaticamente te dira cuanto falta o cuanto tienes que dar de cambio para el cliente.</p>
-                <p>Despues tienes que elegir el metodo de pago que el cliente ha elegido acto siguiente dar clic al boton imprimir el cual te generara una nueva pestaña en la cual solo tienes que imprimir la factura</p>
-                <p>Al regresar al sistema veras un nuevo cuadro que dice Propina lo tienes que marcar segun lo que te haya pagado el cliente. Si no pago propina no la marcas y si pago propina marcas la casilla.</p>
+                <div className="flex flex-col justify-center items-center">
+                <Image
+                    alt="page-invoice img"
+                    src="/page-invoice.png" 
+                    width={800} 
+                    height={800}
+                    priority
+                    className="object-cover flex-grow-0 flex-shrink-0 w-auto h-auto py-4 border-1 rounded-md border-black/70 mb-2"
+                />
+                <p className="pb-3">Cuando este listo para facturar tiene que darle clic al icono de en medio de la lista de 3 iconos de cada mesa. Lo dirigira a una pantalla donde vera sus detalles de ordenes sin poder modificarlos.</p>
+                <p className="pb-3">A la derecha tendra una caja que lleva un boton que dice Dividir Cuenta al costado derecho del titulo. La caja contiene dos botones grandes que diferencian el tipo de cambio con el que se va a trabajar los campos monto y cambio.</p>
+                <p className="pb-3">Al ingresar un numero en el campo monto Cambio automaticamente te dira cuanto falta o cuanto tienes que dar de cambio para el cliente.</p>
+                <p className="pb-3">Despues tienes que elegir el metodo de pago que el cliente ha elegido acto siguiente dar clic al boton imprimir el cual te generara una nueva pestaña en la cual solo tienes que imprimir la factura</p>
+                <p className="pb-3">Al regresar al sistema veras un nuevo cuadro que dice Propina lo tienes que marcar segun lo que te haya pagado el cliente. Si no pago propina no la marcas y si pago propina marcas la casilla.</p>
                 <p>Una vez completado todos estos pasos puedes terminar la orden para finalizar la facturacion y cambiar el estado de la mesa.</p>
-            </SectionHelpInformation>
-            <SectionHelpInformation title="Facturar Orden de Mesa" id="create-invoice">
-                <p>Cuando este listo para facturar tiene que darle clic al icono de en medio de la lista de 3 iconos de cada mesa. Lo dirigira a una pantalla donde vera sus detalles de ordenes sin poder modificarlos.</p>
-                <p>A la derecha tendra una caja que lleva un boton que dice Dividir Cuenta al costado derecho del titulo. La caja contiene dos botones grandes que diferencian el tipo de cambio con el que se va a trabajar los campos monto y cambio.</p>
-                <p>Al ingresar un numero en el campo monto Cambio automaticamente te dira cuanto falta o cuanto tienes que dar de cambio para el cliente.</p>
-                <p>Despues tienes que elegir el metodo de pago que el cliente ha elegido acto siguiente dar clic al boton imprimir el cual te generara una nueva pestaña en la cual solo tienes que imprimir la factura</p>
-                <p>Al regresar al sistema veras un nuevo cuadro que dice Propina lo tienes que marcar segun lo que te haya pagado el cliente. Si no pago propina no la marcas y si pago propina marcas la casilla.</p>
-                <p>Una vez completado todos estos pasos puedes terminar la orden para finalizar la facturacion y cambiar el estado de la mesa.</p>
+                </div>
             </SectionHelpInformation>
             <SectionHelpInformation title="Dividir Cuentas" id="divide-invoice">
-                <p>Dentro de la pagina de facturacion dar clic al boton dividir orden, saldra una ventana la cual tiene que elegir los detalles de ordenes que quiere dividir en una nueva orden y ahora tendra dos ordenes las cuales tendra que seguir los pasos de Facturar una Orden.</p>
+                <div className="flex flex-col justify-center items-center">
+                <Image
+                    alt="divide-invoice img"
+                    src="/divide-invoice.png" 
+                    width={800} 
+                    height={800}
+                    priority
+                    className="object-cover flex-grow-0 flex-shrink-0 w-auto h-auto py-4 border-1 rounded-md border-black/70 mb-2"
+                />
+                <p>Dentro de la pagina de facturacion dar clic al boton dividir orden, saldra una ventana la cual tiene que elegir los detalles de ordenes que quiere dividir en una nueva orden y ahora tendra dos ordenes las cuales tendra que seguir los pasos de <a href="#create-invoice" className="font-semibold">Facturar una Orden.</a></p>
+                </div>
             </SectionHelpInformation>
             <SectionHelpInformation title="Crear Factura sin Mesa" id="create-invoiceClear">
-                <p>Al darle clic al boton Facturar nos dirigira a una pagina donde podremos hacer los mismos pasos de Crear una orden y Facturar una Orden, todo en el mismo lugar pero con la limitacion de que aqui no podremos dividir una orden en dos facturas.</p>
+                <div className="flex flex-col justify-center items-center">
+                    <Image
+                        alt="invoice img"
+                        src="/invoice.png" 
+                        width={800} 
+                        height={800}
+                        priority
+                        className="object-cover flex-grow-0 flex-shrink-0 w-auto h-auto py-4 border-1 rounded-md border-black/70 mb-2"
+                    />
+                    <p>Al darle clic al boton Facturar nos dirigira a una pagina donde podremos hacer los mismos pasos de Crear una orden y Facturar una Orden, todo en el mismo lugar pero con la limitacion de que aqui no podremos dividir una orden en dos facturas.</p>
+                </div>
             </SectionHelpInformation>
-            <SectionHelpInformation title="Pasteleria" id="pastry">
-                <p>Seccion </p>
-            </SectionHelpInformation>
-
         </main>
     )
 }
