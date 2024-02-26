@@ -22,8 +22,8 @@ export default async function MainCloseCash() {
             </header>
         ) : (
             <>
-            <InfoCash cajaActiva={cajaActive} />
-            <NominationForm cajaActiva={cajaActive}  />
+            <InfoCash cajaActiva={cajaActive}/>
+            <NominationForm cajaActiva={cajaActive}/>
             </>
             
         )}

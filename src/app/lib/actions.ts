@@ -95,7 +95,7 @@ export async function createProduct(formData: FormData) {
     const { nombre, descripcion, precio, preparado_en, categoria, disponibilidad } = CreateProductFormSchema.parse(rawFormData);
     const productFound = await prisma.productos.findFirst({
         where: {
-            nombre: nombre
+            nombre
         }
     });
     if (productFound) {

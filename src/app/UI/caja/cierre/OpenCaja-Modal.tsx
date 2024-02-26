@@ -6,7 +6,6 @@ export default function OpenCajaModal({ isOpen, onClose, caja } : { isOpen : boo
 
     const onChange = async (formData : FormData ) => {
         const res = await createNewCashFlow(formData);
-        console.log(res);
     }
 
     return (
