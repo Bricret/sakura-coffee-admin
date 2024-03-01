@@ -38,7 +38,7 @@ export const LinkCaja = [
         href: '/dashboard/caja/pedidos',
     },
     {
-        title: 'Cierre',
+        title: 'Apertura/Cierre',
         icon: CloseIcon,
         href: '/dashboard/caja/cierre',
     },
