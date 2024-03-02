@@ -33,7 +33,7 @@ export default function BottomInvoice({ invoice } : { invoice : any }){
                 </section>
                 <section className="flex flex-row items-start justify-between w-full">
                     <h3 className="text-sm w-1/2">Propina Sugerida U$</h3>
-                    <h3 className="text-sm">{invoice.propina_U_}</h3>
+                    <h3 className="text-sm">{(invoice.propina_U_).toFixed(2)}</h3>
                 </section>
                 <section className="flex flex-row items-start font-bold justify-between w-full">
                     <h3 className="text-base w-1/3">Total C$</h3>
@@ -41,7 +41,7 @@ export default function BottomInvoice({ invoice } : { invoice : any }){
                 </section>
                 <section className="flex flex-row items-start font-bold justify-between w-full">
                     <h3 className="text-sm w-1/3">Total U$</h3>
-                    <h3 className="text-sm">{invoice.total_U_}</h3>
+                    <h3 className="text-sm">{(invoice.total_U_).toFixed(2)}</h3>
                 </section>
                 <h3 className="text-sm mt-2">
                 ---------------------------------------------------------

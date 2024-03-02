@@ -6,6 +6,8 @@ export default function FormSectionInvoice({ isDollar, Order } : { isDollar : bo
 
     const [cambio_U$, setCambio_U$] = useState(0);
     const [cambio_C$, setCambio_C$] = useState(0);
+    const propina_C =parseFloat((Order.sub_total_C_ * 0.10).toFixed(2));
+
 
     const handleChange = (e : any) => {
         const monto = Number(e.target.value);
@@ -55,18 +57,31 @@ export default function FormSectionInvoice({ isDollar, Order } : { isDollar : bo
                     />
                 </section>
             </article>
-            ) : 
-            <div className="flex flex-col">
-                <label htmlFor="cambio" className="text-secundary">Cambio</label>
-                <input 
-                    type="number" 
-                    name="cambio" id="cambio" 
-                    readOnly
-                    placeholder="Cambio para el cliente"
-                    value={cambio_U$}
-                    className="h-10 mb-2 p-1 border-1 border-black/40 rounded-lg shadow-small" 
-                />
-            </div>
+            ) :
+            <article className="flex w-full">
+                <section className="flex flex-col w-1/2">
+                    <label htmlFor="cambio" className="text-secundary">Cambio</label>
+                    <input 
+                        type="number" 
+                        name="cambio" id="cambio" 
+                        readOnly
+                        placeholder="Cambio para el cliente"
+                        value={cambio_U$}
+                        className="w-10/12 h-10 mb-2 p-1 border-1 border-black/40 rounded-lg shadow-small" 
+                    />
+                </section>
+                <section className="flex flex-col w-1/2">
+                    <label htmlFor="cambio" className="text-secundary">Cambio con propina</label>
+                    <input 
+                        type="number" 
+                        name="cambio" id="cambio" 
+                        readOnly
+                        placeholder="Cambio para el cliente"
+                        value={(cambio_U$ - propina_C)}
+                        className="h-10 mb-2 p-1 border-1 border-black/40 rounded-lg shadow-small" 
+                    />
+                </section>
+            </article>
         }
 </>
     )

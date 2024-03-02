@@ -38,7 +38,7 @@ export default function ProductForm({ categorias, ProductData } : { categorias?:
                     id="nombre"
                 />
             </div>
-            <div className="flex flex-col w-full md:w-2/5">
+            <div className="flex flex-col w-full md:w-2/4">
                 <label htmlFor="descripcion" className={ label }>Descripcion del producto</label>   
                 <input 
                     className="border-2 border-secundary/70 bg-inherit p-3 rounded-xl" 
@@ -64,7 +64,7 @@ export default function ProductForm({ categorias, ProductData } : { categorias?:
                 required
             />
             </div>
-            <div className="flex flex-col w-full md:w-2/5">
+            <div className="flex flex-col w-full md:w-2/4">
                 <label htmlFor="preparado_en" className={ label }>Preparado en</label>
                 <select 
                     name="preparado_en" 
@@ -93,7 +93,7 @@ export default function ProductForm({ categorias, ProductData } : { categorias?:
                     }
                 </select>
             </div>
-            <div className="flex flex-col w-full md:w-2/5 ">
+            <div className="flex flex-col w-full md:w-2/4">
                 <label htmlFor="disponibilidad" className={ label }>Disponibilidad</label>
                 <select 
                     name="disponibilidad" 
