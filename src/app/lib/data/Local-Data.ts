@@ -76,8 +76,8 @@ export const TableColumns = [
 
 export const TableColumsCash = [
     {
-        key: "ubicacion",
-        label: "UBICACION",
+        key: "Retiro",
+        label: "RETIRO",
     },
     {
         key: "estado",
