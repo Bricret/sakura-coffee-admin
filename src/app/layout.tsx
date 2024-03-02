@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/react"
 import type { Metadata } from 'next'
 import { PT_Sans } from 'next/font/google'
 import './UI/globals.css'
@@ -20,6 +21,7 @@ export default function RootLayout({
       <body className={pT_Sans.className}>
         <Providers >
           {children}
+          <Analytics />
         </Providers>
       </body>
     </html>
