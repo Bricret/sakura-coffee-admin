@@ -24,7 +24,7 @@ export default async function CashPage() {
                         href={'/dashboard/caja/newOrder'}
                         className="bg-fourth text-center py-4 md:py-2 px-6 md:px-4 text-white rounded-xl "
                     >
-                        Para llevar
+                        Factura Para llevar
                     </Link>
                 </header>   
             )
