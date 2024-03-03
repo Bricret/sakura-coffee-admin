@@ -20,7 +20,7 @@ export default function NavCaja() {
                 {
                     LinkCaja.map((link) => {
                         const LinkIcon = link.icon;
-                        if(link.title !== 'Mesas' && user.role === 'Mesero') return null
+                        if(link.title !== 'Mesas' && link.title !== 'Pasteleria' && user.role === 'Mesero') return null
                         return (
                             <motion.li 
                                 key={link.title}
@@ -42,15 +42,6 @@ export default function NavCaja() {
                     })
                 }
             </ul>
-            <div
-                id="menu-backdrop"
-                className={`
-                    absolute bg-black/30 backgrop-blur-lg rounded
-                    translate-x-[var(--left)] translate-y-[var(--top)] 
-                    w-[var(--width)] h-[var(--height)]
-                    transition-all duration-500 ease-in-out opacity-0 -z-10
-                `}
-            />
         </nav>
     )
 }
