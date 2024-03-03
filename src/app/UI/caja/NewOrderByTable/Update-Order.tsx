@@ -34,7 +34,7 @@ export default function UpdateOrder({ idOrder, total_C, total_U, idTable, ubi } 
             type="submit"
             onClick={ (e) => HandleSubmit(e) }
         >
-            Finalizar
+            Comandar
         </button>
     </div>
     )

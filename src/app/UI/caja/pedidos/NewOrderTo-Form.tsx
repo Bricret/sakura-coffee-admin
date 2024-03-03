@@ -65,7 +65,6 @@ export default function NewOrderToForm({ OrderTo, type } : { OrderTo?: any, type
                 placeholder="Calle 1 # 2-3"
                 name="direccion_cliente"
                 type="text"
-                required
                 defaultValue={ OrderTo?.direccion_cliente || ''}
                 id="direccion_cliente"
             />
