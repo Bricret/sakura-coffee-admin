@@ -309,6 +309,10 @@ export const TableInvoice = [
         label: "ID",
     },
     {
+        key: "salida",
+        label: "SALIDA",
+    },
+    {
         key: "metodo_pago",
         label: "METODO PAGO",
     },

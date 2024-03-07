@@ -1408,6 +1408,15 @@ export async function divideOrdenByTable(idOrder: number, detallesIds: any[], id
 export async function createCategory( formData : FormData ) {
     const rawFormData = Object.fromEntries(formData.entries());
     const { nombre, descripcion } = rawFormData
+
+    const CategoryFind = await prisma.categorias.findFirst({
+        where: {
+            nombre
+        }
+    });
+
+    if (CategoryFind) return { success: false, message: 'Esta categoria ya existe' }
+
     try {
         await prisma.categorias.create({
             data: {

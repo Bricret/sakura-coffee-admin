@@ -4,7 +4,7 @@
 import { fonts } from "@/app/UI/Fonts";
 import { Button } from "@/app/UI/auth/button";
 import { createCategory } from "@/app/lib/actions";
-import { SuccessToast } from "@/app/plugins/sonner";
+import { ErrorToast, SuccessToast } from "@/app/plugins/sonner";
 import { Toaster } from "sonner";
 
 
@@ -12,7 +12,11 @@ export const FormNewCategory = () => {
 
     const actionNewCategory = async (formData : FormData) => {
         const newCategory = await createCategory(formData);
-        newCategory.success === true && SuccessToast(newCategory.message)
+        if (newCategory.success === true) {
+            SuccessToast(newCategory.message)
+        } else {
+            ErrorToast(newCategory.message)
+        }
     }
 
   return (

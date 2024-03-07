@@ -59,17 +59,6 @@ export default function NewOrderToForm({ OrderTo, type } : { OrderTo?: any, type
             />
         </div>
         <div className="flex flex-col w-full md:w-2/5">
-            <label htmlFor="direccion_cliente" className={ label }>Direccion del cliente</label>   
-            <input 
-                className="border-2 border-secundary/70 bg-inherit p-3 rounded-xl" 
-                placeholder="Calle 1 # 2-3"
-                name="direccion_cliente"
-                type="text"
-                defaultValue={ OrderTo?.direccion_cliente || ''}
-                id="direccion_cliente"
-            />
-        </div>
-        <div className="flex flex-col w-full md:w-2/5">
         <label htmlFor="fecha_entrega" className={ label }>Fecha de Entrega</label>   
         <input 
             className="border-2 border-secundary/70 bg-inherit p-3 rounded-xl" 
@@ -89,17 +78,6 @@ export default function NewOrderToForm({ OrderTo, type } : { OrderTo?: any, type
                 placeholder="78695496"
                 defaultValue={ OrderTo?.telefono_cliente || ''}
                 required
-                className="border-2 border-secundary/70 bg-inherit p-3 rounded-xl" 
-            />
-        </div>
-        <div className="flex flex-col w-full md:w-2/5 ">
-            <label htmlFor="telefono_adicional_cliente" className={ label }>Telefono adicional</label>
-            <input
-                name="telefono_adicional_cliente" 
-                id="telefono_adicional_cliente"
-                type="number"
-                placeholder="No ingresado"
-                defaultValue={ OrderTo?.telefono_adicional_cliente || ''}
                 className="border-2 border-secundary/70 bg-inherit p-3 rounded-xl" 
             />
         </div>

@@ -20,26 +20,22 @@ export default function MoreInfoDialog({ isOpen, onClose, ordenTo } : { isOpen :
                         <div className="flex flex-row gap-2">
                             <div className="flex flex-col gap-1 text-lg font-semibold">
                                 <p>Nombre del Cliente:</p>
-                                <p>Direccion del Cliente:</p>
                                 <p>Estado del Pago:</p>
                                 <p>Estado del Pedido:</p>
                                 <p>Fecha de Pedido:</p>
                                 <p>Fecha de Entrega:</p>
                                 <p>Telefono del Cliente:</p>
-                                <p>Telefono Adicional:</p>
                                 <p>Anticipo:</p>
                                 <p>Total:</p>
                                 <p>Pediente de Pago:</p>
                             </div>
                             <div className="flex flex-col gap-1 text-lg">
                                 <p>{ ordenTo.nombre_cliente }</p>
-                                <p>{ ordenTo.direccion_cliente }</p>
                                 <p>{ ordenTo.estado_pago }</p>
                                 <p>{ ordenTo.estado_pedido }</p>
                                 <p>{ (Fecha_Pedido.toISOString()).split('T')[0] }</p>
                                 <p>{ (ordenTo.fecha_entrega.toISOString()).split('T')[0] }</p>
                                 <p>{ ordenTo.telefono_cliente }</p>
-                                <p>{ ordenTo.telefono_adicional_cliente || 'No registrado.' }</p>
                                 <p>{ ordenTo.anticipo }</p>
                                 <p>{ ordenTo.total }</p>
                                 <p>{ Number( ordenTo.total - ordenTo.anticipo ) }</p>

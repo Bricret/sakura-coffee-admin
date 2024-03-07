@@ -63,6 +63,11 @@ export default async function TableInvoices({ dataParams } : { dataParams : any 
                             <td className="px-4 py-4 text-black last:rounded-r-2xl text-start cursor-default">
                                 {item.numero_factura.toString()}
                             </td>
+                            <td className="px-4 py-4 text-black last:rounded-r-2xl text-start cursor-default">
+                            {
+                                item.ordens.mesa_id === null ? 'Para llevar' : 'Local'
+                            }
+                            </td>
                             <td className={`px-4 py-2 text-black  first:rounded-l-2xl last:rounded-r-2xl text-center cursor-default`}>
                                 {item.metodo_pago}
                             </td>
