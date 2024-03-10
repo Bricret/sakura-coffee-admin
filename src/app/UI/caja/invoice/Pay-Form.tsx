@@ -11,6 +11,7 @@ import FormSectionInvoice from "./Form-Section-Invoice";
 import { useRouter } from "next/navigation";
 import { printInvoiceFunction } from "@/app/lib/PrintFunction";
 import { HandleDivideInvoice } from "./HandleDivideInvoice";
+import { buscarPropiedad } from "@/app/lib/utils";
 
 // ubi = 1 -> caja | ubi = 2 -> mesa
 
@@ -19,15 +20,24 @@ export default function PayForm({ Order, ubi } : { Order : any, ubi : number }) 
     const [isDollar, setIsDollar] = useState(false);
     const [propina, setPropina] = useState(false);
     const [invoice, setInvoice] = useState<any>(null);
+    const [checkboxes, setCheckboxes] = useState({
+        efectivo: false,
+        tarjeta: false,
+        transferencia: false,
+    });
     const router = useRouter();
 
-    async function ClientAction( formData : FormData ) {
-        const TypePay = formData.get('tipo')
-        if (TypePay === null) {
-            return ErrorToast('Seleccione un metodo de pago');
-        }
+    const handleCheckboxChange = ( event: any ) => {
+        setCheckboxes({
+           ...checkboxes,
+           [event.target.name]: event.target.checked,
+        });
+       };
+       
+
+    async function ClientAction() {
         if (ubi === 1) {
-            const res = await createNewInvoice(Order, TypePay);
+            const res = await createNewInvoice(Order);
             
             if (res.success === true) {
                 const { data } = res;
@@ -36,7 +46,7 @@ export default function PayForm({ Order, ubi } : { Order : any, ubi : number }) 
             }
         }
         if (ubi === 2) {
-            const res = await createNewInvoiceByTable(Order, TypePay);
+            const res = await createNewInvoiceByTable(Order);
             if (res.success === true) {
                 const { data } = res;
                 setInvoice(data);
@@ -46,21 +56,27 @@ export default function PayForm({ Order, ubi } : { Order : any, ubi : number }) 
     }
 
     const handleFinish = async () => {
+
         if (invoice === null) {
             return ErrorToast('No se ha generado la factura');
         }
 
+        const CheckSelected = buscarPropiedad(checkboxes, function(valor: any) {
+            return valor === true;
+        });
+
+
         if ( propina === true ) {
             if (ubi === 1) {
-                const res = await updateOrderToFinish(Order.id);
-                res.success === true ? router.push('/dashboard/caja') : ErrorToast('No se pudo actualizar la orden');
+                const res = await updateOrderToFinish(Order.id, invoice.id, CheckSelected);
+                res.success === true ? router.push('/dashboard/caja') : ErrorToast('No se pudo actualizar la factura');
             }
             if ( ubi === 2 ) {
-                const res = await updateOrderToFinishByTable(Order.id, Order.mesa_id);
+                const res = await updateOrderToFinishByTable(Order.id, Order.mesa_id, invoice.id, CheckSelected);
                 res.success === false && ErrorToast('No se pudo actualizar la factura');
                 const OrdersPending = await getOrdersPendingByTable(Order.mesa_id)
                 if ( OrdersPending < 1 ) {
-                    router.push('/dashboard/caja') 
+                    router.push('/dashboard/caja');
                 } else {
                     SuccessToast('Factura Finalizada Correctamente')
                 }            
@@ -68,11 +84,11 @@ export default function PayForm({ Order, ubi } : { Order : any, ubi : number }) 
         } else {
             const newTotal = invoice.total_C_ - invoice.propina_C_;
             if (ubi === 1) {
-                const res = await updateInvoice(invoice.id, newTotal, Order.id);
+                const res = await updateInvoice(invoice.id, newTotal, Order.id, CheckSelected);
                 res.success === true ? router.push('/dashboard/caja') : ErrorToast('No se pudo actualizar la factura');
             }
             if ( ubi === 2 ) {
-                const res = await updateInvoiceByTable(invoice.id, newTotal, Order.id, Order.mesa_id);
+                const res = await updateInvoiceByTable(invoice.id, newTotal, Order.id, Order.mesa_id, CheckSelected);
                 res.success === false && ErrorToast('No se pudo actualizar la factura');
                 const OrdersPending = await getOrdersPendingByTable(Order.mesa_id)
                 if ( OrdersPending < 1 ) {
@@ -99,34 +115,41 @@ export default function PayForm({ Order, ubi } : { Order : any, ubi : number }) 
             <ChangeMoney isDollar={ isDollar } setIsDollar={ setIsDollar }/>
             <form action={ClientAction}>
                 <FormSectionInvoice isDollar={ isDollar } Order={ Order }/>
-                <div className="flex flex-col">
+                {
+                invoice !== null ? (
+                <section className="flex flex-col">
                     <h6 className="text-secundary">Metodo de pago</h6>
                     <div className="flex flex-row gap-4 pb-2">
                         <Checkbox 
-                            id="tipo"
-                            name="tipo"
+                            id="efectivo"
+                            name="efectivo"
                             value="efectivo"
                             required
+                            checked={checkboxes.efectivo}
+                            onChange={handleCheckboxChange}
                         >
                             Efectivo
                         </Checkbox>
                         <Checkbox
-                            id="tipo"
-                            name="tipo"
+                            id="tarjeta"
+                            name="tarjeta"
                             value="tarjeta"
+                            checked={checkboxes.tarjeta}
+                            onChange={handleCheckboxChange}
                         >
                             Tarjeta
                         </Checkbox>
                         <Checkbox
-                            id="tipo"
-                            name="tipo"
+                            id="transferencia"
+                            name="transferencia"
                             value="transferencia"
+                            checked={checkboxes.transferencia}
+                            onChange={handleCheckboxChange}
                         >
                             Transferencia
                         </Checkbox>
                     </div>
-                {
-                    invoice !== null ? (
+
                         <div className="mb-2">
                         <Checkbox
                             id="propina"
@@ -137,9 +160,9 @@ export default function PayForm({ Order, ubi } : { Order : any, ubi : number }) 
                             Propina
                         </Checkbox>
                     </div>
+                </section>
                     ) : null
                 }
-                </div>
                 <div className="flex gap-2">
                     <div className="w-1/2">
                         <Button>

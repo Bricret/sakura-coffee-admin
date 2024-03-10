@@ -58,7 +58,7 @@ export default function NewOrderToForm({ OrderTo, type } : { OrderTo?: any, type
                 id="nombre"
             />
         </div>
-        <div className="flex flex-col w-full md:w-2/5">
+        <div className="flex flex-col w-full md:w-2/4">
         <label htmlFor="fecha_entrega" className={ label }>Fecha de Entrega</label>   
         <input 
             className="border-2 border-secundary/70 bg-inherit p-3 rounded-xl" 
@@ -81,7 +81,7 @@ export default function NewOrderToForm({ OrderTo, type } : { OrderTo?: any, type
                 className="border-2 border-secundary/70 bg-inherit p-3 rounded-xl" 
             />
         </div>
-        <div className="flex flex-col w-full md:w-2/5">
+        <div className="flex flex-col w-full md:w-2/4">
             <label htmlFor="total" className={ label }>Total</label>
             <input 
                 name="total" 
@@ -109,7 +109,7 @@ export default function NewOrderToForm({ OrderTo, type } : { OrderTo?: any, type
                 className="border-2 border-secundary/70 bg-inherit p-3 rounded-xl" 
             />
         </div>
-        <div className="flex flex-col w-full md:w-2/5">
+        <div className="flex flex-col w-full md:w-2/4">
             <label htmlFor="observaciones" className={label}>Observaciones</label>
             <textarea 
                 name="observaciones" 

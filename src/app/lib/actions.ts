@@ -309,7 +309,7 @@ export async function updateOrder( idOder : any, subTotalC : number, subTotalU :
     }
 }
 
-export async function updateOrderToFinish( idOrder : any ) {
+export async function updateOrderToFinish( idOrder : any, idInvoice: string, CheckSelected: any) {
     try {
         await prisma.ordens.update({
             where: {
@@ -317,6 +317,14 @@ export async function updateOrderToFinish( idOrder : any ) {
             },
             data: {
                 estado: 'finalizada'
+            }
+        });
+        await prisma.facturas.update({
+            where: {
+                id: idInvoice.toString()
+            },
+            data: {
+                metodo_pago: CheckSelected
             }
         });
         revalidatePath(`/dashboard/caja`);
@@ -338,7 +346,7 @@ export async function getOrdersPendingByTable( idMesa? : string ) {
     return OrdersPending
 } 
 
-export async function updateOrderToFinishByTable( idOrder : any, idTable : any ) {
+export async function updateOrderToFinishByTable( idOrder : any, idTable : any, idInvoice: string, CheckSelected: any ) {
     try {
         await prisma.ordens.update({
             where: {
@@ -354,6 +362,14 @@ export async function updateOrderToFinishByTable( idOrder : any, idTable : any )
             },
             data: {
                 estado: 'libre'
+            }
+        });
+        await prisma.facturas.update({
+            where: {
+                id: idInvoice.toString()
+            },
+            data: {
+                metodo_pago: CheckSelected
             }
         });
         revalidatePath(`/dashboard/caja`);
@@ -562,7 +578,7 @@ export async function updateOderTable( formData : FormData, infoOder : any ) {
     }
 }
 
-export async function createNewInvoiceByTable(Order : any, TypePay : any ) {
+export async function createNewInvoiceByTable( Order : any ) {
 
     const session = await getServerSession(authOptions);
     const client = session?.user?.name;
@@ -572,7 +588,7 @@ export async function createNewInvoiceByTable(Order : any, TypePay : any ) {
     const propina_C =parseFloat((Order.sub_total_C_ * 0.10).toFixed(2));
     const propina_U = parseFloat((propina_C / parseFloat(process.env.NEXT_PUBLIC_CONVERSION_RATE as string)).toFixed(2));
     const total_C = Order.sub_total_C_ + propina_C;
-    const total_U = Order.sub_total_U_ + propina_U;
+    const total_U = (Order.sub_total_U_ + propina_U).toFixed(2);
 
     // Busca el usuario que esta logueado 
     const userFound = await prisma.users.findFirst({
@@ -612,12 +628,12 @@ export async function createNewInvoiceByTable(Order : any, TypePay : any ) {
                 numero_factura: numInvoice.toString(),
                 fecha_emision: emisionDate,
                 hora_emision: emisionDate,
-                metodo_pago: TypePay,
                 user_id: userFound?.id,
                 propina_C_: propina_C,
                 propina_U_: propina_U,
                 descuento_C_: 0, //el descuento aun no se implementa pero se deja por si acaso
                 descuento_U_: 0,
+                metodo_pago: 'efectivo',
                 total_C_: total_C,
                 total_U_: total_U,
                 orden_id: Order.id
@@ -630,7 +646,7 @@ export async function createNewInvoiceByTable(Order : any, TypePay : any ) {
     }
 }
 
-export async function createNewInvoice( Order : any, TypePay : any ) {
+export async function createNewInvoice( Order : any) {
     
     const session = await getServerSession(authOptions);
     const client = session?.user?.name;
@@ -640,7 +656,7 @@ export async function createNewInvoice( Order : any, TypePay : any ) {
     const propina_C =parseFloat((Order.sub_total_C_ * 0.10).toFixed(2));
     const propina_U = parseFloat((propina_C / parseFloat(process.env.NEXT_PUBLIC_CONVERSION_RATE as string)).toFixed(2));
     const total_C = Order.sub_total_C_ + propina_C;
-    const total_U = Order.sub_total_U_ + propina_U;
+    const total_U = (Order.sub_total_U_ + propina_U).toFixed(2);
 
     // Busca el usuario que esta logueado 
     const userFound = await prisma.users.findFirst({
@@ -670,12 +686,12 @@ export async function createNewInvoice( Order : any, TypePay : any ) {
                 numero_factura: numInvoice,
                 fecha_emision: emisionDate,
                 hora_emision: emisionDate,
-                metodo_pago: TypePay,
                 user_id: userFound?.id,
                 propina_C_: propina_C,
                 propina_U_: propina_U,
                 descuento_C_: 0, //el descuento aun no se implementa pero se deja por si acaso
                 descuento_U_: 0,
+                metodo_pago: 'efectivo',
                 total_C_: total_C,
                 total_U_: total_U,
                 orden_id: Order.id
@@ -689,7 +705,7 @@ export async function createNewInvoice( Order : any, TypePay : any ) {
     }
 }
 
-export async function updateInvoice( idInvoice : any, newTotal : number, orderId : any ) {
+export async function updateInvoice( idInvoice : any, newTotal : number, orderId : any, CheckSelected: any ) {
 
     const total_U_ = parseFloat((newTotal / parseFloat(process.env.NEXT_PUBLIC_CONVERSION_RATE as string)).toFixed(2));
 
@@ -703,6 +719,7 @@ export async function updateInvoice( idInvoice : any, newTotal : number, orderId
                 total_U_: total_U_,
                 propina_C_: 0,
                 propina_U_: 0,
+                metodo_pago: CheckSelected,
             }
         });
         if (newInvoice) {
@@ -729,7 +746,7 @@ export async function updateInvoice( idInvoice : any, newTotal : number, orderId
 
 }
 
-export async function updateInvoiceByTable( idInvoice : any, newTotal : number, orderId : any, idTable : any ) {
+export async function updateInvoiceByTable( idInvoice : any, newTotal : number, orderId : any, idTable : any, CheckSelected: any ) {
     
     const total_U_ = parseFloat((newTotal / parseFloat(process.env.NEXT_PUBLIC_CONVERSION_RATE as string)).toFixed(2));
 
@@ -743,6 +760,7 @@ export async function updateInvoiceByTable( idInvoice : any, newTotal : number, 
                 total_U_: total_U_,
                 propina_C_: 0,
                 propina_U_: 0,
+                metodo_pago: CheckSelected,
             }
         });
         if (newInvoice) {

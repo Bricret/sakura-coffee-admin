@@ -89,3 +89,12 @@ export async function calculatePercentage() {
     nombre: mostSoldProduct.nombreProducto
   });
 }
+
+export function buscarPropiedad(obj: any, condicion: any) {
+  for (const propiedad in obj) {
+     if (obj.hasOwnProperty(propiedad) && condicion(obj[propiedad])) {
+       return propiedad;
+     }
+  }
+  return null;
+}

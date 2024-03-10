@@ -38,7 +38,6 @@ export default function TopInvoice({ invoice, user } : { invoice : any , user : 
             <h3 className="text-base">Hora:   {horaEmisionFormatoLocal.split('T')[1]}</h3>
         </div>
         <h3 className="text-base">Cajero: {user.name}</h3>
-        <h3 className="text-base">Forma Pago: {invoice.metodo_pago}</h3>
     </nav>
     </>
     )
