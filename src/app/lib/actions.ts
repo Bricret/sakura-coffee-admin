@@ -588,7 +588,7 @@ export async function createNewInvoiceByTable( Order : any ) {
     const propina_C =parseFloat((Order.sub_total_C_ * 0.10).toFixed(2));
     const propina_U = parseFloat((propina_C / parseFloat(process.env.NEXT_PUBLIC_CONVERSION_RATE as string)).toFixed(2));
     const total_C = Order.sub_total_C_ + propina_C;
-    const total_U = (Order.sub_total_U_ + propina_U).toFixed(2);
+    const total_U = (Order.sub_total_U_ + propina_U);
 
     // Busca el usuario que esta logueado 
     const userFound = await prisma.users.findFirst({
@@ -656,7 +656,7 @@ export async function createNewInvoice( Order : any) {
     const propina_C =parseFloat((Order.sub_total_C_ * 0.10).toFixed(2));
     const propina_U = parseFloat((propina_C / parseFloat(process.env.NEXT_PUBLIC_CONVERSION_RATE as string)).toFixed(2));
     const total_C = Order.sub_total_C_ + propina_C;
-    const total_U = (Order.sub_total_U_ + propina_U).toFixed(2);
+    const total_U = (Order.sub_total_U_ + propina_U);
 
     // Busca el usuario que esta logueado 
     const userFound = await prisma.users.findFirst({
