@@ -3,179 +3,179 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model cajas {
-  id          BigInt        @id @default(autoincrement()) @db.UnsignedBigInt
-  numero_caja String        @unique(map: "cajas_numero_caja_unique") @db.VarChar(255)
-  descripcion String?       @db.Text
+  id          BigInt        @id @default(autoincrement())
+  numero_caja String        @unique
+  descripcion String?
   estado      cajas_estado
   flujo_cajas flujo_cajas[]
 }
 
 model categorias {
-  id          BigInt      @id @default(autoincrement()) @db.UnsignedBigInt
-  nombre      String      @db.VarChar(255)
-  descripcion String?     @db.Text
+  id          BigInt      @id @default(autoincrement())
+  nombre      String
+  descripcion String?
   productos   productos[]
 
-  @@index([nombre], map: "categorias_nombre_index")
+  @@index([nombre])
 }
 
 model detalle_ordens {
-  id          BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
-  orden_id    BigInt    @db.UnsignedBigInt
-  producto_id BigInt    @db.UnsignedBigInt
+  id          BigInt    @id @default(autoincrement())
+  orden_id    BigInt
+  producto_id BigInt
   cantidad    Int
   monto_C_    Float     @map("monto_C$")
   monto_U_    Float     @map("monto_U$")
   impreso     Boolean   @default(false)
-  ordens      ordens    @relation(fields: [orden_id], references: [id], onDelete: Cascade, map: "detalle_ordens_orden_id_foreign")
-  productos   productos @relation(fields: [producto_id], references: [id], onDelete: Cascade, map: "detalle_ordens_producto_id_foreign")
+  ordens      ordens    @relation(fields: [orden_id], references: [id], onDelete: Cascade)
+  productos   productos @relation(fields: [producto_id], references: [id], onDelete: Cascade)
 
-  @@index([orden_id], map: "detalle_ordens_orden_id_index")
-  @@index([producto_id], map: "detalle_ordens_producto_id_index")
+  @@index([orden_id])
+  @@index([producto_id])
 }
 
 model facturas {
-  id             BigInt               @id @default(autoincrement()) @db.UnsignedBigInt
-  numero_factura BigInt               @unique(map: "facturas_numero_factura_unique")
-  fecha_emision  DateTime             @db.Date
-  hora_emision   DateTime             @db.Time(0)
+  id             BigInt               @id @default(autoincrement())
+  numero_factura BigInt               @unique
+  fecha_emision  DateTime
+  hora_emision   DateTime
   metodo_pago    facturas_metodo_pago
-  user_id        BigInt               @db.UnsignedBigInt
+  user_id        BigInt
   propina_C_     Float                @map("propina_C$")
   propina_U_     Float                @map("propina_U$")
   descuento_C_   Float                @map("descuento_C$")
   descuento_U_   Float                @map("descuento_U$")
   total_C_       Float                @map("total_C$")
   total_U_       Float                @map("total_U$")
-  orden_id       BigInt               @db.UnsignedBigInt
-  ordens         ordens               @relation(fields: [orden_id], references: [id], onDelete: Cascade, map: "facturas_orden_id_foreign")
-  users          users                @relation(fields: [user_id], references: [id], onDelete: Cascade, map: "facturas_user_id_foreign")
+  orden_id       BigInt
+  ordens         ordens               @relation(fields: [orden_id], references: [id], onDelete: Cascade)
+  users          users                @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
-  @@index([orden_id], map: "facturas_orden_id_index")
-  @@index([user_id], map: "facturas_user_id_index")
+  @@index([orden_id])
+  @@index([user_id])
 }
 
 model flujo_cajas {
-  id               BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
-  fecha_apertura   DateTime  @db.Date
-  hora_apertura    DateTime  @db.Time(0)
-  fecha_cierre     DateTime? @db.Date
-  hora_cierre      DateTime? @db.Time(0)
-  observaciones    String    @db.VarChar(150)
+  id               BigInt    @id @default(autoincrement())
+  fecha_apertura   DateTime
+  hora_apertura    DateTime
+  fecha_cierre     DateTime?
+  hora_cierre      DateTime?
+  observaciones    String
   faltante_caja    Float?
   sobrante_caja    Float
   monto_inicial_C_ Float     @map("monto_inicial_C$")
   monto_inicial_U_ Float     @map("monto_inicial_U$")
   monto_final_C_   Float?    @map("monto_final_C$")
   monto_final_U_   Float?    @map("monto_final_U$")
-  caja_id          BigInt    @db.UnsignedBigInt
-  user_id          BigInt    @db.UnsignedBigInt
-  cajas            cajas     @relation(fields: [caja_id], references: [id], onDelete: Cascade, map: "flujo_cajas_caja_id_foreign")
-  users            users     @relation(fields: [user_id], references: [id], onDelete: Cascade, map: "flujo_cajas_user_id_foreign")
+  caja_id          BigInt
+  user_id          BigInt
+  cajas            cajas     @relation(fields: [caja_id], references: [id], onDelete: Cascade)
+  users            users     @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
-  @@index([caja_id], map: "flujo_cajas_caja_id_index")
-  @@index([user_id], map: "flujo_cajas_user_id_index")
+  @@index([caja_id])
+  @@index([user_id])
 }
 
 model mesas {
-  id     BigInt       @id @default(autoincrement()) @db.UnsignedBigInt
-  nombre String       @db.VarChar(255)
+  id     BigInt       @id @default(autoincrement())
+  nombre String
   estado mesas_estado @default(libre)
   ordens ordens[]
 }
 
 model ordens {
-  id             BigInt           @id @default(autoincrement()) @db.UnsignedBigInt
-  mesa_id        BigInt?          @db.UnsignedBigInt
-  pedido_id      BigInt?          @db.UnsignedBigInt
+  id             BigInt           @id @default(autoincrement())
+  mesa_id        BigInt?
+  pedido_id      BigInt?
   estado         ordens_estado
   sub_total_C_   Float            @map("sub_total_C$")
   sub_total_U_   Float            @map("sub_total_U$")
   detalle_ordens detalle_ordens[]
   facturas       facturas[]
-  mesas          mesas?           @relation(fields: [mesa_id], references: [id], onDelete: Cascade, map: "ordens_mesa_id_foreign")
-  pedidos        pedidos?         @relation(fields: [pedido_id], references: [id], onDelete: Cascade, map: "ordens_pedido_id_foreign")
+  mesas          mesas?           @relation(fields: [mesa_id], references: [id], onDelete: Cascade)
+  pedidos        pedidos?         @relation(fields: [pedido_id], references: [id], onDelete: Cascade)
 
-  @@index([mesa_id], map: "ordens_mesa_id_index")
-  @@index([pedido_id], map: "ordens_pedido_id_index")
+  @@index([mesa_id])
+  @@index([pedido_id])
 }
 
 model pedidos {
-  id                         BigInt                @id @default(autoincrement()) @db.UnsignedBigInt
-  nombre_cliente             String                @db.VarChar(255)
-  direccion_cliente          String?               @db.VarChar(255)
+  id                         BigInt                @id @default(autoincrement())
+  nombre_cliente             String
+  direccion_cliente          String?
   anticipo                   Int?
-  fecha_pedido               DateTime              @db.Date
-  fecha_entrega              DateTime              @db.Date
-  hora_entrega               DateTime?             @db.Time(0)
-  telefono_cliente           String?               @db.VarChar(255)
-  telefono_adicional_cliente String?               @db.VarChar(255)
+  fecha_pedido               DateTime
+  fecha_entrega              DateTime
+  hora_entrega               DateTime?
+  telefono_cliente           String?
+  telefono_adicional_cliente String?
   estado_pedido              pedidos_estado_pedido @default(pendiente)
   estado_pago                pedidos_estado_pago   @default(pendiente)
-  observaciones              String?               @db.Text
+  observaciones              String?
   total                      Int
   ordens                     ordens[]
 
-  @@index([nombre_cliente], map: "pedidos_nombre_cliente_index")
+  @@index([nombre_cliente])
 }
 
 model permisos {
-  id           BigInt         @id @default(autoincrement()) @db.UnsignedBigInt
-  nombre       String         @db.VarChar(255)
-  descripcion  String?        @db.Text
+  id           BigInt         @id @default(autoincrement())
+  nombre       String
+  descripcion  String?
   rol_permisos rol_permisos[]
 }
 
 model productos {
-  id             BigInt                   @id @default(autoincrement()) @db.UnsignedBigInt
-  categoria_id   BigInt                   @db.UnsignedBigInt
-  nombre         String                   @db.VarChar(255)
-  descripcion    String?                  @db.Text
-  precio         Float                    @default(0) @db.Float
+  id             BigInt                   @id @default(autoincrement())
+  categoria_id   BigInt
+  nombre         String
+  descripcion    String?
+  precio         Float                    @default(0)
   disponibilidad productos_disponibilidad @default(disponible)
   preparado_en   productos_preparado_en
   detalle_ordens detalle_ordens[]
-  categorias     categorias               @relation(fields: [categoria_id], references: [id], onDelete: Cascade, map: "productos_categoria_id_foreign")
+  categorias     categorias               @relation(fields: [categoria_id], references: [id], onDelete: Cascade)
 
-  @@index([categoria_id], map: "productos_categoria_id_index")
-  @@index([nombre], map: "productos_nombre_index")
+  @@index([categoria_id])
+  @@index([nombre])
 }
 
 model rol_permisos {
-  id         BigInt   @id @default(autoincrement()) @db.UnsignedBigInt
-  rol_id     BigInt   @db.UnsignedBigInt
-  permiso_id BigInt   @db.UnsignedBigInt
-  permisos   permisos @relation(fields: [permiso_id], references: [id], onDelete: Cascade, map: "rol_permisos_permiso_id_foreign")
-  rols       rols     @relation(fields: [rol_id], references: [id], onDelete: Cascade, map: "rol_permisos_rol_id_foreign")
+  id         BigInt   @id @default(autoincrement())
+  rol_id     BigInt
+  permiso_id BigInt
+  permisos   permisos @relation(fields: [permiso_id], references: [id], onDelete: Cascade)
+  rols       rols     @relation(fields: [rol_id], references: [id], onDelete: Cascade)
 
-  @@index([permiso_id], map: "rol_permisos_permiso_id_index")
-  @@index([rol_id], map: "rol_permisos_rol_id_index")
+  @@index([permiso_id])
+  @@index([rol_id])
 }
 
 model rols {
-  id           BigInt         @id @default(autoincrement()) @db.UnsignedBigInt
-  nombre       String         @db.VarChar(255)
-  descripcion  String?        @db.Text
+  id           BigInt         @id @default(autoincrement())
+  nombre       String
+  descripcion  String?
   rol_permisos rol_permisos[]
   users        users[]
 }
 
 model users {
-  id          BigInt        @id @default(autoincrement()) @db.UnsignedBigInt
-  rol_id      BigInt?       @db.UnsignedBigInt
-  name        String        @db.VarChar(255)
-  password    String        @db.VarChar(255)
+  id          BigInt        @id @default(autoincrement())
+  rol_id      BigInt?
+  name        String
+  password    String
   status      Boolean       @default(true)
   facturas    facturas[]
   flujo_cajas flujo_cajas[]
-  rols        rols?         @relation(fields: [rol_id], references: [id], onDelete: Cascade, map: "users_rol_id_foreign")
+  rols        rols?         @relation(fields: [rol_id], references: [id], onDelete: Cascade)
 
-  @@index([rol_id], map: "users_rol_id_index")
+  @@index([rol_id])
 }
 
 enum mesas_estado {
