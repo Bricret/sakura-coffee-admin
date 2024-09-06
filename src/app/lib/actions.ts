@@ -626,7 +626,7 @@ export async function createNewInvoiceByTable( Order : any ) {
         const newInvoice = await prisma.facturas.create({
             data: {
                 numero_factura: numInvoice.toString(),
-                fecha_emision: emisionDate,
+                fecha_emision: new Date(emisionDate.toISOString().split('T')[0] + 'T00:00:00.000Z'),
                 hora_emision: emisionDate,
                 user_id: userFound?.id,
                 propina_C_: propina_C,
@@ -684,7 +684,7 @@ export async function createNewInvoice( Order : any) {
         const newInvoice = await prisma.facturas.create({
             data: {
                 numero_factura: numInvoice,
-                fecha_emision: emisionDate,
+                fecha_emision: new Date(emisionDate.toISOString().split('T')[0] + 'T00:00:00.000Z'),
                 hora_emision: emisionDate,
                 user_id: userFound?.id,
                 propina_C_: propina_C,
@@ -948,7 +948,7 @@ export async function createNewCashFlow( formData: FormData ) {
         try {
             await prisma.flujo_cajas.create({
                 data: {
-                    fecha_apertura: openDate,
+                    fecha_apertura: new Date(openDate.toISOString().split('T')[0] + 'T00:00:00.000Z'),
                     hora_apertura: openDate,
                     monto_inicial_C_: monto_C,
                     monto_inicial_U_: monto_U,
@@ -1036,6 +1036,7 @@ export async function createNewTable() {
             nombre: 'desc'
         }
     });
+
     
     let numberTable = Number(findTable.nombre.split(' ')[1]);
 

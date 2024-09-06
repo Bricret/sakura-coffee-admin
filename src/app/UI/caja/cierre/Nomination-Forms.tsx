@@ -15,9 +15,12 @@ export default async function NominationForm({ cajaActiva } : any ) {
 
     let InvoiceForDay = null;
     if (Cashflow !== null) {
+        console.log('Si hay caja activa');
         InvoiceForDay = await FetchInvoiceByDate(Cashflow.fecha_apertura);
+        console.log('Resultado de la consulta de invoice:', InvoiceForDay);
     }
 
+    console.log({Cashflow, InvoiceForDay});
     return (
         <TablesFormsNomination Cashflow={Cashflow} Invoice={InvoiceForDay} />
     )

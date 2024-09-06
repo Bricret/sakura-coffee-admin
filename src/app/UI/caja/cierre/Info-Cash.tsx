@@ -4,6 +4,8 @@ export default async function InfoCash({ cajaActiva } : { cajaActiva: any }) {
 
     let Cashflow = await FetchCashFlowByDate();
 
+    console.log(Cashflow);
+
     if (Cashflow === null && cajaActiva !== null) {
         const actualDate = new Date().toISOString();
         let date = new Date(actualDate);

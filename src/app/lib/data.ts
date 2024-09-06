@@ -262,10 +262,12 @@ export async function FetchCajaActive() {
 }
 
 export async function FetchCashFlowByDate(dayDate?: any) {
+    console.log(dayDate);
     const actualDate = new Date().toISOString();
     let date = new Date(actualDate as string);
     date = new Date(date.getTime() - date.getTimezoneOffset() * 60 * 1000);
     const openOnlyDate = date.toISOString().split('T')[0] + 'T00:00:00.000Z';
+    console.log('openOnlyDate', date.toISOString().split('T')[0]);
     try {
         const cashFlow = await prisma.flujo_cajas.findFirst({
             where: {
@@ -649,7 +651,7 @@ export async function FetchMostSoldProduct() {
             take: 1,
         });
 
-        const productoId = mostSoldProduct[0].producto_id;
+        const productoId = mostSoldProduct[0]?.producto_id;
         const productoInfo = await prisma.productos.findUnique({
             where: {
                 id: productoId,

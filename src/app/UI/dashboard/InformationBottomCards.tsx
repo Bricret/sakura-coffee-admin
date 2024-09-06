@@ -12,10 +12,10 @@ export default function InformationBottomCards({ title, data, money, icon } : { 
     const rounded = useTransform(count, Math.round);
 
     useEffect(() => {
-        const animation = animate(count, data, { duration: 1.2 });
+        const animation = animate(count, data || '', { duration: 1.2 });
     
         return animation.stop;
-      }, []);
+      }, [count, data]);
 
     return (
         <motion.article 
@@ -36,7 +36,7 @@ export default function InformationBottomCards({ title, data, money, icon } : { 
             }
             <motion.h1 className="text-2xl font-bold text-black">
                 {
-                    data === data.toString() ? data : rounded
+                    data === data?.toString() ? data : rounded
                 }
             </motion.h1>
             </div>

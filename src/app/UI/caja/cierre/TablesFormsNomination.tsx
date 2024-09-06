@@ -15,7 +15,9 @@ export default function TablesFormsNomination({ Cashflow, Invoice } : { Cashflow
     const [totalMonto, setTotalMonto] = useState<number>(Cashflow.monto_inicial_C_);
     const propina = PropinaInvoice(Invoice);
 
+    console.log({Invoice, propina});
     const total_invoice = TotalInvoice(Invoice);
+    console.log('Tota Monto:', total_invoice);
     const absolutetotalinvoice = (total_invoice + Cashflow.monto_inicial_C_);
     const allInvoiceTarjeta = Invoice?.filter((item: any) => item.metodo_pago === 'tarjeta');
     const diferencia = totalMonto - absolutetotalinvoice;
