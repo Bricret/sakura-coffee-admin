@@ -1,5 +1,4 @@
 import { FetchAllInvoice, FetchCountInvoiceForDay, FetchInvoicesCurrentMonth, FetchOrdersTo } from "@/app/lib/data";
-import InformationCards from "./InformationCards";
 import TopCards from "./TopCards";
 
 

@@ -203,18 +203,26 @@ export async function createNewOrdersByOrderTo(idOrderTo : any,  total : any) {
     try {
         const orderFound = await prisma.ordens.findFirst({
             where: {
-                pedido_id: idOrderTo,
+                pedidos: {
+                    id: idOrderTo
+                },
                 estado: 'pendiente'
             }
         });
         if (orderFound) {
             return { success: false, message: 'Orden ya existe en la base de datos', data: orderFound }
         };
-        const total_U_ = parseFloat((total / parseFloat(process.env.NEXT_PUBLIC_CONVERSION_RATE as string)).toFixed(2));
+
+        const conversionRate = parseFloat(process.env.NEXT_PUBLIC_CONVERSION_RATE || '1');
+        const total_U_ = parseFloat((total / conversionRate).toFixed(2));
 
         const newOrder = await prisma.ordens.create({
             data: {
-                pedido_id: idOrderTo.toString(),
+                pedidos: {
+                    connect: {
+                        id: idOrderTo
+                    }
+                },
                 sub_total_C_: Number(total),
                 sub_total_U_: total_U_,
                 estado: 'pendiente'
@@ -225,9 +233,9 @@ export async function createNewOrdersByOrderTo(idOrderTo : any,  total : any) {
        console.log('error', error);
        return { success: false, message: 'Error al intentar crear la orden' }
     }
- }
+}
 
- export async function createNewOrder() {
+export async function createNewOrder() {
     const OrderFound = await prisma.ordens.findFirst({
         where: {
             estado: 'pendiente',
@@ -252,7 +260,7 @@ export async function createNewOrdersByOrderTo(idOrderTo : any,  total : any) {
        console.log('error', error);
        return { success: false, message: 'Error al intentar crear la orden' }
     }
- }
+}
 
 export async function updateOrderByTable(idOrder: any, subTotalC: number, subTotalU: number, idTable: any) {
 
@@ -897,20 +905,28 @@ export async function updateOrderToStatusAndUpdateOrdens( idOrderTo : any ) {
                 estado_pago: 'cancelado'
             }
         });
+
         const findOrder = await prisma.ordens.findFirst({
             where: {
-                pedido_id: idOrderTo.toString()
+                pedidos: {
+                    id: idOrderTo.toString()
+                }
             }
         });
+
+        if (!findOrder) {
+            return { success: false, message: 'No se encontró la orden asociada al pedido' }
+        }
+
         await prisma.ordens.update({
             where: {
-                id: findOrder.id.toString(),
-                pedido_id: idOrderTo.toString()
+                id: findOrder.id.toString()
             },
             data: {
                 estado: 'finalizada'
             }
         });
+
         revalidatePath(`/dashboard/caja/pedidos`);
         return { success: true, message: 'Pedido actualizado correctamente' }
     } catch ( error : any ) {
@@ -1030,6 +1046,7 @@ export async function updateCashFlow( formData : FormData, diferencia : number, 
 }
 
 export async function createNewTable() {
+    let numberTable = 1;
 
     const findTable = await prisma.mesas.findFirst({
         orderBy: {
@@ -1037,13 +1054,9 @@ export async function createNewTable() {
         }
     });
 
-    
-    let numberTable = Number(findTable.nombre.split(' ')[1]);
-
     if (findTable) {
-        numberTable = numberTable + 1;
+        numberTable = Number(findTable.nombre.split(' ')[1]) + 1;
     }
-
 
     try {
         const newTable = await prisma.mesas.create({

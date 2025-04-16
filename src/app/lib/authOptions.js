@@ -4,6 +4,7 @@ import { FetchUnicRols } from "@/app/lib/data";
 import prisma from "./db";
 
 export const authOptions = {
+  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     CredentialsProvider({
       name: "Credentials",

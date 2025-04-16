@@ -651,7 +651,15 @@ export async function FetchMostSoldProduct() {
             take: 1,
         });
 
-        const productoId = mostSoldProduct[0]?.producto_id;
+        // Si no hay productos vendidos, retornar un objeto con valores por defecto
+        if (!mostSoldProduct.length) {
+            return {
+                _sum: { cantidad: 0 },
+                nombreProducto: "No hay productos vendidos"
+            };
+        }
+
+        const productoId = mostSoldProduct[0].producto_id;
         const productoInfo = await prisma.productos.findUnique({
             where: {
                 id: productoId,
